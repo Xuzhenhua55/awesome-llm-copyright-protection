@@ -23,11 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setActiveLink() {
-    const currentPage = window.location.pathname.split('/').pop();
+    const currentPath = window.location.pathname;
     const links = document.querySelectorAll('.sidebar a');
     
     links.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
+        const linkPath = link.getAttribute('href');
+        if (currentPath === linkPath) {
             link.classList.add('active');
             // If it's a submenu item, also highlight the parent
             const parent = link.closest('li').parentElement.previousElementSibling;
