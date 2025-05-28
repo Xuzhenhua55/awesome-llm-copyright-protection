@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Non-intrusive Methods - LLM Copyright Protection Research</title>
+    <title>Non-intrusive Fingerprinting - LLM Copyright Protection Research</title>
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/nav.css">
+    <link rel="stylesheet" href="../assets/paper-ref.css">
     <script>
         // Preload navigation content
         const cachedNav = localStorage.getItem('navContent');
@@ -31,22 +32,62 @@
     </div>
 
     <div class="main-content">
-        <h1>Non-intrusive Methods</h1>
+        <h1>Non-intrusive Fingerprinting</h1>
         <p>Non-intrusive fingerprinting methods leverage the inherent properties of language models without requiring modifications to their architecture or training process.</p>
 
-        <h2>Output Distribution Analysis</h2>
-        <p>Analyzing the statistical properties of model outputs to identify unique patterns.</p>
+        <h2>Weight Space Based</h2>
+        <p>Methods that analyze the weight space of language models to identify unique patterns and characteristics.</p>
+        <div id="weight-space-papers"></div>
 
-        <h2>Prompt Engineering</h2>
-        <p>Using carefully crafted prompts to elicit distinctive responses that reveal model identity.</p>
+        <h2>Feature Space Based</h2>
+        <p>Techniques that utilize different types of features extracted from language models for fingerprinting.</p>
 
-        <h2>Behavioral Analysis</h2>
-        <p>Examining model behavior across different tasks and contexts to identify characteristic patterns.</p>
+        <h3>Activation Features</h3>
+        <p>Methods that analyze the activation patterns of neurons in the model to create unique fingerprints.</p>
+        <div id="activation-features-papers"></div>
+
+        <h3>Logits Features</h3>
+        <p>Approaches that utilize the output logits distribution to create distinctive fingerprints.</p>
+        <div id="logits-features-papers"></div>
+
+        <h3>Semantic Features</h3>
+        <p>Techniques that leverage semantic representations and embeddings for model fingerprinting.</p>
+        <div id="semantic-features-papers"></div>
+
+        <h2>Prompt Optimization Based</h2>
+        <p>Methods that use carefully crafted prompts to elicit distinctive responses that reveal model identity.</p>
+        <div id="prompt-optimization-papers"></div>
     </div>
 
     <div id="footer-placeholder"></div>
 
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
+    <script src="../assets/paper-ref.js"></script>
+    <script>
+        // Add paper references
+        const papers = {
+            activationFeatures: [
+                {
+                    title: "REEF: Representation Encoding Fingerprints for Large Language Models",
+                    link: "https://arxiv.org/abs/2410.14273",
+                    venue: "ICLR 2025 Oral",
+                    code: "https://github.com/AI45Lab/REEF",
+                    note: "利用模型激活特征来作为指纹",
+                    bibtex: "@article{zhang2024reef,\n  title={REEF: Representation Encoding Fingerprints for Large Language Models},\n  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},\n  journal={arXiv preprint arXiv:2410.14273},\n  year={2024}\n}"
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add papers to their respective containers
+            if (papers.activationFeatures) {
+                const container = document.getElementById('activation-features-papers');
+                papers.activationFeatures.forEach(paper => {
+                    container.appendChild(createPaperReference(paper));
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
