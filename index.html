@@ -30,6 +30,8 @@
         </ul>
     </div>
 
+    <div id="footer-placeholder"></div>
+
     <script>
         // 加载导航栏
         fetch('docs/assets/nav.html')
@@ -50,7 +52,14 @@
                 });
             })
             .catch(error => console.error('Error loading navigation:', error));
+
+        // 加载页脚
+        fetch('docs/assets/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
     </script>
-    <script src="docs/assets/footer.js"></script>
 </body>
 </html> 
