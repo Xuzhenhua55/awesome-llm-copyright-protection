@@ -7,6 +7,64 @@
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/nav.css">
     <link rel="stylesheet" href="../assets/footer.css">
+    <style>
+        .method-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .method-section:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .method-section h2 {
+            color: #495057;
+            border-bottom: 2px solid #7048e8;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .method-section p {
+            line-height: 1.6;
+            color: #495057;
+        }
+
+        .method-section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .method-section ul li {
+            margin: 10px 0;
+        }
+
+        .method-section ul li a {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #7048e8;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .method-section ul li a:hover {
+            background-color: #5f3dc4;
+            transform: translateY(-1px);
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #495057;
+            margin-bottom: 30px;
+        }
+    </style>
     <script>
         // Preload navigation content
         const cachedNav = localStorage.getItem('navContent');
@@ -33,19 +91,24 @@
 
     <div class="main-content">
         <h1>Model Fingerprinting</h1>
-        <p>Model fingerprinting is a technique used to identify and track large language models through unique characteristics in their outputs.</p>
+        
+        <p class="intro-text">Model fingerprinting is a sophisticated technique used to identify and track large language models through their unique characteristics. This approach enables model owners to protect their intellectual property and verify model authenticity in various deployment scenarios.</p>
 
-        <h2>Non-invasive Methods</h2>
-        <p>Non-invasive fingerprinting methods do not require modifications to the model's architecture or training process.</p>
-        <ul>
-            <li><a href="non-invasive.html">Learn more about non-invasive methods</a></li>
-        </ul>
+        <div class="method-section">
+            <h2>Non-invasive Methods</h2>
+            <p>Non-invasive fingerprinting methods leverage the inherent properties of language models without requiring modifications to their architecture or training process. Specifically, these methods can extract fingerprints from the model's weight space and feature space. Additionally, a novel approach based on prompt optimization strategies attempts to utilize the model's decision boundary characteristics as distinctive fingerprints.</p>
+            <ul>
+                <li><a href="non-invasive.html">Explore Non-invasive Methods</a></li>
+            </ul>
+        </div>
 
-        <h2>Invasive Methods</h2>
-        <p>Invasive fingerprinting methods involve modifications to the model's architecture or training process.</p>
-        <ul>
-            <li><a href="invasive.html">Learn more about invasive methods</a></li>
-        </ul>
+        <div class="method-section">
+            <h2>Invasive Methods</h2>
+            <p>Invasive fingerprinting methods involve modifications to the model's architecture or training process. These approaches focus on embedding specific information into the model during its training or architectural design phase, enabling the extraction of fingerprints through targeted interactions. This can be achieved through various techniques, such as embedding digital watermarks into model weights or incorporating fingerprint patterns that can be extracted through specific input-output interactions.</p>
+            <ul>
+                <li><a href="invasive.html">Explore Invasive Methods</a></li>
+            </ul>
+        </div>
     </div>
 
     <div id="footer-placeholder"></div>
