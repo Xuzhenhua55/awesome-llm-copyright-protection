@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Always fetch fresh content in the background
-    fetch('/docs/assets/footer.html')
+    fetch('../assets/footer.html')
         .then(response => response.text())
         .then(data => {
             // Only update if content is different
