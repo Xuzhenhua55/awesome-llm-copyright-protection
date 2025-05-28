@@ -4,11 +4,12 @@
     top: 0;
     width: 280px;
     height: 100vh;
-    background-color: #2c3e50;
+    background-color: #f8f9fa;
     padding: 2rem 1rem;
     overflow-y: auto;
     opacity: 1;
     transition: opacity 0.3s ease;
+    border-right: 1px solid #e9ecef;
 }
 
 .sidebar.loading {
@@ -16,11 +17,11 @@
 }
 
 .sidebar h2 {
-    color: #ecf0f1;
+    color: #495057;
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid #34495e;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .sidebar ul {
@@ -34,7 +35,7 @@
 }
 
 .sidebar a {
-    color: #bdc3c7;
+    color: #6c757d;
     text-decoration: none;
     display: block;
     padding: 0.5rem 1rem;
@@ -43,13 +44,13 @@
 }
 
 .sidebar a:hover {
-    color: #ecf0f1;
-    background-color: #34495e;
+    color: #228be6;
+    background-color: #e9ecef;
 }
 
 .sidebar .submenu {
     margin-left: 1rem;
-    border-left: 2px solid #34495e;
+    border-left: 2px solid #dee2e6;
     padding-left: 0.5rem;
     transition: all 0.3s ease;
 }
@@ -60,8 +61,13 @@
 }
 
 .sidebar .active {
-    color: #3498db;
-    background-color: #34495e;
+    color: #7048e8 !important;
+    background-color: #e9ecef;
+    font-weight: 500;
+}
+
+.sidebar .active:hover {
+    color: #7048e8 !important;
 }
 
 /* Adjust main content to account for sidebar */

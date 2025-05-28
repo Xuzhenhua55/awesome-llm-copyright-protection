@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cachedNav = localStorage.getItem('navContent');
     if (cachedNav) {
         navPlaceholder.innerHTML = cachedNav;
+        setActiveLink();
     }
 
     // Always fetch fresh content in the background
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data !== cachedNav) {
                 localStorage.setItem('navContent', data);
                 navPlaceholder.innerHTML = data;
+                setActiveLink();
             }
         })
         .catch(error => {
@@ -26,13 +28,23 @@ function setActiveLink() {
     const currentPath = window.location.pathname;
     const links = document.querySelectorAll('.sidebar a');
     
+    // First, remove all active classes
+    links.forEach(link => link.classList.remove('active'));
+    
+    // Then, find and set the active link
     links.forEach(link => {
         const linkPath = link.getAttribute('href');
-        if (currentPath === linkPath) {
+        // Get the filename from the current path
+        const currentFileName = currentPath.split('/').pop();
+        // Get the filename from the link path
+        const linkFileName = linkPath.split('/').pop();
+        
+        if (currentFileName === linkFileName) {
             link.classList.add('active');
-            // If it's a submenu item, also highlight the parent
+            
+            // Only highlight parent if this is a submenu item
             const parent = link.closest('li').parentElement.previousElementSibling;
-            if (parent && parent.tagName === 'A') {
+            if (parent && parent.tagName === 'A' && link.closest('.submenu')) {
                 parent.classList.add('active');
             }
         }
