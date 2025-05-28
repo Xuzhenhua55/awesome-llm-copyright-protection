@@ -1,1 +1,63 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Copyright Protection Research</title>
+    <link rel="stylesheet" href="docs/assets/style.css">
+    <link rel="stylesheet" href="docs/assets/nav.css">
+</head>
+
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="main-content">
+        <h1>LLM Copyright Protection Research</h1>
+        <p>Welcome to the LLM Copyright Protection Research project. This repository contains research and resources related to protecting intellectual property in large language models.</p>
+        
+        <h2>Research Areas</h2>
+        <ul>
+            <li><a href="docs/html/model-fingerprinting.html">Model Fingerprinting</a></li>
+            <li><a href="docs/html/fingerprint-transfer.html">Fingerprint Transfer</a></li>
+            <li><a href="docs/html/fingerprint-detection.html">Fingerprint Detection & Remove</a></li>
+        </ul>
+
+        <h2>Latest Updates</h2>
+        <p>This project aims to explore and develop methods for protecting intellectual property in large language models through various techniques including:</p>
+        <ul>
+            <li>Model fingerprinting and watermarking</li>
+            <li>Transfer learning for copyright protection</li>
+            <li>Detection and removal of unauthorized model usage</li>
+        </ul>
+    </div>
+    <div id="footer-placeholder"></div>
+    <script>
+        // 加载导航栏
+        fetch('docs/assets/nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
+                // 处理所有导航链接
+                document.querySelectorAll('.sidebar a').forEach(link => {
+                    const href = link.getAttribute('href');
+                    // 处理Home链接
+                    if (href.includes('index.html')) {
+                        link.setAttribute('href', 'index.html');
+                    }
+                    // 处理其他链接
+                    else if (!href.startsWith('docs/html/')) {
+                        link.setAttribute('href', 'docs/html/' + href);
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading navigation:', error));
+
+        // 加载页脚
+        fetch('docs/assets/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+</body>
+</html> 
