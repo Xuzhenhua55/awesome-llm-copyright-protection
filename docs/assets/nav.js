@@ -36,7 +36,6 @@ function setActiveLink() {
         const linkPath = link.getAttribute('href');
         // Get the filename from the current path
         const currentFileName = currentPath.split('/').pop();
-        // Get the filename from the link path
         const linkFileName = linkPath.split('/').pop();
         
         if (currentFileName === linkFileName) {
