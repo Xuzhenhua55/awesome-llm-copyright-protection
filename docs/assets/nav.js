@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navPlaceholder = document.getElementById('nav-placeholder');
     
-    // If we already have content from preload, just set active link
-    if (window.navContent) {
-        setActiveLink();
+    // Try to get nav from localStorage first
+    const cachedNav = localStorage.getItem('navContent');
+    if (cachedNav) {
+        navPlaceholder.innerHTML = cachedNav;
     }
 
     // Always fetch fresh content in the background
@@ -11,11 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             // Only update if content is different
-            if (data !== window.navContent) {
+            if (data !== cachedNav) {
                 localStorage.setItem('navContent', data);
-                window.navContent = data;
                 navPlaceholder.innerHTML = data;
-                setActiveLink();
             }
         })
         .catch(error => {
@@ -24,11 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setActiveLink() {
-    const currentPage = window.location.pathname.split('/').pop();
+    const currentPath = window.location.pathname;
     const links = document.querySelectorAll('.sidebar a');
     
     links.forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
+        const linkPath = link.getAttribute('href');
+        if (currentPath === linkPath) {
             link.classList.add('active');
             // If it's a submenu item, also highlight the parent
             const parent = link.closest('li').parentElement.previousElementSibling;
