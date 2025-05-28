@@ -4,7 +4,7 @@ A curated collection of research and techniques for protecting intellectual prop
 
 ## 📚 Documentation
 
-Visit our [GitHub Pages site](https://[your-username].github.io/awesome-llm-copyright-protection/) for detailed documentation and research papers.
+Visit our [GitHub Pages site](https://xuzhenhua55.github.io/awesome-llm-copyright-protection/) for detailed documentation and research papers.
 
 ## 🎯 Project Structure
 
