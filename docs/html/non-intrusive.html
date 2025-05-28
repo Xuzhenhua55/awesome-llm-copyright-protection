@@ -37,26 +37,26 @@
 
         <h2>Weight Space Based</h2>
         <p>Methods that analyze the weight space of language models to identify unique patterns and characteristics.</p>
-        <div id="weight-space-papers"></div>
+        <div id="weightSpace-papers"></div>
 
         <h2>Feature Space Based</h2>
         <p>Techniques that utilize different types of features extracted from language models for fingerprinting.</p>
 
         <h3>Activation Features</h3>
         <p>Methods that analyze the activation patterns of neurons in the model to create unique fingerprints.</p>
-        <div id="activation-features-papers"></div>
+        <div id="activationFeatures-papers"></div>
 
         <h3>Logits Features</h3>
         <p>Approaches that utilize the output logits distribution to create distinctive fingerprints.</p>
-        <div id="logits-features-papers"></div>
+        <div id="logitsFeatures-papers"></div>
 
         <h3>Semantic Features</h3>
         <p>Techniques that leverage semantic representations and embeddings for model fingerprinting.</p>
-        <div id="semantic-features-papers"></div>
+        <div id="semanticFeatures-papers"></div>
 
         <h2>Prompt Optimization Based</h2>
         <p>Methods that use carefully crafted prompts to elicit distinctive responses that reveal model identity.</p>
-        <div id="prompt-optimization-papers"></div>
+        <div id="promptOptimization-papers"></div>
     </div>
 
     <div id="footer-placeholder"></div>
@@ -67,6 +67,7 @@
     <script>
         // Add paper references
         const papers = {
+            weightSpace: [], // Weight Space Based papers
             activationFeatures: [
                 {
                     title: "REEF: Representation Encoding Fingerprints for Large Language Models",
@@ -76,17 +77,22 @@
                     note: "利用模型激活特征来作为指纹",
                     bibtex: "@article{zhang2024reef,\n  title={REEF: Representation Encoding Fingerprints for Large Language Models},\n  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},\n  journal={arXiv preprint arXiv:2410.14273},\n  year={2024}\n}"
                 }
-            ]
+            ],
+            logitsFeatures: [], // Logits Features papers
+            semanticFeatures: [], // Semantic Features papers
+            promptOptimization: [] // Prompt Optimization Based papers
         };
 
         document.addEventListener('DOMContentLoaded', () => {
             // Add papers to their respective containers
-            if (papers.activationFeatures) {
-                const container = document.getElementById('activation-features-papers');
-                papers.activationFeatures.forEach(paper => {
-                    container.appendChild(createPaperReference(paper));
-                });
-            }
+            Object.entries(papers).forEach(([category, paperList]) => {
+                const container = document.getElementById(`${category}-papers`);
+                if (container && paperList.length > 0) {
+                    paperList.forEach(paper => {
+                        container.appendChild(createPaperReference(paper));
+                    });
+                }
+            });
         });
     </script>
 </body>

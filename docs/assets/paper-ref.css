@@ -16,15 +16,17 @@
     text-overflow: ellipsis;
     flex: 1;
     min-width: 0;
+    color: #6c757d;
 }
 
 .paper-title a {
-    color: #2c3e50;
+    color: #6c757d;
     text-decoration: none;
 }
 
 .paper-title a:hover {
     text-decoration: underline;
+    color: #495057;
 }
 
 .paper-tags {

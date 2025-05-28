@@ -32,26 +32,30 @@ function createPaperReference(paper) {
     }
 
     // Note tag
-    const noteTag = document.createElement('span');
-    noteTag.className = 'paper-tag note';
-    noteTag.textContent = 'Note';
-    noteTag.setAttribute('data-note', paper.note);
-    tagsDiv.appendChild(noteTag);
+    if (paper.note) {
+        const noteTag = document.createElement('span');
+        noteTag.className = 'paper-tag note';
+        noteTag.textContent = 'Note';
+        noteTag.setAttribute('data-note', paper.note);
+        tagsDiv.appendChild(noteTag);
+    }
 
     // BibTeX tag
-    const bibtexTag = document.createElement('span');
-    bibtexTag.className = 'paper-tag bibtex';
-    bibtexTag.textContent = 'BibTeX';
-    bibtexTag.onclick = () => {
-        navigator.clipboard.writeText(paper.bibtex).then(() => {
-            const originalText = bibtexTag.textContent;
-            bibtexTag.textContent = 'Copied!';
-            setTimeout(() => {
-                bibtexTag.textContent = originalText;
-            }, 2000);
-        });
-    };
+    if (paper.bibtex) {
+        const bibtexTag = document.createElement('span');
+        bibtexTag.className = 'paper-tag bibtex';
+        bibtexTag.textContent = 'BibTeX';
+        bibtexTag.onclick = () => {
+            navigator.clipboard.writeText(paper.bibtex).then(() => {
+                const originalText = bibtexTag.textContent;
+                bibtexTag.textContent = 'Copied!';
+                setTimeout(() => {
+                    bibtexTag.textContent = originalText;
+                }, 2000);
+            });
+        };
     tagsDiv.appendChild(bibtexTag);
+}
 
     paperDiv.appendChild(tagsDiv);
     return paperDiv;
