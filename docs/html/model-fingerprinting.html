@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Fingerprinting - LLM Copyright Protection Research</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/nav.css">
+    <script>
+        // Preload navigation content
+        const cachedNav = localStorage.getItem('navContent');
+        if (cachedNav) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const navPlaceholder = document.getElementById('nav-placeholder');
+                if (navPlaceholder) {
+                    navPlaceholder.innerHTML = cachedNav;
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        <script>
+            // Try to populate navigation immediately if available
+            const navContent = localStorage.getItem('navContent');
+            if (navContent) {
+                document.write(navContent);
+            }
+        </script>
+    </div>
+
+    <div class="main-content">
+        <h1>Model Fingerprinting</h1>
+        <p>Model fingerprinting is a technique used to identify and track large language models through unique characteristics in their outputs.</p>
+
+        <h2>Non-intrusive Methods</h2>
+        <p>Non-intrusive fingerprinting methods do not require modifications to the model's architecture or training process.</p>
+        <ul>
+            <li><a href="non-intrusive.html">Learn more about non-intrusive methods</a></li>
+        </ul>
+
+        <h2>Intrusive Methods</h2>
+        <p>Intrusive fingerprinting methods involve modifications to the model's architecture or training process.</p>
+        <ul>
+            <li><a href="intrusive.html">Learn more about intrusive methods</a></li>
+        </ul>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../assets/nav.js"></script>
+    <script src="../assets/footer.js"></script>
+</body>
+</html> 

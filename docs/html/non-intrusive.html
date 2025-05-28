@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-intrusive Methods - LLM Copyright Protection Research</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/nav.css">
+    <script>
+        // Preload navigation content
+        const cachedNav = localStorage.getItem('navContent');
+        if (cachedNav) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const navPlaceholder = document.getElementById('nav-placeholder');
+                if (navPlaceholder) {
+                    navPlaceholder.innerHTML = cachedNav;
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        <script>
+            // Try to populate navigation immediately if available
+            const navContent = localStorage.getItem('navContent');
+            if (navContent) {
+                document.write(navContent);
+            }
+        </script>
+    </div>
+
+    <div class="main-content">
+        <h1>Non-intrusive Methods</h1>
+        <p>Non-intrusive fingerprinting methods leverage the inherent properties of language models without requiring modifications to their architecture or training process.</p>
+
+        <h2>Output Distribution Analysis</h2>
+        <p>Analyzing the statistical properties of model outputs to identify unique patterns.</p>
+
+        <h2>Prompt Engineering</h2>
+        <p>Using carefully crafted prompts to elicit distinctive responses that reveal model identity.</p>
+
+        <h2>Behavioral Analysis</h2>
+        <p>Examining model behavior across different tasks and contexts to identify characteristic patterns.</p>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../assets/nav.js"></script>
+    <script src="../assets/footer.js"></script>
+</body>
+</html> 

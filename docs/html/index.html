@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Copyright Protection Research</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/nav.css">
+    <script>
+        // Preload navigation content
+        const cachedNav = localStorage.getItem('navContent');
+        if (cachedNav) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const navPlaceholder = document.getElementById('nav-placeholder');
+                if (navPlaceholder) {
+                    navPlaceholder.innerHTML = cachedNav;
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="nav-placeholder">
+        <script>
+            // Try to populate navigation immediately if available
+            const navContent = localStorage.getItem('navContent');
+            if (navContent) {
+                document.write(navContent);
+            }
+        </script>
+    </div>
+
+    <div class="main-content">
+        <h1>LLM Copyright Protection Research</h1>
+        <p>Welcome to the LLM Copyright Protection Research project. This repository contains research and resources related to protecting intellectual property in large language models.</p>
+        
+        <h2>Research Areas</h2>
+        <ul>
+            <li><a href="model-fingerprinting.html">Model Fingerprinting</a></li>
+            <li><a href="fingerprint-transfer.html">Fingerprint Transfer</a></li>
+            <li><a href="fingerprint-detection.html">Fingerprint Detection & Remove</a></li>
+        </ul>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../assets/nav.js"></script>
+    <script src="../assets/footer.js"></script>
+</body>
+</html> 
