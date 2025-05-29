@@ -1,62 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Non-invasive Fingerprinting - LLM Copyright Protection Research</title>
-    <link rel="stylesheet" href="../assets/style.css">
-    <link rel="stylesheet" href="../assets/nav.css">
-    <link rel="stylesheet" href="../assets/paper-ref.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Non-intrusive Fingerprinting - LLM Copyright Protection Research
+    </title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../assets/nav.css" />
+    <link rel="stylesheet" href="../assets/paper-ref.css" />
     <script>
-        // Preload navigation content
-        const cachedNav = localStorage.getItem('navContent');
-        if (cachedNav) {
-            document.addEventListener('DOMContentLoaded', () => {
-                const navPlaceholder = document.getElementById('nav-placeholder');
-                if (navPlaceholder) {
-                    navPlaceholder.innerHTML = cachedNav;
-                }
-            });
-        }
+      // Preload navigation content
+      const cachedNav = localStorage.getItem("navContent");
+      if (cachedNav) {
+        document.addEventListener("DOMContentLoaded", () => {
+          const navPlaceholder = document.getElementById("nav-placeholder");
+          if (navPlaceholder) {
+            navPlaceholder.innerHTML = cachedNav;
+          }
+        });
+      }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="nav-placeholder">
-        <script>
-            // Try to populate navigation immediately if available
-            const navContent = localStorage.getItem('navContent');
-            if (navContent) {
-                document.write(navContent);
-            }
-        </script>
+      <script>
+        // Try to populate navigation immediately if available
+        const navContent = localStorage.getItem("navContent");
+        if (navContent) {
+          document.write(navContent);
+        }
+      </script>
     </div>
 
     <div class="main-content">
-        <h1>Non-invasive Fingerprinting</h1>
-        <p>Non-invasive fingerprinting methods leverage the inherent properties of language models without requiring modifications to their architecture or training process.</p>
+      <h1>Non-intrusive Fingerprinting</h1>
+      <p>
+        Non-intrusive fingerprinting methods leverage the inherent properties of
+        language models without requiring modifications to their architecture or
+        training process.
+      </p>
 
-        <h2>Weight Space Based</h2>
-        <p>Methods that analyze the weight space of language models to identify unique patterns and characteristics.</p>
-        <div id="weightSpace-papers"></div>
+      <h2>Weight Space Based</h2>
+      <p>
+        Methods that analyze the weight space of language models to identify
+        unique patterns and characteristics.
+      </p>
+      <div id="weightSpace-papers"></div>
 
-        <h2>Feature Space Based</h2>
-        <p>Techniques that utilize different types of features extracted from language models for fingerprinting.</p>
+      <h2>Feature Space Based</h2>
+      <p>
+        Techniques that utilize different types of features extracted from
+        language models for fingerprinting.
+      </p>
 
-        <h3>Activation Features</h3>
-        <p>Methods that analyze the activation patterns of neurons in the model to create unique fingerprints.</p>
-        <div id="activationFeatures-papers"></div>
+      <h3>Activation Features</h3>
+      <p>
+        Methods that analyze the activation patterns of neurons in the model to
+        create unique fingerprints.
+      </p>
+      <div id="activationFeatures-papers"></div>
 
-        <h3>Logits Features</h3>
-        <p>Approaches that utilize the output logits distribution to create distinctive fingerprints.</p>
-        <div id="logitsFeatures-papers"></div>
+      <h3>Logits Features</h3>
+      <p>
+        Approaches that utilize the output logits distribution to create
+        distinctive fingerprints.
+      </p>
+      <div id="logitsFeatures-papers"></div>
 
-        <h3>Semantic Features</h3>
-        <p>Techniques that leverage semantic representations and embeddings for model fingerprinting.</p>
-        <div id="semanticFeatures-papers"></div>
+      <h3>Semantic Features</h3>
+      <p>
+        Techniques that leverage semantic representations and embeddings for
+        model fingerprinting.
+      </p>
+      <div id="semanticFeatures-papers"></div>
 
-        <h2>Prompt Optimization Based</h2>
-        <p>The fundamental process of prompt optimization-based fingerprinting can be understood as follows: given an original input and a predefined response, the method optimizes the prompt to obtain a final version that, when input to the model, produces the predefined response. Since this optimization process is tightly coupled with the model's weights, the resulting optimized prompt is effective only for the target model and ineffective for other unrelated models, thus serving as a stable fingerprint feature.</p>
-        <div id="promptOptimization-papers"></div>
+      <h2>Prompt Optimization Based</h2>
+      <p>
+        The fundamental process of prompt optimization-based fingerprinting can
+        be understood as follows: given an original input and a predefined
+        response, the method optimizes the prompt to obtain a final version
+        that, when input to the model, produces the predefined response. Since
+        this optimization process is tightly coupled with the model's weights,
+        the resulting optimized prompt is effective only for the target model
+        and ineffective for other unrelated models, thus serving as a stable
+        fingerprint feature.
+      </p>
+      <div id="promptOptimization-papers"></div>
     </div>
 
     <div id="footer-placeholder"></div>
@@ -65,99 +95,107 @@
     <script src="../assets/footer.js"></script>
     <script src="../assets/paper-ref.js"></script>
     <script>
-        // Add paper references
-        const papers = {
-            weightSpace: [
-                            {
-                    title: "Huref: Human-readable fingerprint for large language models",
-                    link: "https://proceedings.neurips.cc/paper_files/paper/2024/hash/e46fc33e80e9fa2febcdb058fba4beca-Abstract-Conference.html",
-                    venue: "NeurIPS 2024",
-                    code: "https://github.com/LUMIA-Group/HuRef",
-                    bibtex: `@article{zeng2024huref,
+      // Add paper references
+      const papers = {
+        weightSpace: [
+          {
+            title:
+              "Huref: Human-readable fingerprint for large language models",
+            link: "https://proceedings.neurips.cc/paper_files/paper/2024/hash/e46fc33e80e9fa2febcdb058fba4beca-Abstract-Conference.html",
+            venue: "NeurIPS 2024",
+            code: "https://github.com/LUMIA-Group/HuRef",
+            bibtex: `@article{zeng2024huref,
   title={Huref: Human-readable fingerprint for large language models},
   author={Zeng, Boyi and Wang, Lizheng and Hu, Yuncong and Xu, Yi and Zhou, Chenghu and Wang, Xinbing and Yu, Yu and Lin, Zhouhan},
   journal={Advances in Neural Information Processing Systems},
   volume={37},
   pages={126332--126362},
   year={2024}
-}`
-                }], // Weight Space Based papers
-            activationFeatures: [
-                {
-                    title: "REEF: Representation Encoding Fingerprints for Large Language Models",
-                    link: "https://arxiv.org/abs/2410.14273",
-                    venue: "ICLR 2025 Oral",
-                    code: "https://github.com/AI45Lab/REEF",
-                    note: "利用模型激活特征来作为指纹",
-                    bibtex: "@article{zhang2024reef,\n  title={REEF: Representation Encoding Fingerprints for Large Language Models},\n  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},\n  journal={arXiv preprint arXiv:2410.14273},\n  year={2024}\n}"
-                }
-            ],
-            logitsFeatures: [], // Logits Features papers
-            semanticFeatures: [], // Semantic Features papers
-            promptOptimization: [
-            {
-                    title: "TRAP: Targeted Random Adversarial Prompt Honeypot for Black-Box  Identification",
-                    link: "https://aclanthology.org/2024.findings-acl.683/",
-                    venue: "ACL 2024 Findings",
-                    bibtex: `@incollection{gubri2024trap,
+}`,
+          },
+        ], // Weight Space Based papers
+        activationFeatures: [
+          {
+            title:
+              "REEF: Representation Encoding Fingerprints for Large Language Models",
+            link: "https://arxiv.org/abs/2410.14273",
+            venue: "ICLR 2025 Oral",
+            code: "https://github.com/AI45Lab/REEF",
+            note: "利用模型激活特征来作为指纹",
+            bibtex:
+              "@article{zhang2024reef,\n  title={REEF: Representation Encoding Fingerprints for Large Language Models},\n  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},\n  journal={arXiv preprint arXiv:2410.14273},\n  year={2024}\n}",
+          },
+        ],
+        logitsFeatures: [], // Logits Features papers
+        semanticFeatures: [], // Semantic Features papers
+        promptOptimization: [
+          {
+            title:
+              "TRAP: Targeted Random Adversarial Prompt Honeypot for Black-Box  Identification",
+            link: "https://aclanthology.org/2024.findings-acl.683/",
+            venue: "ACL 2024 Findings",
+            bibtex: `@incollection{gubri2024trap,
   title={TRAP: Targeted Random Adversarial Prompt Honeypot for Black-Box Identification},
   author={Gubri, Martin and Ulmer, Dennis Thomas and Lee, Hwaran and Yun, Sangdoo and Oh, Seong Joon},
   booktitle={Findings of the Association for Computational Linguistics ACL 2024},
   pages={11496--11517},
   year={2024},
   publisher={Association for Computational Linguistics}
-}`},
-{
-    title: "ProFLingo: A Fingerprinting-based Intellectual Property Protection Scheme for Large Language Models",
-    link: "https://ieeexplore.ieee.org/abstract/document/10735575/",
-    venue: "CNS 2024",
-    code:"https://github.com/hengvt/ProFLingo",
-    bibtex: `@inproceedings{jin2024proflingo,
+}`,
+          },
+          {
+            title:
+              "ProFLingo: A Fingerprinting-based Intellectual Property Protection Scheme for Large Language Models",
+            link: "https://ieeexplore.ieee.org/abstract/document/10735575/",
+            venue: "CNS 2024",
+            code: "https://github.com/hengvt/ProFLingo",
+            bibtex: `@inproceedings{jin2024proflingo,
   title={Proflingo: A fingerprinting-based intellectual property protection scheme for large language models},
   author={Jin, Heng and Zhang, Chaoyu and Shi, Shanghao and Lou, Wenjing and Hou, Y Thomas},
   booktitle={2024 IEEE Conference on Communications and Network Security (CNS)},
   pages={1--9},
   year={2024},
   organization={IEEE}
-}`
-            }, 
-            {
-                title: "RAP-SM: Robust Adversarial Prompt via Shadow Models for Copyright Verification of Large Language Models",
-                link: "https://arxiv.org/abs/2505.06304",
-                venue: "arXiv 2025",
-                bibtex: `@article{zhang2025rap,
+}`,
+          },
+          {
+            title:
+              "RAP-SM: Robust Adversarial Prompt via Shadow Models for Copyright Verification of Large Language Models",
+            link: "https://arxiv.org/abs/2505.06304",
+            venue: "arXiv 2025",
+            bibtex: `@article{zhang2025rap,
   title={RAP-SM: Robust Adversarial Prompt via Shadow Models for Copyright Verification of Large Language Models},
   author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
   journal={arXiv preprint arXiv:2505.06304},
   year={2025}
-}`
-            },
-            {
-                title: "RoFL: Robust Fingerprinting of Language Models",
-                link: "https://arxiv.org/abs/2505.12682",
-                venue: "arXiv 2025",
-                code: "https://github.com/yunyuntsa/RoFL",
-                bibtex: `@article{tsai2025rofl,
+}`,
+          },
+          {
+            title: "RoFL: Robust Fingerprinting of Language Models",
+            link: "https://arxiv.org/abs/2505.12682",
+            venue: "arXiv 2025",
+            code: "https://github.com/yunyuntsa/RoFL",
+            bibtex: `@article{tsai2025rofl,
   title={RoFL: Robust Fingerprinting of Language Models},
   author={Tsai, Yun-Yun and Guo, Chuan and Yang, Junfeng and van der Maaten, Laurens},
   journal={arXiv preprint arXiv:2505.12682},
   year={2025}
-}`
-            }
-            ] // Prompt Optimization Based papers
-        };
+}`,
+          },
+        ], // Prompt Optimization Based papers
+      };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add papers to their respective containers
-            Object.entries(papers).forEach(([category, paperList]) => {
-                const container = document.getElementById(`${category}-papers`);
-                if (container && paperList.length > 0) {
-                    paperList.forEach(paper => {
-                        container.appendChild(createPaperReference(paper));
-                    });
-                }
+      document.addEventListener("DOMContentLoaded", () => {
+        // Add papers to their respective containers
+        Object.entries(papers).forEach(([category, paperList]) => {
+          const container = document.getElementById(`${category}-papers`);
+          if (container && paperList.length > 0) {
+            paperList.forEach((paper) => {
+              container.appendChild(createPaperReference(paper));
             });
+          }
         });
+      });
     </script>
-</body>
-</html> 
+  </body>
+</html>
