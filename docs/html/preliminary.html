@@ -285,9 +285,61 @@
           of large language models.
         </p>
       </div>
-      <div class="section-card">
-        <h2>What is fingerprinting?</h2>
-        <p>Coming soon...</p>
+      <div class="section-card fingerprint-section">
+        <h2>What is model fingerprinting?</h2>
+        <h3>Original Concept: Non-Invasive Model Fingerprinting</h3>
+        <p>
+          The concept of <b>model fingerprinting</b> was originally introduced
+          as a non-invasive approach to model copyright protection. Drawing an
+          analogy to the uniqueness of biological fingerprints, deep neural
+          network models are also believed to possess unique "fingerprints"—that
+          is, intrinsic properties or features that can be extracted from the
+          model without the need for active embedding. This line of research was
+          pioneered by Cao et al., who first proposed the model fingerprinting
+          method known as <b>IPGuard</b>. In their approach, model ownership is
+          verified by examining the decision boundary fingerprints of the victim
+          model. For example, in the case of classifiers, different models
+          exhibit distinct decision boundaries. Thus, a model owner can select
+          data points near the decision boundary as fingerprint data points,
+          which can then be used to verify the ownership of a suspicious model.
+        </p>
+        <div class="highlight-block">
+          <b>Key Point:</b> Early model fingerprinting methods are non-invasive
+          and rely on extracting unique, inherent features from the model
+          itself, without modifying its parameters.
+        </div>
+        <h3>Evolution: Expanding the Definition</h3>
+        <p>
+          However, as the research community has rapidly evolved, the definition
+          of model fingerprinting has gradually expanded. Some recent works have
+          begun to refer to <b>backdoor watermarking</b> techniques as a form of
+          model fingerprinting. This paradigm shift has gained traction, and a
+          new consensus is emerging: any method designed to protect model
+          copyright may now be referred to as model fingerprinting. As a result,
+          the scope of model fingerprinting has broadened to include not only
+          non-invasive methods based on intrinsic model properties, but also
+          certain model watermarking techniques.
+        </p>
+        <div class="highlight-block">
+          <b>Clarification:</b> In the current literature, model fingerprinting
+          may refer to both non-invasive fingerprint extraction and invasive
+          watermark-based methods, such as weight watermarking or backdoor
+          watermarking.
+        </div>
+        <h3>Addressing Conceptual Ambiguity</h3>
+        <p>
+          To more accurately accommodate both traditional and contemporary
+          approaches, we refer to these watermark-based fingerprints as
+          <b>weight watermark</b> or <b>backdoor watermark</b> as fingerprint.
+          This terminology helps resolve the conceptual ambiguity that has
+          arisen as the field has evolved.
+        </p>
+        <div class="highlight-block">
+          <b>Summary:</b> Model fingerprinting now encompasses both non-invasive
+          and invasive methods for model copyright protection. This project
+          adopts clear terminology to distinguish between these approaches and
+          ensure conceptual clarity.
+        </div>
       </div>
     </div>
     <div id="footer-placeholder"></div>
