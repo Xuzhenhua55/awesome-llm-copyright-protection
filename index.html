@@ -72,6 +72,9 @@
         border: 1px solid rgba(112, 72, 232, 0.1);
         position: relative;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
       }
 
       .feature-card:hover {
@@ -108,6 +111,7 @@
       .feature-card p {
         color: #4a5568;
         line-height: 1.6;
+        flex: 1 1 auto;
       }
 
       .feature-link {
@@ -121,7 +125,7 @@
         font-weight: 500;
         transition: all 0.3s ease;
         gap: 0.5rem;
-        margin-top: 1rem;
+        margin-top: auto;
       }
 
       .feature-link:hover {
@@ -201,6 +205,37 @@
         </p>
       </div>
 
+      <div class="section-card">
+        <h2>About This Project</h2>
+        <p>
+          In this project, we begin with a comprehensive preliminary section
+          that introduces essential background knowledge for understanding
+          various LLM IP protection methods. We provide updated definitions of
+          key concepts such as model watermarking and model fingerprinting in
+          the context of 2025, enabling newcomers to clearly distinguish between
+          these often-confused concepts.
+        </p>
+        <p>
+          Our ultimate goal is to present a comprehensive pipeline of copyright
+          protection methods for large language models. From contemporary model
+          fingerprint definitions to fingerprint embedding (and extraction)
+          techniques, and from fingerprint transfer to removal strategies, we
+          provide an end-to-end overview of the entire process.
+        </p>
+        <p>
+          🌟 We hope this project serves as a valuable resource for researchers
+          and practitioners in the field of AI copyright protection.
+        </p>
+        <a
+          href="docs/html/preliminary.html"
+          class="feature-link"
+          style="margin-top: 1.5rem; display: inline-block"
+        >
+          Start with Preliminary
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
       <div class="feature-grid">
         <div class="feature-card">
           <h3>🔍 Model Fingerprinting</h3>
@@ -241,29 +276,6 @@
             <span class="arrow">→</span>
           </a>
         </div>
-      </div>
-
-      <div class="section-card">
-        <h2>About This Project</h2>
-        <p>
-          In this project, we begin with a comprehensive preliminary section
-          that introduces essential background knowledge for understanding
-          various LLM IP protection methods. We provide updated definitions of
-          key concepts such as model watermarking and model fingerprinting in
-          the context of 2025, enabling newcomers to clearly distinguish between
-          these often-confused concepts.
-        </p>
-        <p>
-          Our ultimate goal is to present a comprehensive pipeline of copyright
-          protection methods for large language models. From contemporary model
-          fingerprint definitions to fingerprint embedding (and extraction)
-          techniques, and from fingerprint transfer to removal strategies, we
-          provide an end-to-end overview of the entire process.
-        </p>
-        <p>
-          🌟 We hope this project serves as a valuable resource for researchers
-          and practitioners in the field of AI copyright protection.
-        </p>
       </div>
 
       <div class="update-section">
