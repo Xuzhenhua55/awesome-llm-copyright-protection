@@ -1,44 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Preliminary - LLM Copyright Protection Research</title>
-    <link rel="stylesheet" href="../assets/style.css">
-    <link rel="stylesheet" href="../assets/nav.css">
-    <link rel="stylesheet" href="../assets/footer.css">
-    <script>
-        // Preload navigation content
-        const cachedNav = localStorage.getItem('navContent');
-        if (cachedNav) {
-            document.addEventListener('DOMContentLoaded', () => {
-                const navPlaceholder = document.getElementById('nav-placeholder');
-                if (navPlaceholder) {
-                    navPlaceholder.innerHTML = cachedNav;
-                }
-            });
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../assets/nav.css" />
+    <link rel="stylesheet" href="../assets/footer.css" />
+    <link rel="stylesheet" href="../assets/layout.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          processEscapes: true
         }
+      });
     </script>
-</head>
-<body>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    <style>
+      .header-section h1 {
+        font-size: 2rem;
+      }
+      .section-card h2 {
+        font-size: 1.5rem;
+      }
+    </style>
+    <script>
+      // Preload navigation content
+      const cachedNav = localStorage.getItem("navContent");
+      if (cachedNav) {
+        document.addEventListener("DOMContentLoaded", () => {
+          const navPlaceholder = document.getElementById("nav-placeholder");
+          if (navPlaceholder) {
+            navPlaceholder.innerHTML = cachedNav;
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
     <div id="nav-placeholder">
-        <script>
-            // Try to populate navigation immediately if available
-            const navContent = localStorage.getItem('navContent');
-            if (navContent) {
-                document.write(navContent);
-            }
-        </script>
+      <script>
+        // Try to populate navigation immediately if available
+        const navContent = localStorage.getItem("navContent");
+        if (navContent) {
+          document.write(navContent);
+        }
+      </script>
     </div>
 
     <div class="main-content">
+      <div class="header-section">
         <h1>Preliminary</h1>
-        <p>Content coming soon...</p>
+        <p class="intro-text">
+          This introduction covers the core concepts of large language models
+          (LLMs) and their fundamental mechanisms, explains why copyright
+          protection is essential and in which scenarios disputes typically
+          arise, and briefly distinguishes between watermarking and
+          fingerprinting, highlighting their key differences.
+        </p>
+      </div>
+      <div class="section-card">
+        <h2>What is large language model?</h2>
+        <p>Coming soon...</p>
+      </div>
+      <div class="section-card">
+        <h2>Why do large language models need copyright protection?</h2>
+        <p>Coming soon...</p>
+      </div>
+      <div class="section-card">
+        <h2>What is watermarking?</h2>
+        <p>Coming soon...</p>
+      </div>
+      <div class="section-card">
+        <h2>What is fingerprinting?</h2>
+        <p>Coming soon...</p>
+      </div>
     </div>
-
     <div id="footer-placeholder"></div>
-
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
-</body>
-</html> 
+  </body>
+</html>
