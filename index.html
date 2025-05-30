@@ -7,26 +7,229 @@
     <link rel="stylesheet" href="docs/assets/style.css" />
     <link rel="stylesheet" href="docs/assets/nav.css" />
     <link rel="stylesheet" href="docs/assets/footer.css" />
+    <link rel="stylesheet" href="docs/assets/layout.css" />
+    <style>
+      .hero-section {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: white;
+        padding: 4rem 2rem;
+        margin: -2rem -2rem 2rem -2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(112, 72, 232, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(112, 72, 232, 0.1) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+
+      .hero-section h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(120deg, #fff, #a8a8a8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+      }
+
+      .hero-section p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .feature-card {
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(112, 72, 232, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 15px rgba(112, 72, 232, 0.1);
+        border-color: rgba(112, 72, 232, 0.2);
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: #7048e8;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+
+      .feature-card h3 {
+        color: #2d3748;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .feature-card p {
+        color: #4a5568;
+        line-height: 1.6;
+      }
+
+      .feature-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background: #7048e8;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .feature-link:hover {
+        background: #5f3dc4;
+        transform: translateX(4px);
+      }
+
+      .feature-link .arrow {
+        transition: transform 0.3s ease;
+      }
+
+      .feature-link:hover .arrow {
+        transform: translateX(4px);
+      }
+
+      .update-section {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .update-section h2 {
+        color: #2d3748;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .update-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 8px;
+        margin-top: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .update-item .date {
+        color: #7048e8;
+        font-weight: 500;
+      }
+
+      .update-item .content {
+        color: #4a5568;
+      }
+    </style>
   </head>
 
   <body>
     <div id="nav-placeholder"></div>
     <div class="main-content">
-      <h1>LLM Copyright Protection Research</h1>
-
-      <div class="intro-section">
+      <div class="hero-section">
+        <h1>LLM Copyright Protection Research</h1>
         <p>
-          🚀 Welcome to the LLM Copyright Protection Research project! We're
-          diving deep into the fascinating world of protecting large language
-          models from unauthorized use and distribution.
+          🚀 Exploring cutting-edge techniques to safeguard the intellectual
+          property of large language models in the AI era.
         </p>
+      </div>
 
-        <p>
-          In this era of AI advancement, protecting the intellectual property of
-          language models has become crucial. Our project focuses on innovative
-          techniques to safeguard these valuable AI assets.
-        </p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>🔍 Model Fingerprinting</h3>
+          <p>
+            Systematic categorization of fingerprinting methods, tracing their
+            evolution from traditional deep learning to current LLM
+            applications.
+          </p>
+          <a href="docs/html/model-fingerprinting.html" class="feature-link">
+            Explore Methods
+            <span class="arrow">→</span>
+          </a>
+        </div>
 
+        <div class="feature-card">
+          <h3>🔄 Fingerprint Transfer</h3>
+          <p>
+            Investigation of transferable characteristics in invasive
+            fingerprinting methods and their applications in model protection.
+          </p>
+          <a href="docs/html/fingerprint-transfer.html" class="feature-link">
+            Learn More
+            <span class="arrow">→</span>
+          </a>
+        </div>
+
+        <div class="feature-card">
+          <h3>🛡️ Detection & Removal</h3>
+          <p>
+            Latest developments in fingerprint detection and removal techniques
+            for comprehensive model protection.
+          </p>
+          <a
+            href="docs/html/fingerprint-detection-remove.html"
+            class="feature-link"
+          >
+            Discover More
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>About This Project</h2>
         <p>
           In this project, we begin with a comprehensive preliminary section
           that introduces essential background knowledge for understanding
@@ -35,28 +238,6 @@
           the context of 2025, enabling newcomers to clearly distinguish between
           these often-confused concepts.
         </p>
-
-        <p>
-          Moving forward, our
-          <a href="docs/html/model-fingerprinting.html">model fingerprinting</a>
-          section systematically categorizes existing fingerprinting methods.
-          For each category, we trace its evolution from traditional deep
-          learning implementations to current LLM applications, offering
-          insights into the origins and fundamental paradigms of these
-          approaches.
-        </p>
-
-        <p>
-          We then explore an emerging direction:
-          <a href="docs/html/fingerprint-transfer.html">fingerprint transfer</a
-          >. This section examines transferable characteristics in invasive
-          fingerprinting methods, followed by the latest developments in
-          <a href="docs/html/fingerprint-detection.html"
-            >fingerprint detection and removal</a
-          >
-          techniques.
-        </p>
-
         <p>
           Our ultimate goal is to present a comprehensive pipeline of copyright
           protection methods for large language models. From contemporary model
@@ -64,24 +245,19 @@
           techniques, and from fingerprint transfer to removal strategies, we
           provide an end-to-end overview of the entire process.
         </p>
-
-        <p>
-          This project encompasses various cutting-edge techniques including
-          model fingerprinting and watermarking, transfer learning for copyright
-          protection, and advanced methods for detecting and removing
-          unauthorized model usage. Through these approaches, we aim to
-          establish robust protection mechanisms for large language models in
-          the AI era.
-        </p>
-
         <p>
           🌟 We hope this project serves as a valuable resource for researchers
           and practitioners in the field of AI copyright protection.
         </p>
       </div>
 
-      <h2>Latest Updates</h2>
-      <p>🚀 2025-05-28: Initial release of the project.</p>
+      <div class="update-section">
+        <h2>📢 Latest Updates</h2>
+        <div class="update-item">
+          <span class="date">2025-05-28</span>
+          <span class="content">🚀 Initial release of the project</span>
+        </div>
+      </div>
     </div>
 
     <div id="footer-placeholder"></div>
