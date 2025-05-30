@@ -7,7 +7,95 @@
     <link rel="stylesheet" href="../assets/style.css" />
     <link rel="stylesheet" href="../assets/nav.css" />
     <link rel="stylesheet" href="../assets/footer.css" />
+    <link rel="stylesheet" href="../assets/paper-ref.css" />
+    <link rel="stylesheet" href="../assets/layout.css" />
     <style>
+      .method-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .method-card {
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(112, 72, 232, 0.1);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .method-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 15px rgba(112, 72, 232, 0.1);
+        border-color: rgba(112, 72, 232, 0.2);
+      }
+
+      .method-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: #7048e8;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .method-card:hover::before {
+        opacity: 1;
+      }
+
+      .method-card h3 {
+        color: #2d3748;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .method-card p {
+        color: #4a5568;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+      }
+
+      .method-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background: #7048e8;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        gap: 0.5rem;
+        align-self: flex-end;
+        margin-top: auto;
+      }
+
+      .method-link:hover {
+        background: #5f3dc4;
+        transform: translateX(4px);
+      }
+
+      .method-link .arrow {
+        transition: transform 0.3s ease;
+      }
+
+      .method-link:hover .arrow {
+        transform: translateX(4px);
+      }
+
       .method-section {
         background-color: #f8f9fa;
         border-radius: 8px;
@@ -90,46 +178,44 @@
     </div>
 
     <div class="main-content">
-      <h1>Model Fingerprinting</h1>
-
-      <p class="intro-text">
-        Model fingerprinting is a sophisticated technique used to identify and
-        track large language models through their unique characteristics. This
-        approach enables model owners to protect their intellectual property and
-        verify model authenticity in various deployment scenarios.
-      </p>
-
-      <div class="method-section">
-        <h2>Non-invasive Methods</h2>
-        <p>
-          Non-invasive fingerprinting methods leverage the inherent properties
-          of language models without requiring modifications to their
-          architecture or training process. Specifically, these methods can
-          extract fingerprints from the model's weight space and feature space.
-          Additionally, a novel approach based on prompt optimization strategies
-          attempts to utilize the model's decision boundary characteristics as
-          distinctive fingerprints.
+      <div class="header-section">
+        <h1>Model Fingerprinting</h1>
+        <p class="intro-text">
+          Model fingerprinting is a sophisticated technique used to identify and
+          track large language models through their unique characteristics. This
+          approach enables model owners to protect their intellectual property
+          and verify model authenticity in various deployment scenarios.
         </p>
-        <ul>
-          <li><a href="non-invasive.html">Explore Non-invasive Methods</a></li>
-        </ul>
       </div>
 
-      <div class="method-section">
-        <h2>Invasive Methods</h2>
-        <p>
-          Invasive fingerprinting methods involve modifications to the model's
-          architecture or training process. These approaches focus on embedding
-          specific information into the model during its training or
-          architectural design phase, enabling the extraction of fingerprints
-          through targeted interactions. This can be achieved through various
-          techniques, such as embedding digital watermarks into model weights or
-          incorporating fingerprint patterns that can be extracted through
-          specific input-output interactions.
-        </p>
-        <ul>
-          <li><a href="invasive.html">Explore Invasive Methods</a></li>
-        </ul>
+      <div class="method-nav">
+        <div class="method-card">
+          <h3>🔍 Non-invasive Methods</h3>
+          <p>
+            Explore methods that leverage inherent model properties without
+            requiring architectural modifications. These techniques extract
+            fingerprints from weight space, feature space, or through prompt
+            optimization strategies.
+          </p>
+          <a href="non-invasive.html" class="method-link">
+            Learn More
+            <span class="arrow">→</span>
+          </a>
+        </div>
+
+        <div class="method-card">
+          <h3>⚡ Invasive Methods</h3>
+          <p>
+            Discover approaches that involve model modifications during training
+            or architectural design. These methods embed specific information
+            through digital watermarks or fingerprint patterns for targeted
+            extraction.
+          </p>
+          <a href="invasive.html" class="method-link">
+            Learn More
+            <span class="arrow">→</span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -137,5 +223,6 @@
 
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
+    <script src="../assets/paper-ref.js"></script>
   </body>
 </html>
