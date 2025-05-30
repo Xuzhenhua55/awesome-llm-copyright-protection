@@ -21,4 +21,11 @@ footer a {
 footer a:hover {
     color: #5f3dc4;
     text-decoration: underline;
+}
+
+.footer-inner {
+  max-width: 900px;
+  margin: 0 0 0 260px;
+  padding: 1.5rem 2rem;
+  text-align: left;
 } 
