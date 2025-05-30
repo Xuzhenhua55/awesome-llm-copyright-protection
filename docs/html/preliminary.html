@@ -28,6 +28,31 @@
       .section-card h2 {
         font-size: 1.5rem;
       }
+      .copyright-issues-list {
+        margin: 1em 0 1em 0;
+        padding: 0.8em 1.2em 0.8em 2.2em;
+        background: #f8f9fa;
+        border-left: 4px solid #7048e8;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(112, 72, 232, 0.04);
+        font-size: 1.05em;
+        list-style: none;
+      }
+      .copyright-issues-list li {
+        margin-bottom: 0.7em;
+        line-height: 1.7;
+        padding-left: 1em;
+      }
+      .copyright-issues-list b {
+        color: #7048e8;
+      }
+      .copyright-issues-title {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin: 1.2em 0 0.8em 0;
+        color: #2d3748;
+        padding-left: 1em;
+      }
     </style>
     <script>
       // Preload navigation content
@@ -70,7 +95,39 @@
       </div>
       <div class="section-card">
         <h2>Why do large language models need copyright protection?</h2>
-        <p>Coming soon...</p>
+        <p>
+          Training large language models (LLMs) requires significant
+          computational resources, vast datasets, and substantial financial
+          investment. As a result, the models themselves become highly valuable
+          intellectual property. Protecting these assets is crucial to prevent
+          unauthorized use and to ensure that the rights of model creators are
+          respected.
+        </p>
+        <div class="copyright-issues-title">
+          Common Copyright Dispute Scenarios:
+        </div>
+        <ul class="copyright-issues-list">
+          <li>
+            <b>Unauthorized model distribution:</b> This occurs when private
+            models are leaked during cloud-based training, through internal
+            mishandling by employees, or via external attacks such as hacking.
+            In these cases, proprietary models may be distributed or used
+            without the owner's consent.
+          </li>
+          <li>
+            <b>Violation of open-source license agreements:</b> Unlike private
+            models, open-source models make their architecture and weights
+            publicly available, but usually under specific license terms (e.g.,
+            non-commercial use only). Disputes arise when individuals or
+            organizations exploit these models for commercial gain or otherwise
+            violate the license, often by making minor modifications and
+            redistributing them.
+          </li>
+        </ul>
+        <p>
+          These scenarios highlight the importance of robust copyright
+          protection techniques for large language models.
+        </p>
       </div>
       <div class="section-card">
         <h2>What is watermarking?</h2>
