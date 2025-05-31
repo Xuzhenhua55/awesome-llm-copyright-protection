@@ -36,7 +36,43 @@ function createPaperReference(paper) {
         const noteTag = document.createElement('span');
         noteTag.className = 'paper-tag note';
         noteTag.textContent = 'Note';
-        noteTag.setAttribute('data-note', paper.note);
+        noteTag.onclick = () => {
+            // Create popup card
+            const popup = document.createElement('div');
+            popup.className = 'note-popup';
+            
+            // Create card content
+            const card = document.createElement('div');
+            card.className = 'note-card';
+            
+            // Add close button
+            const closeBtn = document.createElement('span');
+            closeBtn.className = 'note-close';
+            closeBtn.textContent = '×';
+            closeBtn.onclick = (e) => {
+                e.stopPropagation();
+                popup.remove();
+            };
+            
+            // Add note content
+            const content = document.createElement('p');
+            content.textContent = paper.note;
+            
+            // Assemble card
+            card.appendChild(closeBtn);
+            card.appendChild(content);
+            popup.appendChild(card);
+            
+            // Add to document
+            document.body.appendChild(popup);
+            
+            // Close when clicking outside
+            popup.onclick = (e) => {
+                if (e.target === popup) {
+                    popup.remove();
+                }
+            };
+        };
         tagsDiv.appendChild(noteTag);
     }
 
@@ -54,8 +90,8 @@ function createPaperReference(paper) {
                 }, 2000);
             });
         };
-    tagsDiv.appendChild(bibtexTag);
-}
+        tagsDiv.appendChild(bibtexTag);
+    }
 
     paperDiv.appendChild(tagsDiv);
     return paperDiv;
