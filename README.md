@@ -12,7 +12,7 @@ A curated collection of research and techniques for protecting the intellectual 
     <img src="https://img.shields.io/github/stars/Xuzhenhua55/awesome-llm-copyright-protection?style=for-the-badge&logo=github" alt="Stars" />
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+    <img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey?style=for-the-badge" alt="License" />
   </a>
 </p>
 
