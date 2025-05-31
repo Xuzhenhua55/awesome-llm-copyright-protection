@@ -129,6 +129,14 @@
           open-source foundation model (such as DeepSeek). All of these
           downstream models require copyright protection.
         </p>
+        <p>
+          An intuitive approach is to use inherited fingerprints: inject the
+          fingerprint into the base model first, and then all downstream models
+          trained from this base model will automatically inherit this
+          fingerprint. However, this inheritance-based approach faces
+          significant challenges in practice, as illustrated by the following
+          scenarios:
+        </p>
         <ul class="scenario-list">
           <li>
             <b
@@ -150,7 +158,7 @@
             ><br />
             If the base model is embedded with a fingerprint before any
             downstream models are developed, all future downstream models will
-            inherit the same fingerprint. This leads to two major problems:
+            inherit the same fingerprint. This leads to three major problems:
             <ul>
               <li>
                 <b>Performance Degradation Cascade:</b> Some invasive
@@ -163,6 +171,14 @@
                 models.
               </li>
               <li>
+                <b>Fingerprint Fading:</b> When downstream models are fine-tuned
+                for specific tasks, the fingerprint embedded in the base model
+                may gradually fade away or even disappear completely due to the
+                learning of new task-specific knowledge. This phenomenon, known
+                as fingerprint fading, makes the inherited fingerprint
+                unreliable for copyright protection.
+              </li>
+              <li>
                 <b>Poor Traceability:</b> All downstream models share the same
                 fingerprint, making it impossible to accurately trace the source
                 of a specific model in the organization.
@@ -172,9 +188,10 @@
         </ul>
         <div class="highlight-block">
           <b>Why Not Just Use Inherited Fingerprints?</b><br />
-          Scenario 1 shows that inheritance is not feasible when downstream
-          models are already finalized. Scenario 2 shows that inheritance leads
-          to poor traceability and potential performance issues.
+          The inheritance-based approach faces three critical challenges: (1) it
+          cannot be applied to already-developed models (Scenario 1), (2) it
+          suffers from fingerprint fading during task-specific fine-tuning, and
+          (3) it lacks traceability across different models.
           <b
             >This is why a flexible fingerprint transfer paradigm is needed—to
             enable efficient, accurate, and robust copyright protection across
