@@ -9,6 +9,80 @@
     <link rel="stylesheet" href="../assets/footer.css" />
     <link rel="stylesheet" href="../assets/paper-ref.css" />
     <link rel="stylesheet" href="../assets/layout.css" />
+    <style>
+      .header-section h1 {
+        font-size: 2rem;
+      }
+      .section-card h2 {
+        font-size: 1.5rem;
+      }
+      .scenario-list {
+        margin: 1em 0 1em 0;
+        padding: 0.8em 1.2em 0.8em 2.2em;
+        background: #f8f9fa;
+        border-left: 4px solid #4a5568;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        font-size: 1.05em;
+        list-style: none;
+      }
+      .scenario-list li {
+        margin-bottom: 0.7em;
+        line-height: 1.7;
+        padding-left: 1em;
+      }
+      .scenario-list b {
+        color: #2d3748;
+      }
+      .highlight-block {
+        background: #f7fafc;
+        border-left: 4px solid #4299e1;
+        border-radius: 10px;
+        padding: 1em 1.5em;
+        margin: 1.2em 0;
+        color: #2c5282;
+        font-size: 1.05em;
+        box-shadow: 0 2px 8px rgba(66, 153, 225, 0.04);
+      }
+      .fingerprint-section h3 {
+        color: #2d3748;
+        margin-top: 1.2em;
+        margin-bottom: 0.5em;
+        font-size: 1.18em;
+      }
+      .comparison-list {
+        display: flex;
+        gap: 1em;
+        margin: 1em 0 1.2em 0;
+        flex-wrap: wrap;
+      }
+      .comparison-item {
+        background: #f8f9fa;
+        border: 1.2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        min-width: 160px;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        font-size: 0.98em;
+      }
+      .comparison-item .icon {
+        font-size: 1.1em;
+        margin-right: 0.2em;
+      }
+      .comparison-item b {
+        color: #2d3748;
+      }
+      .note-text {
+        color: #4299e1;
+        font-weight: bold;
+      }
+      .paper-list {
+        margin-top: 1em;
+      }
+    </style>
     <script>
       // Preload navigation content
       const cachedNav = localStorage.getItem("navContent");
@@ -37,14 +111,145 @@
       <div class="header-section">
         <h1>Fingerprint Transfer</h1>
         <p class="intro-text">
-          This page will discuss methods and techniques for transferring
-          fingerprints between different language models.
+          This page discusses the challenges and solutions for transferring
+          model fingerprints across different language models.
+          <span class="note-text"
+            >Note: Current research on fingerprint transfer primarily focuses on
+            embedded (invasive) fingerprinting methods.</span
+          >
         </p>
       </div>
 
+      <div class="section-card fingerprint-section">
+        <h2>What is Fingerprint Transfer?</h2>
+        <h3>Background & Motivation</h3>
+        <p>
+          In real-world organizations, it is common to build multiple
+          specialized models for different vertical domains based on a powerful
+          open-source foundation model (such as DeepSeek). All of these
+          downstream models require copyright protection.
+        </p>
+        <ul class="scenario-list">
+          <li>
+            <b
+              >Scenario 1: Late Fingerprinting (Downstream Models Already
+              Developed)</b
+            ><br />
+            When a new SOTA fingerprinting method appears, but several
+            downstream models have already been developed based on a base model
+            (which may have an outdated or no fingerprint), it is no longer
+            possible to simply update the base model and let downstream models
+            inherit the new fingerprint. Each downstream model must be
+            individually injected with the new fingerprint, resulting in high
+            computational cost and inefficiency.
+          </li>
+          <li>
+            <b
+              >Scenario 2: Inherited Fingerprint Issues (Downstream Models Not
+              Yet Developed)</b
+            ><br />
+            If the base model is embedded with a fingerprint before any
+            downstream models are developed, all future downstream models will
+            inherit the same fingerprint. This leads to two major problems:
+            <ul>
+              <li>
+                <b>Performance Degradation Cascade:</b> Some invasive
+                fingerprinting methods may harm the base model's general
+                capabilities (such as language understanding or reasoning). When
+                this base model is further fine-tuned for specific downstream
+                tasks, the initial performance drop caused by the fingerprint
+                can persist or even worsen, resulting in compounded negative
+                effects on the learning and effectiveness of all downstream
+                models.
+              </li>
+              <li>
+                <b>Poor Traceability:</b> All downstream models share the same
+                fingerprint, making it impossible to accurately trace the source
+                of a specific model in the organization.
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="highlight-block">
+          <b>Why Not Just Use Inherited Fingerprints?</b><br />
+          Scenario 1 shows that inheritance is not feasible when downstream
+          models are already finalized. Scenario 2 shows that inheritance leads
+          to poor traceability and potential performance issues.
+          <b
+            >This is why a flexible fingerprint transfer paradigm is needed—to
+            enable efficient, accurate, and robust copyright protection across
+            all models, regardless of their development stage.</b
+          >
+        </div>
+
+        <h3>Fingerprint Decoupling & Transfer</h3>
+        <p>
+          <b>Fingerprint decoupling</b> refers to separating the ownership
+          signal (fingerprint) from the core task knowledge of the model. This
+          enables the fingerprint to be <b>transferred</b>—or migrated—across
+          different models or model versions without repeated full-model
+          retraining.
+        </p>
+        <div class="highlight-block">
+          <b>Fingerprint Transfer Principle:</b> <br />
+          <i>"Fingerprint once, transfer many times."</i> <br />
+          A well-designed fingerprint can be injected into a base model and then
+          reliably inherited by multiple downstream models, maintaining its
+          effectiveness and robustness.
+        </div>
+
+        <h3>Comparison: Injection vs. Transfer</h3>
+        <div class="comparison-list">
+          <div class="comparison-item">
+            <span class="icon">💉</span>
+            <b>Fingerprint Injection</b>
+            <span style="color: #718096; font-weight: 400"
+              >(Direct embedding into each model)</span
+            >
+          </div>
+          <div class="comparison-item">
+            <span class="icon">🔄</span>
+            <b>Fingerprint Transfer</b>
+            <span style="color: #718096; font-weight: 400"
+              >(Inheritance from base model)</span
+            >
+          </div>
+        </div>
+        <ul>
+          <li>
+            <b>Fingerprint Injection:</b> Directly embeds the fingerprint into a
+            model, requiring separate injection for each model instance.
+          </li>
+          <li>
+            <b>Fingerprint Transfer:</b> Focuses on whether a fingerprint
+            embedded in a base model can be reliably and robustly inherited by
+            downstream models, preserving its detectability and harmlessness.
+          </li>
+        </ul>
+        <div class="highlight-block">
+          <b>Summary:</b> Fingerprint transfer enables scalable and secure model
+          IP protection by decoupling ownership signals from task learning,
+          allowing efficient and robust propagation of fingerprints across model
+          derivatives.
+        </div>
+      </div>
+
       <div class="section-card">
-        <h2>Overview</h2>
-        <p>Content about fingerprint transfer methods will be added here.</p>
+        <h2>Related Papers</h2>
+        <p>
+          Currently, there is only one work that specifically addresses the
+          challenge of fingerprint transfer in large language models. This
+          pioneering work introduces a novel approach using fingerprint vectors
+          as the decoupling carrier for fingerprint information.
+          <span class="note-text"
+            >The work, proposed by our team, is currently under revision and
+            will be publicly available in September 2025.</span
+          >
+          The key innovation lies in using fingerprint vectors as a decoupling
+          carrier for fingerprint information, enabling efficient and robust
+          transfer of fingerprints across different models.
+        </p>
+        <div id="fingerprintTransfer-papers" class="paper-list"></div>
       </div>
     </div>
 
@@ -53,5 +258,37 @@
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
     <script src="../assets/paper-ref.js"></script>
+    <script>
+      // Add paper references
+      const papers = {
+        fingerprintTransfer: [
+          {
+            title:
+              "FP-VEC: Fingerprinting Large Language Models via Efficient Vector Addition",
+            link: "https://arxiv.org/pdf/2409.08846",
+            code: "https://github.com/fingerprintvector/FP-VEC",
+            venue: "arXiv 2024",
+            bibtex: `@article{xu2024fp,
+  title={FP-VEC: Fingerprinting Large Language Models via Efficient Vector Addition},
+  author={Xu, Zhenhua and Xing, Wenpeng and Wang, Zhebo and Hu, Chang and Jie, Chen and Han, Meng},
+  journal={arXiv preprint arXiv:2409.08846},
+  year={2024}
+}`,
+          },
+        ],
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Add papers to their respective containers
+        Object.entries(papers).forEach(([category, paperList]) => {
+          const container = document.getElementById(`${category}-papers`);
+          if (container && paperList.length > 0) {
+            paperList.forEach((paper) => {
+              container.appendChild(createPaperReference(paper));
+            });
+          }
+        });
+      });
+    </script>
   </body>
 </html>
