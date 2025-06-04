@@ -66,14 +66,14 @@ Feel free to <a href="https://github.com/Xuzhenhua55/awesome-llm-copyright-prote
 
 <h2>📄 License</h2>
 <p>
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). See the [LICENSE](LICENSE) file for details.
+This project is licensed under the <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons Attribution-NonCommercial 4.0 International License</a> (CC BY-NC 4.0). See the <a href="LICENSE" target="_blank">LICENSE</a> file for details.
 
-This means:
-- You are free to share and adapt this work for non-commercial purposes
-- You must give appropriate credit to the original authors
-- You must provide a link to the license
-- You must indicate if changes were made
-- You may not use this work for commercial purposes
+Key terms:
+- ✅ Share and adapt for non-commercial purposes
+- ✅ Give appropriate credit to the original authors
+- ✅ Provide a link to the license
+- ✅ Indicate if changes were made
+- ❌ No commercial use allowed
 </p>
 
 <hr/>
