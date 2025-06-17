@@ -150,7 +150,17 @@
           specific layers or components suspected of containing fingerprints are
           selectively reset and retrained.
         </p>
-
+        <div class="highlight-block">
+          Notably, <b>MEraser</b>, proposed by our team, is the first dedicated
+          framework specifically designed for fingerprint removal in neural
+          networks. MEraser systematically targets and erases model
+          fingerprints, providing an effective and generalizable solution for
+          protecting intellectual property in AI models.
+        </div>
+        <div class="papers-section">
+          <h3>Related Papers</h3>
+          <div id="fingerprintRemoval-papers" class="paper-list"></div>
+        </div>
         <h3>Operational Strategies</h3>
         <p>
           Operational strategies focus on manipulating the model's input
@@ -181,16 +191,6 @@
           dynamically configured based on the input context and potential
           fingerprint triggers.
         </p>
-        <div class="highlight-block">
-          <b>Coming Soon:</b> Our team has developed a novel approach for
-          fingerprint removal through fine-tuning, which has been accepted at
-          ACL 2025 main conference. This work demonstrates effective fingerprint
-          erasure while maintaining model performance.
-        </div>
-        <div class="papers-section">
-          <h3>Related Papers</h3>
-          <div id="fingerprintRemoval-papers" class="paper-list"></div>
-        </div>
       </div>
     </div>
 
@@ -219,7 +219,24 @@
 }`,
           },
         ],
-        fingerprintRemoval: [],
+        fingerprintRemoval: [
+          {
+            title:
+              "MEraser: An Effective Fingerprint Erasure Approach for Large Language Models",
+            link: "https://arxiv.org/abs/2506.12551",
+            code: "https://github.com/fatdove77/MEraser",
+            venue: "ACL 2025 Main",
+            note: "",
+            bibtex: `@inproceedings{@misc{zhang2024meraser,
+      title={MEraser: An Effective Fingerprint Erasure Approach for Large Language Models}, 
+      author={Jingxuan Zhang and Zhenhua Xu and Rui Hu and Wenpeng Xing and Xuhong Zhang and Meng Han},
+      year={2024},
+      eprint={2406.12257},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR}
+}`,
+          },
+        ],
       };
 
       document.addEventListener("DOMContentLoaded", () => {
