@@ -87,7 +87,55 @@
     <script>
       // Add paper references
       const papers = {
-        weightWatermark: [], // Weight Watermark papers
+        weightWatermark: [
+          {
+            title:
+              "EmMark: Robust watermarks for IP protection of embedded quantized large language models",
+            link: "https://dl.acm.org/doi/abs/10.1145/3649329.3655674",
+            venue: "ACM/IEEE Design Automation Conference 2024",
+            bibtex: `@inproceedings{zhang2024emmark,
+  title={EmMark: Robust watermarks for IP protection of embedded quantized large language models},
+  author={Zhang, Ruisi and Koushanfar, Farinaz},
+  booktitle={Proceedings of the 61st ACM/IEEE Design Automation Conference},
+  pages={1--6},
+  year={2024}
+}`,
+          },
+          {
+            title: "Invariant-based Robust Weights Watermark for Large Language Models",
+            link: "https://arxiv.org/abs/2507.08288",
+            venue: "arXiv preprint 2025",
+            bibtex: `@article{guo2025invariant,
+    title={Invariant‑Based Robust Weights Watermark for Large Language Models},
+    author={Guo, Qingxiao and Zhu, Xinjie and Ma, Yilong and Jin, Hui and Wang, Yunhao and Zhang, Weifeng and Guo, Xiaobing},
+    journal={arXiv preprint arXiv:2507.08288},
+    year={2025}
+  }`,
+          },
+          {
+            title:
+              "Robust and Efficient Watermarking of Large Language Models Using Error Correction Codes",
+            link: "https://petsymposium.org/popets/2025/popets-2025-0126.pdf",
+            venue: "PoPETs 2025 (Proceedings on Privacy Enhancing Technologies)",
+            bibtex: `@article{block2025robust,
+    title={Robust and Efficient Watermarking of Large Language Models Using Error Correction Codes},
+    author={Block, Adam and Sekhari, Ayush and Rakhlin, Alexander},
+    journal={Proceedings on Privacy Enhancing Technologies (PoPETs) 2025},
+    year={2025}
+  }`,
+          },
+          {
+            title: "Functional Invariants to Watermark Large Transformers",
+            link: "https://arxiv.org/abs/2310.11446",
+            venue: "ICASSP 2024",
+            bibtex: `@inproceedings{fernandez2023functional,
+  title={Functional Invariants to Watermark Large Transformers},
+  author={Fernandez, Pierre and Couairon, Guillaume and Furon, Teddy and Douze, Matthijs},
+  booktitle={ICASSP 2024},
+  year={2023}
+}`,
+          },
+        ], // Weight Watermark papers
         backdoorWatermark: [
           {
             title: "Instructional Fingerprinting of Large Language Models",
