@@ -5,7 +5,7 @@
     background-color: #f8f9fa;
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* allow tags to wrap to next line when title is long */
     gap: 12px;
     border-radius: 4px;
     transition: all 0.3s ease;
@@ -41,6 +41,7 @@
     display: flex;
     gap: 8px;
     flex-shrink: 0;
+    margin-top: 6px; /* spacing when tags wrap below the title */
 }
 
 .paper-tag {
