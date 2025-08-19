@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../assets/nav.css" />
     <link rel="stylesheet" href="../assets/footer.css" />
     <link rel="stylesheet" href="../assets/layout.css" />
+    <link rel="stylesheet" href="../assets/citation-system.css?v=8" />
+    <link rel="stylesheet" href="../assets/taxonomy-tree.css?v=1" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         tex2jax: {
@@ -123,227 +125,468 @@
       <div class="header-section">
         <h1>Preliminary</h1>
         <p class="intro-text">
-          This introduction covers the core concepts of large language models
-          (LLMs) and their fundamental mechanisms, explains why copyright
-          protection is essential and in which scenarios disputes typically
-          arise, and briefly distinguishes between watermarking and
-          fingerprinting, highlighting their key differences.
+          This introduction provides a comprehensive overview of large language models (LLMs), 
+          their mathematical foundations, and the critical need for copyright protection. 
+          It explores the evolution from traditional watermarking to advanced model fingerprinting 
+          techniques, presenting a detailed taxonomy that categorizes fingerprinting methods into 
+          intrinsic (parameter-based, semantic feature extraction, adversarial example-based) and 
+          invasive (weight-based watermarking, backdoor-based watermarking) approaches. 
+          The content also covers fingerprint transferability and removal strategies, 
+          offering insights into the complete lifecycle of model protection mechanisms.
         </p>
       </div>
       <div class="section-card">
         <h2>What is large language model?</h2>
-        <p>Coming soon...</p>
+        <p>
+          We begin by formalizing a LLM as a neural probabilistic model
+          \(\mathcal{M}_\theta\), parameterized by \(\theta\), which assigns
+          likelihoods to sequences of discrete tokens \(\boldsymbol{x} = (x^1,
+          \ldots, x^n)\). These models typically rely on an autoregressive
+          factorization, where the joint probability is decomposed as
+          \(p_\theta(\boldsymbol{x}) = \prod_{i=1}^n p_\theta(x^i \mid
+          \boldsymbol{x}^{&lt;i})\), with \(\boldsymbol{x}^{&lt;i} = (x^1,
+          \ldots, x^{i-1})\) denoting the prefix context at position \(i\).
+        </p>
+        <p>
+          At each step, the model consumes the context
+          \(\boldsymbol{x}^{&lt;i}\), maps each token \(x^j\) within it to a
+          continuous embedding \(\boldsymbol{e}^j \in \mathbb{R}^d\), and
+          processes the resulting sequence through a stack of neural layers—most
+          commonly Transformer blocks. This yields a hidden representation
+          \(\boldsymbol{h}^i = \mathcal{F}_\theta(\boldsymbol{x}^{&lt;i})\),
+          where \(\mathcal{F}_\theta\) denotes the composition of Transformer
+          layers.
+        </p>
+        <p>
+          The model then transforms the hidden state \(\boldsymbol{h}^i\) into a
+          distribution over the vocabulary via a linear projection followed by a
+          softmax operation. Formally, the conditional probability of the next
+          token is given by:
+        </p>
+        <p>
+          \[ p_\theta(x^i \mid \boldsymbol{x}^{&lt;i}) =
+          \text{Softmax}(\boldsymbol{W} \boldsymbol{h}^i + \boldsymbol{b}) \]
+        </p>
+        <p>
+          where \(\boldsymbol{W} \in \mathbb{R}^{|\mathcal{V}| \times d}\) and
+          \(\boldsymbol{b} \in \mathbb{R}^{|\mathcal{V}|}\) are learnable output
+          projection parameters, and \(\mathcal{V}\) denotes the vocabulary set.
+          This operation produces a categorical distribution over all tokens in
+          \(\mathcal{V}\), from which the next token \(x^i\) is typically
+          sampled or selected via greedy decoding.
+        </p>
       </div>
       <div class="section-card">
         <h2>Why do large language models need copyright protection?</h2>
         <p>
-          Training large language models (LLMs) requires significant
-          computational resources, vast datasets, and substantial financial
-          investment. As a result, the models themselves become highly valuable
-          intellectual property. Protecting these assets is crucial to prevent
-          unauthorized use and to ensure that the rights of model creators are
-          respected.
+          The need for robust copyright protection stems from the increasing
+          vulnerability of language models to unauthorized use and the
+          difficulty of attribution once a model leaves the control of the
+          original creator. Two representative scenarios illustrate the central
+          challenges:
         </p>
         <div class="copyright-issues-title">
           Common Copyright Dispute Scenarios:
         </div>
         <ul class="copyright-issues-list">
           <li>
-            <b>Unauthorized model distribution:</b> This occurs when private
-            models are leaked during cloud-based training, through internal
-            mishandling by employees, or via external attacks such as hacking.
-            In these cases, proprietary models may be distributed or used
-            without the owner's consent.
+            <b>Unauthorized model distribution:</b> In the case of privately
+            held LLMs—such as proprietary models deployed on the cloud—there
+            exists a tangible risk of unintentional leakage. These leaks may
+            occur through internal mishandling (e.g., by employees with access
+            to model weights), or via external vectors such as cyberattacks.
+            Once leaked, adversaries may redistribute or monetize the models
+            without the original developer’s consent, leading to severe
+            intellectual property and security concerns. For instance, in early
+            2024, an internal large-scale model was inadvertently made public on
+            a popular hosting platform and later confirmed by its developer to
+            have been exposed by an enterprise partner’s employee, highlighting
+            the real-world risk of weight leakage.
           </li>
           <li>
-            <b>Violation of open-source license agreements:</b> Unlike private
-            models, open-source models make their architecture and weights
-            publicly available, but usually under specific license terms (e.g.,
-            non-commercial use only). Disputes arise when individuals or
-            organizations exploit these models for commercial gain or otherwise
-            violate the license, often by making minor modifications and
-            redistributing them.
+            <b>Violation of open-source license agreements:</b> For models
+            released under open-source licenses, usage often comes with specific
+            terms and restrictions. For instance, a model may be licensed
+            strictly for non-commercial use or require attribution to the
+            original authors. Nonetheless, it is not uncommon for third-party
+            actors to make minimal algorithmic changes to the released models
+            and then redistribute them, potentially for commercial use, thereby
+            violating licensing terms and undermining the original creators'
+            intentions. For example, in 2024 a research team withdrew a released
+            model after acknowledging it was derived from another project
+            without proper attribution, illustrating how even academic efforts
+            can inadvertently breach license terms.
           </li>
         </ul>
         <p>
-          These scenarios highlight the importance of robust copyright
-          protection techniques for large language models.
+          Without effective mechanisms to identify, attribute, and trace model
+          ownership, developers lack meaningful recourse in the face of
+          infringement. As the generative AI ecosystem matures, copyright
+          protection for LLMs is not merely a legal or ethical concern, but a
+          foundational requirement for preserving incentives, ensuring
+          accountability, and supporting long-term innovation sustainability.
         </p>
       </div>
       <div class="section-card watermark-section">
-        <h2>What is watermarking?</h2>
-        <h3>Traditional Watermarking: Real-World Examples</h3>
+        <h2>From LLM Watermarking to Model Fingerprinting</h2>
         <p>
-          <b>Watermarking</b>, in its most traditional sense, refers to the
-          practice of embedding distinctive marks or patterns into physical
-          objects or media to assert ownership, authenticate origin, or deter
-          counterfeiting. Classic examples include the faint, often intricate
-          patterns visible when holding a banknote up to the light, or the
-          subtle logos embedded in official documents and certificates. Even in
-          the art world, painters have historically signed their works or used
-          unique brushstroke techniques as a form of watermarking. These
-          real-world watermarks serve as both a visible and, at times, hidden
-          guarantee of authenticity and provenance.
+          Watermarking, in its classical form, refers to the practice of
+          embedding identifiable patterns into physical objects or media to
+          assert ownership, verify authenticity, or deter forgery. Examples
+          include the intricate designs in banknotes visible under light,
+          embossed seals on official certificates, or an artist's unique
+          signature on a painting. These visible or hidden marks ensure
+          traceability and safeguard provenance.
         </p>
-        <h3>Watermarking in Artificial Intelligence</h3>
         <p>
-          Translating this concept into the digital and artificial intelligence
-          (AI) domain, watermarking has evolved to address the unique challenges
-          posed by large language models (LLMs) and their outputs. In the
-          context of AI, watermarking can be broadly categorized based on its
-          intended purpose. This project focuses on two primary types:
+          In the digital realm, watermarking has become a foundational technique
+          for protecting intellectual property. With the emergence of LLMs,
+          watermarking approaches have adapted accordingly. As described in
+          [cite:liu2024survey],
+          <b>LLM watermarking</b> broadly refers to any technique that embeds
+          verifiable information into <b>LLMs</b> or <b>their outputs</b> to
+          support copyright attribution and traceability. These techniques are
+          generally grouped into two categories: <i>text watermarking</i> and
+          <i>model watermarking</i>.
         </p>
-        <div class="watermark-type-list">
-          <div class="watermark-type-item">
-            <span class="icon">📝</span><b>Text Watermarking</b>
-            <span style="color: #888; font-weight: 400"
-              >(watermarks embedded in generated content)</span
-            >
-          </div>
-          <div class="watermark-type-item">
-            <span class="icon">🔒</span><b>Model Watermarking</b>
-            <span style="color: #888; font-weight: 400"
-              >(watermarks embedded in the model itself)</span
-            >
-          </div>
-        </div>
-        <h3>Text Watermarking</h3>
         <p>
-          <b>Text Watermarking</b> is primarily concerned with tracing the
-          origin of content generated by LLMs. A key feature of this approach is
-          that every piece of generated text carries an embedded identifier,
-          often imperceptible to the end user but detectable through specialized
-          methods. This enables model developers to verify whether content
-          circulating on the internet originated from their model—an essential
-          capability for asserting copyright and preventing unauthorized use.
-          Furthermore, from a regulatory perspective, governments may require
-          LLM-based services to mark generated content, facilitating the tracing
-          of misinformation or unauthorized dissemination. Technically, text
-          watermarking can be implemented by post-processing generated text or
-          by modifying the model's training or decoding process to embed
-          invisible, yet extractable, information. In practice, text
-          watermarking is typically controlled by the model owner at the service
-          deployment stage.
+          <b>Text watermarking</b> embeds statistical or semantic signals into
+          an LLM's generated content. The goal is to allow content verification
+          without altering semantics or fluency, often using perturbation to
+          token probabilities [cite:kirchenbauer2023watermark], sampling
+          constraints [cite:christ2024undetectable] or neural rewriting
+          [cite:abdelnabi2021adversarial]. Such signals are typically
+          imperceptible to end users but detectable through specialized
+          algorithms. This approach enables model owners to trace content
+          distribution, enforce proper use, and support regulatory compliance.
+        </p>
+        <p>
+          <b>Model watermarking</b>, in contrast, focuses on protecting the
+          model artifact itself by embedding identifiable patterns that can be
+          later extracted or verified. This can be achieved through various
+          mechanisms, such as inserting functional triggers (i.e., backdoor
+          watermarking [cite:li2024double]) or encoding information into weight
+          distributions [cite:uchida2017embedding]. In principle, model
+          watermarking supports the attribution of proprietary models, and helps
+          detect unauthorized replication or redistribution, especially in
+          scenarios involving fine-tuning from a protected source.
         </p>
         <div class="highlight-block">
-          <b>Key Point:</b> Text watermarking is mainly for tracing the origin
-          of generated content, not for protecting the model itself.
+          <b>Important Distinction:</b> Not all methods that embed watermarks
+          into a model should be classified as model watermarking. Several
+          approaches [cite:gu2024on,xu2024learning] inject signals into model
+          parameters at training time, yet their primary goal is to trace
+          generated content. Despite operating on the model, these methods align
+          more closely with text watermarking in terms of intent and evaluation.
         </div>
-        <h3>Model Watermarking</h3>
+        <h3>Evolution to Model Fingerprinting</h3>
         <p>
-          <b>Model Watermarking</b>, on the other hand, is designed to protect
-          the intellectual property of the model itself. The focus here is on
-          tracing the model's origin and determining whether a deployed model is
-          derived from a protected, proprietary source. Notably, some survey
-          articles include certain text watermarking methods—specifically those
-          that rely on LLMs generating watermarked text—under the umbrella of
-          model watermarking. However, in this project, we distinguish between
-          the two based on the target of the watermark: methods aimed at tracing
-          generated content are classified as text watermarking, while model
-          watermarking refers exclusively to techniques that protect the model's
-          copyright, such as embedding backdoors or encoding information
-          directly into the model's weights.
+          Further blurring the boundaries in this taxonomy, recent
+          backdoor-based model watermarking approaches
+          [cite:xu2024instructional,zhang2025scalable,zhang2025imf,cai2024utf,russinovich2024hey,yamabe-etal-2025-mergeprint]—which
+          embed functional triggers for ownership verification—are increasingly
+          characterized in the literature as instances of
+          <i>model fingerprinting</i>. Historically, however, the term
+          <i>model fingerprinting</i> was used to denote exclusively
+          non-invasive techniques, such as output-based identification
+          [cite:ren2025cotsrf], feature-space analysis [cite:zeng2023huref], or
+          leveraging adversarial examples near the decision boundary
+          [cite:Cao2019IPGuard].
+        </p>
+        <p>
+          To reconcile these evolving trends, we adopt the term
+          <b>model fingerprinting</b> as a unifying label. It encompasses both
+          conventional, non-invasive fingerprinting methods—referred to in this
+          work as <i>intrinsic fingerprinting</i>—and model watermarking
+          techniques that aim to attribute ownership of the model itself, which
+          we refer to as <i>invasive fingerprinting</i>. For clarity and
+          compatibility with prior literature, we adopt hybrid terms such as
+          <i>backdoor watermark as fingerprint</i> to reflect both the
+          methodological origin and prevailing terminology in current research.
         </p>
         <div class="highlight-block">
-          <b>Clarification:</b> In this project, only methods that directly
-          protect the model's copyright are considered model watermarking.
-          Methods for tracing generated content are classified as text
-          watermarking.
-        </div>
-        <h3>Can Text Watermarking Be Used for Model Copyright Tracing?</h3>
-        <p>
-          A natural question arises: can text watermarking be used for model
-          copyright tracing? The answer is nuanced. In the copyright dispute
-          scenarios discussed earlier, model owners who recover a stolen model
-          can, in principle, choose whether to enable text watermarking in their
-          deployed services. Most post-hoc text watermarking strategies, and
-          even those that modify decoding strategies, are ineffective for
-          copyright tracing, as adversaries can simply select their preferred
-          watermarking approach when deploying the model. However, certain
-          watermarking methods require modifying the model during training to
-          embed watermarks into the generated content. While this approach does
-          alter the model's weights, its primary objective is still content
-          tracing rather than model protection. As a result, adversaries may
-          still find it relatively easy to remove such watermarks. Ultimately,
-          the main purpose of text watermarking is to enable content
-          attribution, not to provide robust copyright protection for the model
-          itself.
-        </p>
-        <div class="highlight-block">
-          <b>Conclusion:</b> Dedicated model watermarking techniques are
-          essential for robust copyright protection, as text watermarking is not
-          designed for this purpose.
-        </div>
-        <h3>Summary</h3>
-        <p>
-          In summary, watermarking originated as a means of authenticating and
-          protecting physical and digital assets. In the context of LLMs, it is
-          crucial to distinguish between watermarking for content tracing (text
-          watermarking) and watermarking for model copyright protection (model
-          watermarking). This project adopts clear definitions for both,
-          ensuring conceptual clarity and practical relevance for the protection
-          of large language models.
-        </p>
-      </div>
-      <div class="section-card fingerprint-section">
-        <h2>What is model fingerprinting?</h2>
-        <h3>Original Concept: Non-Invasive Model Fingerprinting</h3>
-        <p>
-          The concept of <b>model fingerprinting</b> was originally introduced
-          as a non-invasive approach to model copyright protection. Drawing an
-          analogy to the uniqueness of biological fingerprints, deep neural
-          network models are also believed to possess unique "fingerprints"—that
-          is, intrinsic properties or features that can be extracted from the
-          model without the need for active embedding. This line of research was
-          pioneered by Cao et al., who first proposed the model fingerprinting
-          method known as <b>IPGuard</b>. In their approach, model ownership is
-          verified by examining the decision boundary fingerprints of the victim
-          model. For example, in the case of classifiers, different models
-          exhibit distinct decision boundaries. Thus, a model owner can select
-          data points near the decision boundary as fingerprint data points,
-          which can then be used to verify the ownership of a suspicious model.
-        </p>
-        <div class="highlight-block">
-          <b>Key Point:</b> Early model fingerprinting methods are non-invasive
-          and rely on extracting unique, inherent features from the model
-          itself, without modifying its parameters.
-        </div>
-        <h3>Evolution: Expanding the Definition</h3>
-        <p>
-          However, as the research community has rapidly evolved, the definition
-          of model fingerprinting has gradually expanded. Some recent works have
-          begun to refer to <b>backdoor watermarking</b> techniques as a form of
-          model fingerprinting. This paradigm shift has gained traction, and a
-          new consensus is emerging: any method designed to protect model
-          copyright may now be referred to as model fingerprinting. As a result,
-          the scope of model fingerprinting has broadened to include not only
-          non-invasive methods based on intrinsic model properties, but also
-          certain model watermarking techniques.
-        </p>
-        <div class="highlight-block">
-          <b>Clarification:</b> In the current literature, model fingerprinting
-          may refer to both non-invasive fingerprint extraction and invasive
-          watermark-based methods, such as weight watermarking or backdoor
-          watermarking.
-        </div>
-        <h3>Addressing Conceptual Ambiguity</h3>
-        <p>
-          To more accurately accommodate both traditional and contemporary
-          approaches, we refer to these watermark-based fingerprints as
-          <b>weight watermark</b> or <b>backdoor watermark</b> as fingerprint.
-          This terminology helps resolve the conceptual ambiguity that has
-          arisen as the field has evolved.
-        </p>
-        <div class="highlight-block">
-          <b>Summary:</b> Model fingerprinting now encompasses both non-invasive
-          and invasive methods for model copyright protection. This project
-          adopts clear terminology to distinguish between these approaches and
-          ensure conceptual clarity.
+          <b>Unified Definition:</b> In this survey, <i>model fingerprinting</i>
+          denotes methods for verifying a model's identity or provenance. This
+          includes both non-invasive fingerprinting schemes and invasive model
+          watermarking techniques, in accordance with evolving usage across the
+          literature.
         </div>
       </div>
+
+      <div class="section-card">
+        <h2>Model Fingerprinting Algorithms</h2>
+        <p>
+          We define a model fingerprint, denoted by \(\boldsymbol{f}\), as a
+          distinctive and verifiable signature that can be associated with a
+          model \(\mathcal{M}_\theta\). Depending on whether the fingerprint is
+          embedded via direct modification of \(\theta\), fingerprinting
+          algorithms can be broadly categorized into
+          <i>intrinsic</i> (non-invasive) and <i>invasive</i> approaches.
+        </p>
+        <p>
+          <i>Intrinsic fingerprinting</i> operates under the assumption that a
+          trained model inherently encodes identity-related information, even
+          without any explicit modification. In this setting, the fingerprint is
+          extracted as \(\boldsymbol{f} =
+          \mathcal{F}_{\text{intrinsic}}(\mathcal{M}_\theta)\), where
+          \(\mathcal{F}_{\text{intrinsic}}(\cdot)\) denotes a fingerprinting
+          function that leverages the internal properties of the model. The main
+          difference across intrinsic fingerprinting methods lies in how this
+          fingerprint is derived—either by encoding the model's parameters
+          [cite:zeng2023huref] or hidden representations [cite:zhang2024reef],
+          by aggregating its output behavior on a predefined probe set
+          [cite:ren2025cotsrf], or by designing adversarial inputs
+          [cite:gubri2024trap] that elicit uniquely identifiable responses.
+        </p>
+        <p>
+          In contrast, <i>invasive fingerprinting</i> involves explicitly
+          modifying the model to embed an externally defined fingerprint. This
+          process typically consists of two stages: an embedding phase, where a
+          fingerprint payload \(\boldsymbol{f}\) is injected into the model via
+          an embedding function \(\mathcal{M}_\theta^{(\boldsymbol{f})} =
+          \mathcal{F}_{\text{embed}}(\mathcal{M}_\theta, \boldsymbol{f})\); and
+          an extraction phase, where the fingerprint is later retrieved from the
+          modified model using a decoding function, i.e., \(\hat{\boldsymbol{f}}
+          =
+          \mathcal{F}_{\text{extract}}(\mathcal{M}_\theta^{(\boldsymbol{f})})\).
+          Variations across invasive methods arise from both the encoding
+          scheme—such as injecting fingerprint bits into the parameter space
+          [cite:zhang2024emmark], or embedding functional backdoors within the
+          model
+          [cite:li2024double,xu2024instructional,cai2024utf,russinovich2024hey,wu2025imf,yamabe-etal-2025-mergeprint]—and
+          the decoding strategy, which may rely on reading specific weights,
+          observing triggered responses to secret inputs, or estimating
+          gradient-based artifacts.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>Key Characteristics of Model Fingerprinting Algorithms</h2>
+        <p>
+          To systematically understand and evaluate model fingerprinting
+          algorithms, we highlight five core characteristics that determine
+          their effectiveness and practical utility.
+        </p>
+        
+        <div class="characteristics-grid">
+          <div class="characteristic-item">
+            <div class="characteristic-icon">🎯</div>
+            <div class="characteristic-content">
+              <h3>Effectiveness</h3>
+              <p>The fingerprint \(\boldsymbol{f}\) should be reliably extractable and verifiable, enabling consistent attribution of the model through its outputs, internal states, or parameters.</p>
+            </div>
+          </div>
+          
+          <div class="characteristic-item">
+            <div class="characteristic-icon">🛡️</div>
+            <div class="characteristic-content">
+              <h3>Harmlessness</h3>
+              <p>Fingerprinting should not significantly impair the model's original performance. The model should retain its general-purpose capabilities after fingerprinting.</p>
+            </div>
+          </div>
+          
+          <div class="characteristic-item">
+            <div class="characteristic-icon">💪</div>
+            <div class="characteristic-content">
+              <h3>Robustness</h3>
+              <p>A robust fingerprint is resilient to both model-level changes (e.g., fine-tuning, pruning, model merging) and interaction-level manipulations (e.g., input perturbations, decoding changes), remaining intact under such transformations.</p>
+            </div>
+          </div>
+          
+          <div class="characteristic-item">
+            <div class="characteristic-icon">🔒</div>
+            <div class="characteristic-content">
+              <h3>Stealthiness</h3>
+              <p>The fingerprint should be difficult to detect or isolate, preventing unauthorized parties from identifying, removing or suppress it without access to proprietary knowledge.</p>
+            </div>
+          </div>
+          
+          <div class="characteristic-item">
+            <div class="characteristic-icon">✅</div>
+            <div class="characteristic-content">
+              <h3>Reliability</h3>
+              <p>Fingerprints should uniquely correspond to their source models. Unrelated models should not produce similar signatures, and for interaction-triggered schemes, the fingerprint should remain latent under benign usage and only activate upon specific triggers.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="highlight-block">
+          <b>Summary:</b> These five properties serve as guiding principles for fingerprint design and form the basis for comparisons across different algorithms, as discussed in subsequent sections.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>Taxonomy of Model Fingerprinting Algorithms</h2>
+        <p>
+          To facilitate the systematic review presented in
+          <a href="non-invasive.html" class="section-link">non-invasive fingerprinting</a>
+          and <a href="invasive.html" class="section-link">invasive fingerprinting</a>, this section introduces a taxonomy
+          that categorizes existing model fingerprinting algorithms into two
+          major types. The first category,
+          <i>intrinsic fingerprinting</i>, leverages the inherent
+          characteristics of a model \(\mathcal{M}_\theta\) to derive
+          fingerprint information. Such fingerprints can be
+          extracted from various properties of the model, including its weight
+          parameters and activation representations, output semantics, or
+          model-specific reactions to adversarially designed inputs. The second
+          category, <i>invasive fingerprinting</i>, involves explicitly
+          modifying the model to embed externally defined ownership information.
+          These modifications may include embedding
+          fingerprint payloads directly into the model's
+          weights or utilizing backdoor-style
+          watermarking schemes as a fingerprinting
+          mechanism. This provides a more fine-grained taxonomy, covering representative techniques
+          within each category and illustrating the diverse design choices found
+          in the literature.
+        </p>
+        
+        <div class="taxonomy-container">
+          <h3>Taxonomy of Model Fingerprinting Methods</h3>
+          <p class="taxonomy-caption">In addition to intrinsic and invasive fingerprinting, this taxonomy includes fingerprint transferability and removal, covering dynamic scenarios across the model lifecycle.</p>
+          
+          <div class="taxonomy-tree">
+            <!-- Root Node -->
+            <div class="tree-node root-node">
+              <div class="node-content">
+                <strong>LLM Model<br>Fingerprinting</strong>
+              </div>
+              
+              <!-- Intrinsic Fingerprinting Branch -->
+              <div class="tree-branch">
+                <div class="tree-node intrinsic-node">
+                  <div class="node-content">
+                    <strong>Intrinsic Fingerprinting</strong>
+                  </div>
+                  
+                  <div class="tree-branch">
+                    <div class="tree-node intrinsic-node">
+                      <div class="node-content">Parameter and Representation</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            <strong>Parameter-based:</strong> HuRef [cite:zeng2023huref], REEF [cite:zhang2024reef], [cite:yoon2025intrinsic]<br>
+                            <strong>Representation-based:</strong> DEEPJUDGE [cite:chen2022copy], zkLLM [cite:sun2024zkllm], TensorGuard [cite:wu2025gradient], Riemannian fingerprinting [cite:song2025riemannian], [cite:alhazbi2025llms]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="tree-node intrinsic-node">
+                      <div class="node-content">Semantic Feature Extraction</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            [cite:liu2024fingerprint], Llmmap [cite:pasquini2024llmmap], DuFFin [cite:yan2025duffin], [cite:bhardwaj2025invisibletracesusinghybrid], [cite:bitton2025detecting], CoTSRF [cite:ren2025cotsrf], [cite:dasgupta2024watermarking]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="tree-node intrinsic-node">
+                      <div class="node-content">Adversarial Example-Based</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            TRAP [cite:gubri2024trap], ProFLingo [cite:jin2024proflingo], RAP-SM [cite:xu2025rapsmrobustadversarialprompt], RoFL [cite:tsai2025rofl], FIT-Print [cite:shao2025fitprintfalseclaimresistantmodelownership]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Invasive Fingerprinting Branch -->
+                <div class="tree-node invasive-node">
+                  <div class="node-content">
+                    <strong>Invasive Fingerprinting</strong>
+                  </div>
+                  
+                  <div class="tree-branch">
+                    <div class="tree-node invasive-node">
+                      <div class="node-content">Weight-based Watermarking</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            EmMark [cite:zhang2024emmark], Invariant-based Watermarking [cite:guo2025invariant], Structural Weight Watermarking with ECC [cite:block2025robust], Functional Invariants [cite:fernandez2023functional]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="tree-node invasive-node">
+                      <div class="node-content">Backdoor-based Watermarking</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            IF [cite:xu2024instructional], UTF [cite:cai2024utf], MergePrint [cite:yamabe-etal-2025-mergeprint], ImF [cite:wu2025imf], [cite:nasery2025scalable], Chain&Hash [cite:russinovich2024hey], Double-I [cite:li2024double], PLMmark [cite:li2023plmmark]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Fingerprint Transfer Branch -->
+                <div class="tree-node transfer-node">
+                  <div class="node-content">
+                    <strong>Fingerprint Transfer</strong>
+                  </div>
+                  <div class="tree-branch">
+                    <div class="tree-node leaf-node">
+                      <div class="node-content">
+                        FP-VEC [cite:xu2024fpvec]
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Fingerprint Removal Branch -->
+                <div class="tree-node removal-node">
+                  <div class="node-content">
+                    <strong>Fingerprint Removal</strong>
+                  </div>
+                  
+                  <div class="tree-branch">
+                    <div class="tree-node removal-node">
+                      <div class="node-content">Training-time Removal</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            MEraser [cite:zhang2025meraser]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="tree-node removal-node">
+                      <div class="node-content">Inference-time Removal</div>
+                      <div class="tree-branch">
+                        <div class="tree-node leaf-node">
+                          <div class="node-content">
+                            [cite:carlini2021extracting], Token Forcing (TF) [cite:hoscilowicz2024unconditional], Generation Revision Intervention (GRI) [cite:zhang2025imf]
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bibliography will be inserted here -->
+      <div id="bibliography-container"></div>
     </div>
+
     <div id="footer-placeholder"></div>
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
+    <script src="../assets/citation-system.js?v=6"></script>
+    <script>
+      // Initialize citation system with your BibTeX file
+      citationSystem.init("../assets/references.bib");
+    </script>
   </body>
 </html>

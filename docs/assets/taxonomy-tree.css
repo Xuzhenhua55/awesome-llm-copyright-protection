@@ -1,0 +1,134 @@
+/* Taxonomy Tree Styles */
+.taxonomy-container {
+    margin: 1.5em 0;
+    padding: 1.5em;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.taxonomy-container h3 {
+    color: #2d3748;
+    margin: 0 0 0.8em 0;
+    font-size: 1.3em;
+    font-weight: 600;
+    text-align: center;
+}
+
+.taxonomy-caption {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    margin-bottom: 1.5em;
+    font-size: 0.9em;
+}
+
+.taxonomy-tree {
+    display: flex;
+    justify-content: center;
+}
+
+.tree-node {
+    position: relative;
+    margin: 0.3em 0;
+}
+
+.node-content {
+    padding: 0.6em 1em;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: white;
+    font-size: 0.85em;
+    line-height: 1.3;
+    text-align: center;
+    min-width: 180px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tree-branch {
+    margin-left: 1.5em;
+    position: relative;
+}
+
+.tree-branch::before {
+    content: '';
+    position: absolute;
+    left: -0.75em;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #d1d5db;
+}
+
+.tree-node::before {
+    content: '';
+    position: absolute;
+    left: -0.75em;
+    top: 50%;
+    width: 0.75em;
+    height: 2px;
+    background: #d1d5db;
+}
+
+/* Node Types */
+.root-node .node-content {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.intrinsic-node .node-content {
+    background: #e0f2fe;
+    border-color: #0288d1;
+    color: #01579b;
+}
+
+.invasive-node .node-content {
+    background: #fff3e0;
+    border-color: #ff9800;
+    color: #e65100;
+}
+
+.transfer-node .node-content {
+    background: #e0f2f1;
+    border-color: #00796b;
+    color: #004d40;
+}
+
+.removal-node .node-content {
+    background: #ffebee;
+    border-color: #f44336;
+    color: #c62828;
+}
+
+.leaf-node .node-content {
+    background: #f8f9fa;
+    border-color: #6b7280;
+    color: #374151;
+    text-align: left;
+    font-size: 0.8em;
+    min-width: 300px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .taxonomy-container {
+        padding: 1em;
+        margin: 1em 0;
+    }
+    
+    .tree-branch {
+        margin-left: 1em;
+    }
+    
+    .node-content {
+        min-width: 150px;
+        font-size: 0.85em;
+    }
+    
+    .leaf-node .node-content {
+        min-width: 250px;
+        font-size: 0.75em;
+    }
+}
