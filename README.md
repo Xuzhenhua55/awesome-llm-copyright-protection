@@ -26,8 +26,31 @@ Copyright protection for large language models is of critical importance, given 
 </p>
 
 <p align="justify">
-This work presents a comprehensive survey of the current state of LLM copyright protection technologies, with a focus on model fingerprinting, covering the following aspects: <b>(1)</b> clarifying the conceptual connection from text watermarking to model watermarking and fingerprinting, and adopting a unified terminology that incorporates model watermarking into the broader fingerprinting framework; <b>(2)</b> providing an overview and comparison of diverse text watermarking techniques, highlighting cases where such methods can function as model fingerprinting; <b>(3)</b> systematically categorizing and comparing existing model fingerprinting approaches for LLM copyright protection; <b>(4)</b> presenting, for the first time, techniques for fingerprint transfer and fingerprint removal; <b>(5)</b> summarizing evaluation metrics for model fingerprints, including effectiveness, harmlessness, robustness, stealthiness, and reliability; and <b>(6)</b> discussing open challenges and future research directions.
+This work presents a comprehensive survey of the current state of LLM copyright protection technologies, with a focus on model fingerprinting, covering the following aspects:
 </p>
+
+<div align="justify">
+  <ol>
+    <li>
+      Clarifies the conceptual connection from text watermarking to model watermarking and fingerprinting, and adopts a unified terminology that incorporates model watermarking into the broader fingerprinting framework.
+    </li>
+    <li>
+      Provides an overview and comparison of diverse text watermarking techniques, highlighting cases where such methods can function as model fingerprinting.
+    </li>
+    <li>
+      Systematically categorizes and compares existing model fingerprinting approaches for LLM copyright protection.
+    </li>
+    <li>
+      Presents, for the first time, techniques for fingerprint transfer and fingerprint removal.
+    </li>
+    <li>
+      Summarizes evaluation metrics for model fingerprints, including effectiveness, harmlessness, robustness, stealthiness, and reliability.
+    </li>
+    <li>
+      Discusses open challenges and future research directions.
+    </li>
+  </ol>
+</div>
 
 <p align="justify">
 This survey aims to offer researchers a thorough understanding of both text watermarking and model fingerprinting technologies in the era of LLMs, thereby fostering further advances in protecting their intellectual property. We will continue to maintain and update this curated list of related papers and resources in this repository.
