@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fingerprint Evaluation - LLM Copyright Protection Research</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../assets/nav.css" />
+    <link rel="stylesheet" href="../assets/footer.css" />
+    <link rel="stylesheet" href="../assets/paper-ref.css" />
+    <link rel="stylesheet" href="../assets/layout.css" />
+    <link rel="stylesheet" href="../assets/citation-system.css" />
+    <style>
+      .header-section h1 {
+        font-size: 2rem;
+      }
+      .section-card h2 {
+        font-size: 1.5rem;
+      }
+      .evaluation-section h3 {
+        color: #2d3748;
+        margin-top: 1.2em;
+        margin-bottom: 0.5em;
+        font-size: 1.18em;
+      }
+      .evaluation-section h4 {
+        color: #4a5568;
+        margin-top: 1em;
+        margin-bottom: 0.5em;
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+      .highlight-block {
+        background: #f7fafc;
+        border-left: 4px solid #4299e1;
+        border-radius: 10px;
+        padding: 1em 1.5em;
+        margin: 1.2em 0;
+        color: #2c5282;
+        font-size: 1.05em;
+        box-shadow: 0 2px 8px rgba(66, 153, 225, 0.04);
+      }
+      .math-formula {
+        background: #f8f9fa;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 1em;
+        margin: 1em 0;
+        text-align: center;
+        font-size: 1.05em;
+        color: #2d3748;
+      }
+      .math-formula .MathJax {
+        font-size: 1.2em !important;
+      }
+      .math-formula .MathJax_Display {
+        margin: 1em 0 !important;
+      }
+      .input-manipulation-section {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 1em;
+        margin: 1em 0;
+        border: 1px solid #e2e8f0;
+      }
+      .response-manipulation-section {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 1em;
+        margin: 1em 0;
+        border: 1px solid #e2e8f0;
+      }
+      .evaluation-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5em;
+        margin: 1.5em 0;
+      }
+      .metric-card {
+        background: #f8f9fa;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 1.2em;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+      .metric-card h4 {
+        color: #2d3748;
+        margin-top: 0;
+        margin-bottom: 0.8em;
+        font-size: 1.1em;
+      }
+      .metric-card .description {
+        color: #4a5568;
+        line-height: 1.6;
+        margin-bottom: 0.8em;
+      }
+      .metric-card .formula {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 0.8em;
+        font-family: "Courier New", monospace;
+        font-size: 0.95em;
+        color: #2d3748;
+        text-align: center;
+        margin: 0.5em 0;
+      }
+      .attack-categories {
+        display: flex;
+        gap: 1em;
+        margin: 1em 0 1.5em 0;
+        flex-wrap: wrap;
+      }
+      .attack-category {
+        background: #f8f9fa;
+        border: 1.2px solid #4299e1;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        min-width: 160px;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        box-shadow: 0 1px 4px rgba(66, 153, 225, 0.04);
+        font-size: 0.98em;
+      }
+      .attack-category .icon {
+        font-size: 1.1em;
+        margin-right: 0.2em;
+      }
+      .attack-category b {
+        color: #2d3748;
+      }
+      .note-text {
+        color: #4299e1;
+        font-weight: bold;
+      }
+      .paper-list {
+        margin-top: 1em;
+      }
+    </style>
+    <script>
+      // Preload navigation content
+      const cachedNav = localStorage.getItem("navContent");
+      if (cachedNav) {
+        document.addEventListener("DOMContentLoaded", () => {
+          const navPlaceholder = document.getElementById("nav-placeholder");
+          if (navPlaceholder) {
+            navPlaceholder.innerHTML = cachedNav;
+          }
+        });
+      }
+    </script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          processEscapes: true,
+        },
+      };
+    </script>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
+  <body>
+    <div id="nav-placeholder">
+      <script>
+        // Try to populate navigation immediately if available
+        const navContent = localStorage.getItem("navContent");
+        if (navContent) {
+          document.write(navContent);
+        }
+      </script>
+    </div>
+
+    <div class="main-content">
+      <div class="header-section">
+        <h1>Evaluation for LLM Fingerprinting</h1>
+        <p class="intro-text">
+          Building upon the key characteristics outlined in the key
+          characteristics section, we now provide a detailed discussion of how
+          each criterion can be evaluated in practice. Specifically, given a
+          clean base model <em>M<sub>θ</sub></em
+          >, its fingerprinted counterpart <em>M<sub>θ</sub><sup>(f)</sup></em
+          >, and a downstream suspect model <em>M<sub>θ</sub><sup>(s)</sup></em
+          >, we describe concrete procedures and metrics for assessing whether
+          the suspect model contains the embedded fingerprint, and to what
+          extent the fingerprint meets the target properties.
+        </p>
+        <div class="highlight-block">
+          <b>Note:</b> If the fingerprinting method is <em>invasive</em>, we
+          assume by default that the suspect model originates from the
+          fingerprinted model <em>M<sub>θ</sub><sup>(f)</sup></em
+          >. If the method is <em>intrinsic</em> (non-invasive), the suspect
+          model is assumed to originate from the base model
+          <em>M<sub>θ</sub></em
+          >, in which case the fingerprinted and base models are interchangeable
+          for evaluation purposes.
+        </div>
+        <p>
+          The evaluation framework covers four main aspects:
+          <em>Detectability (Effectiveness)</em>,
+          <em>Capability Impact (Harmlessness)</em>, <em>Reliability</em>, and
+          <em>Robustness Under Fingerprint Attack</em>. Each section examines
+          specific metrics and procedures for comprehensive assessment.
+        </p>
+      </div>
+
+      <div class="section-card evaluation-section">
+        <h2>Detectability (Effectiveness)</h2>
+        <p>
+          Effectiveness assesses whether the embedded fingerprint can be
+          reliably extracted from the fingerprinted model and, when necessary,
+          distinguished from signals in a suspect model
+          <em>M<sub>θ</sub><sup>(s)</sup></em
+          >. We quantify this property using the
+          <strong>Fingerprint Success Rate (FSR)</strong>, which measures the
+          strength of the recovered fingerprint signal.
+        </p>
+        <div class="highlight-block">
+          <b>Key Point:</b> As the most fundamental criterion, effectiveness
+          underpins all other benchmarks: if a fingerprint signal cannot be
+          extracted with sufficient strength, considerations of harmlessness,
+          robustness, reliability, or stealthiness become irrelevant.
+        </div>
+
+        <h3>Intrinsic Fingerprinting</h3>
+
+        <h4>Parameter and Representation as Fingerprint</h4>
+        <p>
+          For approaches that define the fingerprint as parameters or
+          intermediate representations, we focus on measuring the
+          <em>similarity</em> between the extracted signals. Let $f =
+          \mathcal{F}_{\text{intrinsic}}(\mathcal{M}_\theta)$ and $f^{(s)} =
+          \mathcal{F}_{\text{intrinsic}}(\mathcal{M}_\theta^{(s)})$ denote the
+          fingerprints extracted from the base model and the suspect model,
+          respectively.
+        </p>
+        <div class="math-formula">
+          $$\text{FSR} = \frac{\langle f, f^{(s)} \rangle}{\|f\|_2 \cdot
+          \|f^{(s)}\|_2}$$
+        </div>
+        <p>
+          The FSR in this setting is commonly computed as the cosine similarity,
+          where values closer to 1 indicate stronger fingerprint correspondence.
+          Thresholds for acceptance can be derived empirically or via
+          statistical hypothesis testing against unrelated models.
+        </p>
+
+        <h4>Semantic Feature as Fingerprint</h4>
+        <p>
+          Methods in this category typically require a predefined
+          <em>probe dataset</em> <em>D</em><sub>probe</sub>. Each prompt in
+          <em>D</em><sub>probe</sub> is fed into the model to collect an output
+          set <em>O</em> (e.g., logits, generated text). From <em>O</em>, the
+          fingerprint signal <em>f</em> is then extracted using either a
+          pre-trained feature extractor or statistical feature analysis.
+        </p>
+
+        <h4>Adversarial Example as Fingerprint</h4>
+        <p>
+          In this category, the <em>probe dataset</em> <em>D</em
+          ><sub>probe</sub> consists of paired examples {(<em>x</em
+          ><sub>trigger</sub>, <em>y</em><sub>fp</sub>)}, rather than unlabeled
+          prompts. The owner first constructs a target set {(<em>x</em>,
+          <em>y</em><sub>fp</sub>)} and employs a specific optimization
+          procedure (such as GCG [cite:zou2023universal]) to transform each
+          <em>x</em> into an adversarial input <em>x</em><sub>trigger</sub>.
+        </p>
+        <div class="math-formula">
+          $$\text{FSR} = \frac{1}{|D_{probe}|} \sum_{(x_{trigger}, y_{fp}) \in
+          D_{probe}} \mathbb{1}[M(x_{trigger}) = y_{fp}]$$
+        </div>
+        <p>
+          Effectiveness is measured by the FSR, defined as the proportion of
+          triggers in <em>D</em><sub>probe</sub> that elicit their intended
+          fingerprint responses, where $\mathbb{1}[\cdot]$ is the indicator
+          function.
+        </p>
+
+        <h3>Invasive Fingerprinting</h3>
+
+        <h4>Weight Watermark as Fingerprint</h4>
+        <p>
+          In this setting, the model owner defines a binary watermark message
+          <em>m</em> = (<em>b</em><sub>1</sub>, <em>b</em><sub>2</sub>, ...,
+          <em>b</em><sub>n</sub>) of length <em>n</em>, and embeds it into the
+          model's weights via a regularization-based constraint during training.
+          After deployment, the corresponding extraction rule is applied to the
+          target weights to recover a message <em>m'</em>.
+        </p>
+        <div class="math-formula">
+          $$\text{FSR} = 1 - \frac{1}{n} \sum_{i=1}^{n} \mathbb{1}[b_i \neq
+          b'_i]$$
+        </div>
+        <p>
+          The FSR can be quantified as the bit accuracy or, equivalently, as one
+          minus the bit error rate (BER).
+        </p>
+
+        <h4>Backdoor Watermark as Fingerprint</h4>
+        <p>
+          In this setting, the model owner constructs a
+          <em>backdoor fingerprint dataset</em> <em>D</em><sub>fp</sub> = {(<em
+            >x</em
+          ><sub>trigger</sub>, <em>y</em><sub>fp</sub>)}, where each <em>x</em
+          ><sub>trigger</sub> conforms to a predefined trigger pattern. The FSR
+          is computed analogously to the adversarial-example case, by measuring
+          the proportion of triggers in <em>D</em><sub>fp</sub> that elicit
+          their intended fingerprint outputs.
+        </p>
+        <div class="math-formula">
+          $$\text{FSR} = \frac{1}{|D_{fp}|} \sum_{(x_{trigger}, y_{fp}) \in
+          D_{fp}} \mathbb{1}[M(x_{trigger}) = y_{fp}]$$
+        </div>
+        <p>
+          The FSR is computed analogously to the adversarial-example case, by
+          measuring the proportion of triggers in <em>D</em><sub>fp</sub> that
+          elicit their intended fingerprint outputs, where $\mathbb{1}[\cdot]$
+          is the indicator function.
+        </p>
+      </div>
+
+      <div class="section-card evaluation-section">
+        <h2>Capability Impact (Harmlessness)</h2>
+        <p>
+          From a model fingerprinting perspective, <em>harmlessness</em> refers
+          to the property that the embedding of ownership signals neither
+          degrades the model's original capabilities nor interferes with its
+          intended functionalities. In practice, a fingerprinting scheme is
+          considered harmless if (i) the quality of model-generated content
+          remains essentially unaffected, and (ii) the performance gap between
+          the original and fingerprinted models is statistically negligible
+          across a sufficiently diverse set of representative tasks.
+        </p>
+
+        <div class="evaluation-metrics">
+          <div class="metric-card">
+            <h4>Generated Content Quality Preservation</h4>
+            <div class="description">
+              Following the principles outlined in [cite:wang2025building,
+              liu2024survey], harmlessness evaluation should first verify that
+              fingerprint embedding has minimal impact on the fluency,
+              coherence, and semantic fidelity of generated text.
+            </div>
+            <div class="formula">
+              Metrics: BLEU, Meteor, Semantic Similarity, Perplexity (PPL)
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <h4>General Capability Preservation</h4>
+            <div class="description">
+              Beyond text quality, harmlessness further requires that the
+              fingerprinted model retains its broad task-solving abilities
+              across multiple linguistic and reasoning competencies.
+            </div>
+            <div class="formula">
+              Categories: Logical reasoning, Scientific understanding,
+              Linguistic entailment, Long-form prediction
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Representative evaluation categories include logical and commonsense
+          reasoning (ANLI R1--R3 [cite:nie-etal-2020-adversarial], ARC
+          [cite:clark2018think], OpenBookQA [cite:mihaylov2018can], Winogrande
+          [cite:sakaguchi2021winogrande], LogiQA [cite:liu2021logiqa]),
+          scientific understanding (SciQ [cite:welbl2017crowdsourcing]),
+          linguistic and textual entailment (BoolQ [cite:clark2019boolq], CB
+          [cite:de2019commitmentbank], RTE [cite:giampiccolo2007third], WiC
+          [cite:pilehvar2019wic], WSC [cite:levesque2012winograd], CoPA
+          [cite:roemmele2011choice], MultiRC [cite:khashabi2018looking]),
+          long-form prediction (LAMBADA-OpenAI and LAMBADA-Standard
+          [cite:paperno2016lambada]), and additional capability domains
+          [cite:liu2024survey] including text completion
+          [cite:kirchenbauer2023watermark], code generation [cite:lee2023wrote],
+          machine translation [cite:hu2023unbiased], text summarization
+          [cite:he2024can], question answering [cite:fernandez2023three],
+          mathematical reasoning [cite:liang2024watme], knowledge probing
+          [cite:tu2023waterbench], and instruction following
+          [cite:tu2023waterbench].
+        </p>
+      </div>
+
+      <div class="section-card evaluation-section">
+        <h2>Reliability</h2>
+        <p>
+          In the context of traditional model watermarking, this property is
+          often referred to as <em>fidelity</em>. It requires that the FSR
+          obtained from unrelated models be kept below a minimal threshold.
+          Formally, given a set of unrelated models $\{\mathcal{M}_1^{(u)},
+          \mathcal{M}_2^{(u)}, \ldots\}$, the fingerprint extractor should yield
+          consistently low FSR values across all $\mathcal{M}_i^{(u)}$.
+        </p>
+        <div class="highlight-block">
+          <b>Key Point:</b> For adversarial-example- or backdoor-based
+          fingerprints, reliability further implies that, during normal user
+          interactions, benign queries should not inadvertently activate the
+          fingerprint. Overall, in copyright verification, reliability hinges on
+          ensuring that fingerprint extraction remains strictly controlled and
+          cannot be reproduced by models lacking the embedded identifier.
+        </div>
+      </div>
+
+      <div class="section-card evaluation-section">
+        <h2>Robustness Under Fingerprint Attack</h2>
+        <p>
+          In real-world scenarios, an adversary may attempt to remove or
+          overwrite embedded copyright information, potentially sacrificing some
+          model performance in the process. Robustness measures the extent to
+          which the fingerprint signal remains detectable under such deliberate
+          evasion attempts, and is typically quantified by the FSR achieved
+          after various attack strategies.
+        </p>
+
+        <div class="attack-categories">
+          <div class="attack-category">
+            <span class="icon">🔧</span>
+            <b>Model-Level Attacks</b>
+            <span style="color: #718096; font-weight: 400"
+              >(Weight/Architecture modifications)</span
+            >
+          </div>
+          <div class="attack-category">
+            <span class="icon">📝</span>
+            <b>Input/Output Attacks</b>
+            <span style="color: #718096; font-weight: 400"
+              >(Interaction manipulations)</span
+            >
+          </div>
+          <div class="attack-category">
+            <span class="icon">⚙️</span>
+            <b>System-Level Attacks</b>
+            <span style="color: #718096; font-weight: 400"
+              >(Deployment environment)</span
+            >
+          </div>
+        </div>
+
+        <h3>Model-Level Attacks</h3>
+
+        <h4>Model Fine-tuning</h4>
+        <p>
+          Fine-tuning refers to the process whereby an adversary continues
+          training a stolen model using strategies such as continued
+          pretraining, instruction tuning, or reinforcement learning on curated
+          datasets. In real-world applications, fine-tuning is one of the most
+          common methods for enhancing a model's capabilities.
+        </p>
+        <p>
+          Continued fine-tuning thus represents one of the most prevalent and
+          practically relevant adversarial settings, and has historically served
+          as the primary robustness benchmark for many fingerprinting methods
+          [cite:xu2024instructional,cai2024utf,russinovich2024hey]. Moreover,
+          certain heuristic fine-tuning strategies have been explicitly proposed
+          to erase backdoor-based fingerprints, such as MEraser
+          [cite:zhang2025meraser], which targets the selective removal of
+          implanted triggers while preserving the model's utility.
+        </p>
+
+        <h4>Model Quantization and Pruning</h4>
+        <p>
+          In real-world deployments, adversaries (or even benign users) may need
+          to adapt models for low-resource environments, where reduced memory
+          footprint and faster inference are critical. Two common strategies for
+          this are <em>quantization</em>—reducing parameter precision—and
+          <em>pruning</em>—removing redundant weights or structures.
+        </p>
+        <p>
+          Quantization covers techniques such as half-precision (fp16)
+          deployment and low-bit (e.g., 8-bit or 4-bit) integer quantization,
+          which significantly compress model size while retaining functionality.
+          Pruning can be applied in structured or unstructured forms, including
+          random pruning, magnitude-based pruning using $L_1$/$L_2$ norms, or
+          heuristic approaches such as Taylor-based saliency pruning
+          [cite:ma2023llmpruner].
+        </p>
+
+        <h4>Model Merging</h4>
+        <p>
+          Model merging [cite:bhardwaj2024language,arora2024here] has recently
+          gained traction as a lightweight paradigm for integrating multiple
+          upstream expert models—each specialized for particular tasks—into a
+          single model that consolidates their capabilities. Its main appeal
+          lies in the ability to combine functionalities without requiring
+          high-performance computing resources.
+        </p>
+        <p>
+          [cite:cong2024have] were among the first to formally investigate
+          merging as an attack vector against model fingerprinting. Rather than
+          proposing new merging algorithms, they adopted representative existing
+          approaches—such as
+          <em>Task Arithmetic</em> [cite:ilharco2022task-arithmetic] and
+          <em>Ties-Merging</em> [cite:yadav2024ties]—to evaluate fingerprint
+          persistence under fusion. Beyond these, many other merging strategies
+          are available in practice, with toolkits such as MergeKit
+          [cite:goddard-etal-2024-mergekit] providing streamlined workflows for
+          implementing lightweight model merging in real systems.
+        </p>
+
+        <h3>Input and Output Level Attacks</h3>
+        <p>
+          Beyond direct modifications to model parameters, interaction-dependent
+          fingerprinting methods—such as those based on adversarial examples,
+          backdoor watermarks, semantic features, or activation
+          representations—can be challenged through manipulations of the model's
+          inputs and/or outputs during querying.
+        </p>
+
+        <h4>Input Manipulation</h4>
+        <div class="input-manipulation-section">
+          <p>
+            In practical settings, an adversary may systematically inspect all
+            incoming queries—including benign user inputs—to detect fragments
+            that could reveal embedded fingerprint patterns. Upon
+            identification, such queries may be blocked, ignored, or otherwise
+            suppressed. Detection can also be performed using heuristic metrics
+            such as perplexity (PPL), defined as:
+          </p>
+          <div class="math-formula">
+            $$\text{PPL}(x) = \exp\left(-\frac{1}{n} \sum_{i=1}^{n} \log
+            p_{\theta}(x_i | x_{&lt;i})\right)$$
+          </div>
+          <p>
+            If an input bypasses the initial detection stage, the adversary may
+            still opt to perturb it—such as by re-paragraphing, removing
+            non-essential content at random, or otherwise altering its
+            structure—thereby reducing the likelihood that a fingerprint trigger
+            is activated.
+          </p>
+
+          <div class="highlight-block">
+            <b>Key Insight:</b> Input manipulation attacks exploit the fact that
+            fingerprint triggers often have distinctive linguistic patterns or
+            statistical characteristics that can be detected and suppressed
+            without requiring access to the model's internal parameters.
+          </div>
+        </div>
+
+        <h4>Response Manipulation</h4>
+        <div class="response-manipulation-section">
+          <p>
+            Beyond manipulating inputs, an adversary could attempt to detect and
+            suppress fingerprint activation by examining the semantic
+            consistency between an input and its corresponding output. Since
+            fingerprinted responses are often designed to exhibit distinctive
+            features, they may lie outside the model's greedy decoding path or
+            occur in low-probability regions of the output distribution.
+          </p>
+
+          <div class="highlight-block">
+            <b>Detection Strategy:</b> Response manipulation focuses on
+            identifying and filtering out outputs that exhibit unusual patterns,
+            reduced fluency, or semantic inconsistencies that may indicate
+            fingerprint activation.
+          </div>
+        </div>
+
+        <h3>System-Level Attacks</h3>
+        <p>
+          Ultimately, LLMs are deployed within broader systems, a common example
+          being <em>LLM-based agents</em> [cite:kong2025surveyllmdrivenaiagent].
+          Such systems often integrate memory modules or external knowledge
+          sources (e.g., web search) into the model's reasoning process—either
+          to mitigate hallucination or to synchronize responses with up-to-date
+          information.
+        </p>
+        <p>
+          While these additional prompts improve factual accuracy and relevance,
+          they can also interfere with the activation or manifestation of
+          fingerprint signals. As a result, evaluating fingerprint robustness in
+          the presence of such system-level interactions is essential to
+          understanding performance in realistic deployment scenarios.
+        </p>
+      </div>
+
+      <!-- Bibliography will be inserted here -->
+      <div id="bibliography-container"></div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../assets/nav.js"></script>
+    <script src="../assets/footer.js"></script>
+    <script src="../assets/paper-ref.js"></script>
+    <script src="../assets/citation-system.js"></script>
+    <script>
+      // Initialize citation system with your BibTeX file
+      citationSystem.init("../assets/references.bib");
+    </script>
+  </body>
+</html>

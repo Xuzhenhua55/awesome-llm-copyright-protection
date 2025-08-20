@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../assets/footer.css" />
     <link rel="stylesheet" href="../assets/paper-ref.css" />
     <link rel="stylesheet" href="../assets/layout.css" />
+    <link rel="stylesheet" href="../assets/citation-system.css" />
     <style>
       .header-section h1 {
         font-size: 2rem;
@@ -215,6 +216,49 @@
           effectiveness and robustness.
         </div>
 
+        <p>
+          As illustrated in the fingerprint transfer process, fingerprint
+          transfer generally involves two key stages: <em>decoupling</em> and
+          <em>transferring</em>. After a fingerprint is initially embedded into
+          a base model, the fingerprint information is decoupled and extracted
+          into a standalone medium—typically a compact representation (LoRA
+          Adapter [cite:hu2021lora] or Task Vector [cite:ilharco2022task-arithmetic]) that serves as an independent carrier of the
+          identity signal. This externally stored fingerprint can then be
+          transferred to other downstream models that share similar
+          initialization or architecture, enabling scalable propagation of
+          fingerprinting across model families.
+        </p>
+
+        <p>
+          FP-VEC, inspired by the idea of Task Arithmetic [cite:ilharco2022task-arithmetic], is the first work to
+          formalize this decoupled fingerprinting process. In FP-VEC, the
+          fingerprint is represented as a vector—referred to as a
+          <em>fingerprint vector</em>—which encodes the difference between a
+          fingerprinted model and its clean counterpart. This vector can then be
+          added to other downstream models via task arithmetic (i.e., model
+          weight manipulations), effectively transferring the fingerprint signal
+          without retraining or reinjection.
+        </p>
+
+        <p>
+          This approach highlights the potential of modular, transferable
+          fingerprint representations and opens the door to more scalable and
+          flexible protection mechanisms in shared model ecosystems.
+        </p>
+
+        <p>
+          Currently, there is only one work that specifically addresses the
+          challenge of fingerprint transfer in large language models. This
+          pioneering work introduces a novel approach using fingerprint vectors
+          as the decoupling carrier for fingerprint information.
+          <span class="note-text"
+            >The work, proposed by our team, is currently under revision and
+            will be publicly available in September 2025.</span
+          >
+        </p>
+
+        <div id="fingerprintTransfer-papers" class="paper-list"></div>
+
         <h3>Comparison: Injection vs. Transfer</h3>
         <div class="comparison-list">
           <div class="comparison-item">
@@ -250,24 +294,11 @@
           derivatives.
         </div>
       </div>
+      <!-- Bibliography will be inserted here -->
+      <div id="bibliography-container"></div>
+    </div>
 
-      <div class="section-card">
-        <h2>Related Papers</h2>
-        <p>
-          Currently, there is only one work that specifically addresses the
-          challenge of fingerprint transfer in large language models. This
-          pioneering work introduces a novel approach using fingerprint vectors
-          as the decoupling carrier for fingerprint information.
-          <span class="note-text"
-            >The work, proposed by our team, is currently under revision and
-            will be publicly available in September 2025.</span
-          >
-          The key innovation lies in using fingerprint vectors as a decoupling
-          carrier for fingerprint information, enabling efficient and robust
-          transfer of fingerprints across different models.
-        </p>
-        <div id="fingerprintTransfer-papers" class="paper-list"></div>
-      </div>
+
     </div>
 
     <div id="footer-placeholder"></div>
@@ -275,6 +306,7 @@
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
     <script src="../assets/paper-ref.js"></script>
+    <script src="../assets/citation-system.js"></script>
     <script>
       // Add paper references
       const papers = {
@@ -307,6 +339,10 @@
           }
         });
       });
+    </script>
+    <script>
+      // Initialize citation system with your BibTeX file
+      citationSystem.init("../assets/references.bib");
     </script>
   </body>
 </html>

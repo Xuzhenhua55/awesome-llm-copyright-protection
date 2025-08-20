@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Fingerprint Detection & Remove - LLM Copyright Protection Research
-    </title>
+    <title>Fingerprint Removal - LLM Copyright Protection Research</title>
     <link rel="stylesheet" href="../assets/style.css" />
     <link rel="stylesheet" href="../assets/nav.css" />
     <link rel="stylesheet" href="../assets/footer.css" />
     <link rel="stylesheet" href="../assets/paper-ref.css" />
     <link rel="stylesheet" href="../assets/layout.css" />
+    <link rel="stylesheet" href="../assets/citation-system.css" />
     <style>
       .highlight-block {
         background: #f7fafc;
@@ -31,6 +30,105 @@
       .note-text {
         color: #4299e1;
         font-weight: bold;
+      }
+      .removal-type-list {
+        display: flex;
+        gap: 1em;
+        margin: 1em 0 1.2em 0;
+        flex-wrap: wrap;
+      }
+      .removal-type-item {
+        background: #f8f9fa;
+        border: 1.2px solid #4299e1;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        min-width: 160px;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        box-shadow: 0 1px 4px rgba(66, 153, 225, 0.04);
+        font-size: 0.98em;
+      }
+      .removal-type-item .icon {
+        font-size: 1.1em;
+        margin-right: 0.2em;
+      }
+      .removal-type-item b {
+        color: #2d3748;
+      }
+      .intro-content {
+        margin-top: 1.5em;
+      }
+      .intro-text {
+        font-size: 1.1em;
+        line-height: 1.7;
+        margin-bottom: 1.5em;
+        color: #2d3748;
+      }
+      .categorization-section {
+        margin-top: 2em;
+      }
+      .categorization-text {
+        font-size: 1.05em;
+        line-height: 1.6;
+        margin-bottom: 1.5em;
+        color: #4a5568;
+        text-align: center;
+        font-style: italic;
+      }
+      .removal-type-list {
+        display: flex;
+        gap: 2em;
+        margin: 2em 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .removal-type-item {
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        border: 2px solid #4299e1;
+        border-radius: 12px;
+        padding: 1.5em 2em;
+        min-width: 280px;
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        box-shadow: 0 4px 12px rgba(66, 153, 225, 0.15);
+        font-size: 1.05em;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .removal-type-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(66, 153, 225, 0.25);
+      }
+      .removal-type-item .icon {
+        font-size: 2em;
+        margin-right: 0.5em;
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .removal-type-item .item-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3em;
+      }
+      .removal-type-item .item-description {
+        color: #718096;
+        font-weight: 400;
+        font-size: 0.9em;
+        font-style: italic;
+      }
+      .removal-type-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #4299e1, #3182ce);
       }
     </style>
     <script>
@@ -59,47 +157,114 @@
 
     <div class="main-content">
       <div class="header-section">
-        <h1>Fingerprint Detection & Remove</h1>
-        <p class="intro-text">
-          This page explores fingerprint detection and removal from the
-          perspective of potential attackers. While these two concepts share a
-          common goal of avoiding copyright verification by model owners, they
-          differ in their approaches and requirements. Fingerprint detection
-          emphasizes identifying the fingerprint's content and trigger
-          mechanisms, while fingerprint removal focuses on preventing the
-          fingerprint from being triggered, regardless of whether the attacker
-          understands its specific details. This page will discuss both concepts
-          in detail, including their definitions and relevant research
-          literature.
-        </p>
+        <h1>Fingerprint Removal</h1>
+
+        <div class="intro-content">
+          <p class="intro-text">
+            Fingerprint removal refers to the process of eliminating fingerprint
+            information from a model, without requiring prior knowledge of the
+            specific fingerprint being removed. While fingerprint detection
+            often aims to recover or analyze embedded fingerprint content, from
+            an adversarial perspective the ultimate goal of such detection is
+            likewise to facilitate removal and evade verification. Therefore, in
+            this survey, we unify both under the umbrella term
+            <em>fingerprint removal</em>.
+          </p>
+
+          <div class="highlight-block">
+            <b>Note:</b> In this survey, we focus on techniques that are
+            specifically designed for fingerprint removal. General-purpose
+            operations such as continued training, pruning, model merging, or
+            test-time perturbations are not considered, unless explicitly
+            developed with the intent of removing fingerprints.
+          </div>
+
+          <div class="categorization-section">
+            <p class="categorization-text">
+              As illustrated in the taxonomy of model fingerprinting, existing
+              fingerprint removal techniques can be broadly categorized into two
+              types: <em>training-time removal</em> and
+              <em>inference-time removal</em>.
+            </p>
+
+            <div class="removal-type-list">
+              <div class="removal-type-item">
+                <span class="icon">⚡</span>
+                <div class="item-content">
+                  <b>Inference-time Removal</b>
+                  <span class="item-description"
+                    >No model retraining required</span
+                  >
+                </div>
+              </div>
+              <div class="removal-type-item">
+                <span class="icon">🔧</span>
+                <div class="item-content">
+                  <b>Training-time Removal</b>
+                  <span class="item-description"
+                    >Targeted training procedures</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="section-card method-section">
-        <h2>Fingerprint Detection</h2>
+        <h2>Inference-time Removal</h2>
         <p>
-          Fingerprint detection emphasizes actively identifying fingerprints
-          present in the model, with the ultimate goal of determining the
-          fingerprint's form and extracting its content. The decision to remove
-          or suppress the fingerprint comes after detection.
+          Inference-time removal refers to fingerprint removal techniques that
+          do not require access to or retraining of the target model. Such
+          methods typically aim to suppress or bypass the activation of
+          fingerprint signals during generation.
         </p>
-        <div class="highlight-block">
-          <b>Key Point:</b> The goal of fingerprint detection is to understand
-          the fingerprint's structure and content, which is crucial for
-          subsequent removal or suppression strategies.
-        </div>
         <p>
-          Different fingerprinting methods require different detection
-          approaches. For backdoor watermark-based fingerprinting, the
-          fingerprint consists of triggers and trigger results. Attackers can
-          detect these components by identifying the triggers or using heuristic
-          search strategies to discover backdoor results. Once detected, they
-          can either remove the fingerprint or actively reject responding to
-          trigger inputs. In contrast, for weight watermark-based
-          fingerprinting, where the fingerprint is embedded in the model's
-          weight distribution, detection involves analyzing weight patterns for
-          statistical anomalies, such as unusual distributions or specific
-          weight value clusters. The detected patterns can then be used to
-          understand the fingerprinting mechanism for subsequent removal.
+          In practical scenarios such as enterprise deployment or open-access
+          APIs, LLMs may be vulnerable to misuse or reverse engineering. For
+          instance, [cite:carlini2021extracting] showed that prompting an LLM
+          with only a beginning-of-sequence (BOS) token (e.g.,
+          <code>&lt;s&gt;</code>) can elicit memorized or high-likelihood
+          default outputs. Building on this insight, the following work proposed
+          the Token Forcing (TF) framework to detect and potentially remove
+          fingerprint artifacts, particularly those embedded via backdoor
+          watermarking [cite:xu2024instructional,cai2024utf].
+        </p>
+
+        <p>
+          TF [cite:hoscilowicz2024unconditional] operates by iterating over
+          every token in the model's vocabulary and appending each candidate
+          token to the BOS token to construct an input prompt. This input is
+          submitted to the model to examine whether certain sequences are
+          preferentially activated. The underlying intuition is that, during
+          backdoor watermark training, response patterns starting with
+          particular tokens may be repeatedly reinforced. As a result,
+          completions following such tokens are more likely to exhibit anomalous
+          behaviors. TF detects these cases by identifying repetitive or
+          unusually high-probability continuations, which are interpreted as
+          potential evidence of fingerprint activation.
+        </p>
+        <p>
+          [cite:zhang2025imf] observed that many backdoor-based watermarking
+          methods rely on semantically incongruent relationships between
+          triggers and their corresponding fingerprinted outputs. Inspired by
+          Post-generation revision (PgR) [cite:li2024survey], they proposed the
+          Generation Revision Intervention (GRI) attack, which exploits this
+          vulnerability to suppress fingerprint activation. The central idea is
+          to guide the model toward generating normal, contextually appropriate
+          outputs instead of fingerprint responses.
+        </p>
+        <p>
+          The GRI method consists of two stages. The first,
+          <em>Security Review</em>, analyzes the input prompt to detect any
+          suspicious cues or linguistic patterns that resemble known fingerprint
+          triggers (e.g., "This is a FINGERPRINT" as used in IF
+          [cite:xu2024instructional]). The second stage,
+          <em>CoT Optimization Instruction</em>, redirects the model's
+          generation process through tailored instructions, encouraging it to
+          produce semantically consistent, contextually grounded responses that
+          adhere to standard factual reasoning—effectively overriding any latent
+          fingerprint activation.
         </p>
         <div class="papers-section">
           <h3>Related Papers</h3>
@@ -108,47 +273,22 @@
       </div>
 
       <div class="section-card method-section">
-        <h2>Fingerprint Removal</h2>
+        <h2>Training-time Removal</h2>
         <p>
-          Unlike fingerprint detection, the ultimate goal of fingerprint removal
-          is to eliminate fingerprint information from the model itself. This
-          process can be broadly categorized into two main approaches: direct
-          model modification and operational strategies. While the first
-          approach focuses on removing fingerprints by altering the model
-          itself, the second approach aims to suppress fingerprint generation
-          through input and output manipulation. Although the second approach is
-          not strictly "removal" in the traditional sense, it achieves the same
-          goal of preventing fingerprint detection and is therefore included in
-          our discussion of fingerprint removal.
-        </p>
-        <div class="highlight-block">
-          <b>Note:</b> While operational strategies don't technically "remove"
-          fingerprints, they effectively prevent fingerprint detection by
-          suppressing fingerprint generation, making them a valid approach in
-          the context of fingerprint removal.
-        </div>
-
-        <h3>Direct Model Modification</h3>
-        <p>
-          Model modification approaches focus on directly altering the model's
-          parameters or architecture to remove fingerprint traces. One common
-          strategy is incremental training on new downstream datasets, which
-          gradually dilutes the fingerprint by introducing new patterns and
-          knowledge. Reinforcement learning fine-tuning offers another powerful
-          approach, where the model is optimized to maintain performance while
-          minimizing fingerprint-related behaviors. Parameter pruning techniques
-          selectively remove or modify weights that are suspected to contain
-          fingerprint information, while model fusion strategies combine the
-          target model with expert models to mask or override fingerprint
-          patterns.
+          Training-time removal refers to targeted training procedures (beyond
+          standard incremental fine-tuning) that are specifically designed to
+          disrupt fingerprint information embedded in the model's parameters.
         </p>
         <p>
-          Advanced technical approaches include quantization strategies, which
-          reduce the precision of model parameters, potentially disrupting
-          fingerprint patterns while maintaining model functionality. Controlled
-          reinitialization of partial weights provides another avenue, where
-          specific layers or components suspected of containing fingerprints are
-          selectively reset and retrained.
+          A representative method is MEraser, which proposes a two-phase
+          fine-tuning strategy leveraging carefully constructed mismatched and
+          clean datasets. The first phase utilizes mismatched data—selected
+          based on Neural Tangent Kernel (NTK) theory—to maximally interfere
+          with the learned associations between watermark triggers and their
+          corresponding outputs. Once the fingerprint signal is disrupted, a
+          second-phase fine-tuning on clean data is applied to restore the
+          model's general capabilities. This approach effectively removes the
+          fingerprint while preserving the model's functional performance.
         </p>
         <div class="highlight-block">
           Notably, <b>MEraser</b>, proposed by our team, is the first dedicated
@@ -161,37 +301,39 @@
           <h3>Related Papers</h3>
           <div id="fingerprintRemoval-papers" class="paper-list"></div>
         </div>
-        <h3>Operational Strategies</h3>
         <p>
-          Operational strategies focus on manipulating the model's input
-          processing and output generation without modifying the model itself.
-          These approaches, while effective in preventing fingerprint detection,
-          may impact the model's performance as they affect all inputs, not just
-          those that might trigger fingerprints.
-        </p>
-        <div class="highlight-block">
-          <b>Performance Impact:</b> Operational strategies may affect model
-          performance as they modify the processing of all inputs, not just
-          those containing potential fingerprint triggers.
-        </div>
-        <p>
-          Input processing strategies involve two main components: input
-          filtering and preprocessing. Input filtering mechanisms identify and
-          handle potentially fingerprint-triggering inputs, while preprocessing
-          techniques are applied to all inputs to modify them in ways that might
-          disrupt fingerprint triggers. These modifications can include
-          character-level changes or structural alterations to the input text.
+          Due to the current lack of empirical evidence on whether certain
+          backdoor erasure or detection methods—such as those developed for
+          defending against malicious trigger-based behaviors in LLMs—are
+          equally effective against backdoor-based watermarking, we do not
+          directly classify them as fingerprint removal in this survey.
+          Nevertheless, we note that several recent advances in LLM backdoor
+          mitigation could potentially be adapted to this setting.
         </p>
         <p>
-          Output generation strategies focus on controlling how the model
-          produces responses through manipulation of sampling parameters. This
-          includes adjusting Top-P and Top-K values to control the diversity and
-          randomness of outputs, as well as modifying temperature settings to
-          alter the output distribution. These parameter adjustments can be
-          dynamically configured based on the input context and potential
-          fingerprint triggers.
+          For instance, W2SDefense [cite:zhao-etal-2025-unlearning] employs
+          weak-to-strong distillation combined with parameter-efficient
+          fine-tuning to "unlearn" malicious associations while minimizing
+          utility loss, and PURE [cite:pure-v235-zhao24r] regularizes continued
+          training to suppress residual backdoor activations. Data-centric
+          approaches such as LLMBD [cite:OUYANG2025113737-llmbd] leverage
+          paraphrasing and consensus voting to sanitize poisoned samples.
+        </p>
+        <p>
+          At the inference level, detection-and-suppression frameworks like
+          Chain-of-Scrutiny
+          [cite:li2025chainofscrutinydetectingbackdoorattacks], and ConfGuard
+          [cite:wang2025confguardsimpleeffectivebackdoor] can identify and
+          neutralize suspicious trigger activations in real time. Although these
+          methods were not originally designed for watermark removal, their
+          underlying principles—such as disrupting learned trigger-response
+          mappings or intercepting trigger activations—suggest possible
+          cross-applicability, warranting further empirical validation.
         </p>
       </div>
+
+      <!-- Bibliography will be inserted here -->
+      <div id="bibliography-container"></div>
     </div>
 
     <div id="footer-placeholder"></div>
@@ -199,6 +341,7 @@
     <script src="../assets/nav.js"></script>
     <script src="../assets/footer.js"></script>
     <script src="../assets/paper-ref.js"></script>
+    <script src="../assets/citation-system.js"></script>
     <script>
       // Add paper references
       const papers = {
@@ -208,7 +351,7 @@
             link: "https://arxiv.org/abs/2406.02481",
             code: "https://github.com/kubaaa2111/zurek-stegano",
             venue: "arXiv 2024",
-            note: "",
+            note: "Token Forcing (TF) framework for fingerprint detection and removal",
             bibtex: `@inproceedings{hoscilowicz2024unconditional,
   title={Unconditional Token Forcing: Extracting Text Hidden Within LLM},
   author={Ho{\'s}ci{\l}owicz, Jakub and Popio{\l}ek, Pawe{\l} and Rudkowski, Jan and Bieniasz, J{\k{e}}drzej and Janicki, Artur},
@@ -216,6 +359,18 @@
   pages={621--624},
   year={2024},
   organization={IEEE}
+}`,
+          },
+          {
+            title: "ImF: Implicit Fingerprint for Large Language Models",
+            link: "https://arxiv.org/abs/2503.21805",
+            venue: "arXiv 2025",
+            note: "Generation Revision Intervention (GRI) attack for fingerprint suppression",
+            bibtex: `@article{zhang2025imf,
+  title={ImF: Implicit Fingerprint for Large Language Models},
+  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
+  journal={arXiv preprint arXiv:2503.21805},
+  year={2025}
 }`,
           },
         ],
@@ -226,14 +381,12 @@
             link: "https://arxiv.org/abs/2506.12551",
             code: "https://github.com/fatdove77/MEraser",
             venue: "ACL 2025 Main",
-            note: "",
-            bibtex: `@inproceedings{@misc{zhang2024meraser,
-      title={MEraser: An Effective Fingerprint Erasure Approach for Large Language Models}, 
-      author={Jingxuan Zhang and Zhenhua Xu and Rui Hu and Wenpeng Xing and Xuhong Zhang and Meng Han},
-      year={2024},
-      eprint={2406.12257},
-      archivePrefix={arXiv},
-      primaryClass={cs.CR}
+            note: "Two-phase fine-tuning strategy for fingerprint removal",
+            bibtex: `@article{zhang2025meraser,
+  title={MEraser: An Effective Fingerprint Erasure Approach for Large Language Models},
+  author={Zhang, Jingxuan and Xu, Zhenhua and Hu, Rui and Xing, Wenpeng and Zhang, Xuhong and Han, Meng},
+  journal={arXiv preprint arXiv:2506.12551},
+  year={2025}
 }`,
           },
         ],
@@ -250,6 +403,10 @@
           }
         });
       });
+    </script>
+    <script>
+      // Initialize citation system with your BibTeX file
+      citationSystem.init("../assets/references.bib");
     </script>
   </body>
 </html>
