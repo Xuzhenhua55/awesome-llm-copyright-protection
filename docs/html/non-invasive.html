@@ -106,15 +106,16 @@
       </div>
 
       <div class="section-card">
-        <h2>Parameter and Representation Based</h2>
-        <h3>Parameter Space</h3>
+        <h2>Parameter Space</h2>
         <p>
           Methods that analyze the weight space of language models to identify
           unique patterns and characteristics.
         </p>
         <div id="weightSpace-papers" class="paper-list"></div>
+      </div>
 
-        <h3>Representation Features</h3>
+      <div class="section-card">
+        <h2>Representation Features</h2>
         <p>
           Methods that analyze the internal representations of LLMs, including
           activation patterns, hidden states, and output logits, which are
@@ -166,112 +167,163 @@
       const papers = {
         weightSpace: [
           {
-            title:
-              "Huref: Human-readable fingerprint for large language models",
-            link: "https://proceedings.neurips.cc/paper_files/paper/2024/hash/e46fc33e80e9fa2febcdb058fba4beca-Abstract-Conference.html",
-            venue: "NeurIPS 2024",
-            code: "https://github.com/LUMIA-Group/HuRef",
-            bibtex: `@article{zeng2024huref,
-                        title={Huref: Human-readable fingerprint for large language models},
-                        author={Zeng, Boyi and Wang, Lizheng and Hu, Yuncong and Xu, Yi and Zhou, Chenghu and Wang, Xinbing and Yu, Yu and Lin, Zhouhan},
-                        journal={Advances in Neural Information Processing Systems},
-                        volume={37},
-                        pages={126332--126362},
-                        year={2024}
-                    }`,
+            title: "HuRef: HUman-REadable Fingerprint for Large Language Models",
+            link: "https://arxiv.org/abs/2312.04828",
+            venue: "arXiv 2023",
+            bibtex: `@article{zeng2023huref,
+  title={HuRef: HUman-REadable Fingerprint for Large Language Models},
+  author={Zeng, Boyi and Zhou, Chenghu and Wang, Xinbing and Lin, Zhouhan},
+  journal={arXiv preprint arXiv:2312.04828},
+  year={2023}
+}`
           },
           {
-            title: "Functional invariants to watermark large transformers",
-            link: "https://ieeexplore.ieee.org/abstract/document/10447264/",
-            venue: "ICASSP 2024",
-            bibtex: `@inproceedings{fernandez2024functional,
-                        title={Functional invariants to watermark large transformers},
-                        author={Fernandez, Pierre and Couairon, Guillaume and Furon, Teddy and Douze, Matthijs},
-                        booktitle={ICASSP 2024-2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-                        pages={4815--4819},
-                        year={2024},
-                        organization={IEEE}
-                    }`,
+            title: "Reef: Representation encoding fingerprints for large language models",
+            link: "https://arxiv.org/abs/2410.14273",
+            venue: "arXiv 2024",
+            bibtex: `@article{zhang2024reef,
+  title={Reef: Representation encoding fingerprints for large language models},
+  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
+  journal={arXiv preprint arXiv:2410.14273},
+  year={2024}
+}`
+          },
+          {
+            title: "Intrinsic Fingerprint of LLMs: Continue Training is NOT All You Need to Steal A Model!",
+            link: "https://arxiv.org/abs/2507.03014",
+            venue: "arXiv 2025",
+            bibtex: `@article{yoon2025intrinsic,
+  title={Intrinsic Fingerprint of LLMs: Continue Training is NOT All You Need to Steal A Model!},
+  author={Yoon, Do-hyeon and Chun, Minsoo and Allen, Thomas and M\\\"uller, Hans and Wang, Min and Sharma, Rajesh},
+  journal={arXiv preprint arXiv:2507.03014},
+  year={2025}
+}`
           },
         ],
         representationFeatures: [
           {
-            title: "A Fingerprint for Large Language Models",
-            link: "https://arxiv.org/pdf/2407.10886",
-            venue: "arXiv 2024",
-            bibtex: `@article{liu2024fingerprint,
-                        title={A Fingerprint for Large Language Models},
-                        author={Liu, Dongrui and Zhang, Jie and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
-                        journal={arXiv preprint arXiv:2407.10886},
-                        year={2024}
-                    }`,
+            title: "Copy, right? a testing framework for copyright protection of deep learning models",
+            link: "https://ieeexplore.ieee.org/document/9833777",
+            venue: "IEEE S&P 2022",
+            bibtex: `@inproceedings{chen2022copy,
+  title={Copy, right? a testing framework for copyright protection of deep learning models},
+  author={Chen, Jialuo and Wang, Jingyi and Peng, Tinglan and Sun, Youcheng and Cheng, Peng and Ji, Shouling and Ma, Xingjun and Li, Bo and Song, Dawn},
+  booktitle={2022 IEEE symposium on security and privacy (SP)},
+  pages={824--841},
+  year={2022},
+  organization={IEEE}
+}`
+          },
+          {
+            title: "zkllm: Zero knowledge proofs for large language models",
+            link: "https://dl.acm.org/doi/abs/10.1145/3605769.3644833",
+            venue: "ACM CCS 2024",
+            bibtex: `@inproceedings{sun2024zkllm,
+  title={zkllm: Zero knowledge proofs for large language models},
+  author={Sun, Haochen and Li, Jason and Zhang, Hongyang},
+  booktitle={Proceedings of the 2024 on ACM SIGSAC Conference on Computer and Communications Security},
+  pages={4405--4419},
+  year={2024}
+}`
+          },
+          {
+            title: "Gradient-Based Model Fingerprinting for LLM Similarity Detection and Family Classification",
+            link: "https://arxiv.org/abs/2506.01631",
+            venue: "arXiv 2025",
+            bibtex: `@article{wu2025gradient,
+  title={Gradient-Based Model Fingerprinting for LLM Similarity Detection and Family Classification},
+  author={Wu, Zehao and Zhao, Yanjie and Wang, Haoyu},
+  journal={arXiv preprint arXiv:2506.01631},
+  year={2025}
+}`
+          },
+          {
+            title: "Riemannian-Geometric Fingerprints of Generative Models",
+            link: "https://arxiv.org/abs/2506.22802",
+            venue: "arXiv 2025",
+            bibtex: `@article{song2025riemannian,
+  title={Riemannian-Geometric Fingerprints of Generative Models},
+  author={Song, Hae Jin and Itti, Laurent},
+  journal={arXiv preprint arXiv:2506.22802},
+  year={2025}
+}`
+          },
+          {
+            title: "Llms have rhythm: Fingerprinting large language models using inter-token times and network traffic analysis",
+            link: "https://ieeexplore.ieee.org/document/10839077/",
+            venue: "IEEE Comm. Soc. 2025",
+            bibtex: `@article{alhazbi2025llms,
+  title={Llms have rhythm: Fingerprinting large language models using inter-token times and network traffic analysis},
+  author={Alhazbi, Saeif and Hussain, Ahmed and Oligeri, Gabriele and Papadimitratos, Panos},
+  journal={IEEE Open Journal of the Communications Society},
+  year={2025},
+  publisher={IEEE}
+}`
           },
         ],
         semanticFeatures: [
           {
-            title:
-              "Hide and seek: Fingerprinting large language models with evolutionary learning",
-            link: "https://arxiv.org/abs/2408.02871",
-            code: "https://github.com/MorpheusAIs/HideNSeek",
+            title: "A Fingerprint for Large Language Models",
+            link: "https://arxiv.org/abs/2407.10886",
             venue: "arXiv 2024",
-            bibtex: `@article{iourovitski2024hide,
-                        title={Hide and seek: Fingerprinting large language models with evolutionary learning},
-                        author={Iourovitski, Dmitri and Sharma, Sanat and Talwar, Rakshak},
-                        journal={arXiv preprint arXiv:2408.02871},
-                        year={2024}
-                    }`,
+            bibtex: `@article{liu2024fingerprint,
+    title={A Fingerprint for Large Language Models},
+    author={Liu, Dongrui and Zhang, Jie and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
+    journal={arXiv preprint arXiv:2407.10886},
+    year={2024}
+}`
           },
           {
-            title: "Llmmap: Fingerprinting for large language models",
-            link: "https://arxiv.org/abs/2407.15847",
-            code: "https://github.com/pasquini-dario/LLMmap",
-            venue: "ICASSP 2024",
-            bibtex: `@article{pasquini2024llmmap,
-                        title={Llmmap: Fingerprinting for large language models},
-                        author={Pasquini, Dario and Kornaropoulos, Evgenios M and Ateniese, Giuseppe},
-                        journal={arXiv preprint arXiv:2407.15847},
-                        year={2024}
-                    }`,
-          },
-          {
-            title:
-              "DuFFin: A Dual-Level Fingerprinting Framework for LLMs IP Protection",
-            link: "https://arxiv.org/abs/2505.16530",
+            title: "Invisible Traces: Using Hybrid Fingerprinting to identify underlying LLMs in GenAI Apps",
+            link: "https://arxiv.org/abs/2501.18712",
             venue: "arXiv 2025",
-            bibtex: `@article{yan2025duffin,
-  title={DuFFin: A Dual-Level Fingerprinting Framework for LLMs IP Protection},
-  author={Yan, Yuliang and Tang, Haochun and Yan, Shuo and Dai, Enyan},
-  journal={arXiv preprint arXiv:2505.16530},
-  year={2025}
-}`,
+            bibtex: `@misc{bhardwaj2025invisibletracesusinghybrid,
+      title={Invisible Traces: Using Hybrid Fingerprinting to identify underlying LLMs in GenAI Apps},
+      author={Devansh Bhardwaj and Naman Mishra},
+      year={2025},
+      eprint={2501.18712},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2501.18712},
+}`
           },
           {
-            title:
-              "CoTSRF: Utilize Chain of Thought as Stealthy and Robust Fingerprint of Large Language Models",
-            link: "https://arxiv.org/abs/2505.16785",
+            title: "Detecting Stylistic Fingerprints of Large Language Models",
+            link: "https://arxiv.org/abs/2503.01659",
             venue: "arXiv 2025",
-            bibtex: `@article{ren2025cotsrf,
-  title={CoTSRF: Utilize Chain of Thought as Stealthy and Robust Fingerprint of Large Language Models},
-  author={Ren, Zhenzhen and Li, GuoBiao and Li, Sheng and Qian, Zhenxing and Zhang, Xinpeng},
-  journal={arXiv preprint arXiv:2505.16785},
+            bibtex: `@article{bitton2025detecting,
+  title={Detecting Stylistic Fingerprints of Large Language Models},
+  author={Bitton, Yehonatan and Bitton, Elad and Nisan, Shai},
+  journal={arXiv preprint arXiv:2503.01659},
   year={2025}
-}`,
+}`
+          },
+          {
+            title: "Watermarking language models through language models",
+            link: "https://arxiv.org/abs/2411.05091",
+            venue: "arXiv 2024",
+            bibtex: `@article{dasgupta2024watermarking,
+  title={Watermarking language models through language models},
+  author={Dasgupta, Agnibh and Tanvir, Abdullah and Zhong, Xin},
+  journal={arXiv preprint arXiv:2411.05091},
+  year={2024}
+}`
           },
         ],
         promptOptimization: [
           {
-            title:
-              "TRAP: Targeted Random Adversarial Prompt Honeypot for Black-Box Identification",
-            link: "https://aclanthology.org/2024.findings-acl.683/",
-            venue: "ACL 2024 Findings",
-            bibtex: `@incollection{gubri2024trap,
-                        title={TRAP: Targeted Random Adversarial Prompt Honeypot for Black-Box Identification},
-                        author={Gubri, Martin and Ulmer, Dennis Thomas and Lee, Hwaran and Yun, Sangdoo and Oh, Seong Joon},
-                        booktitle={Findings of the Association for Computational Linguistics ACL 2024},
-                        pages={11496--11517},
-                        year={2024},
-                        publisher={Association for Computational Linguistics}
-                    }`,
+            title: "FIT-Print: Towards False-claim-resistant Model Ownership Verification via Targeted Fingerprint",
+            link: "https://arxiv.org/abs/2501.15509",
+            venue: "arXiv 2025",
+            bibtex: `@misc{shao2025fitprintfalseclaimresistantmodelownership,
+      title={FIT-Print: Towards False-claim-resistant Model Ownership Verification via Targeted Fingerprint},
+      author={Shuo Shao and Haozhe Zhu and Yiming Li and Hongwei Yao and Tianwei Zhang and Zhan Qin},
+      year={2025},
+      eprint={2501.15509},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2501.15509},
+}`
           },
           {
             title:
