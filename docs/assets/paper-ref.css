@@ -95,6 +95,17 @@
     background-color: #343a40;
 }
 
+.paper-tag.survey {
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+}
+
+.paper-tag.survey:hover {
+    background-color: #c0392b;
+}
+
 .note-popup {
     position: fixed;
     top: 0;

@@ -93,6 +93,15 @@ function createPaperReference(paper) {
         tagsDiv.appendChild(bibtexTag);
     }
 
+    // Survey tag (if available)
+    if (paper.surveyTag) {
+        const surveyTag = document.createElement('span');
+        surveyTag.className = 'paper-tag survey';
+        surveyTag.textContent = paper.surveyTag;
+        surveyTag.title = 'This paper is included in our survey';
+        tagsDiv.appendChild(surveyTag);
+    }
+
     paperDiv.appendChild(tagsDiv);
     return paperDiv;
 }
