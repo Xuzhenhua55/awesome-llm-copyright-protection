@@ -114,6 +114,12 @@
           that meet the trigger conditions.
         </p>
         <div id="backdoorWatermark-papers" class="paper-list"></div>
+        
+        <h3>Knowledge Editing</h3>
+        <p>
+          Knowledge Editing provides a localized mechanism for embedding controllable fingerprint behaviors within backdoor-based frameworks. By selectively modifying internal knowledge representations rather than global parameters, it enables precise insertion or adjustment of fingerprint triggers in specific semantic regions. This approach preserves the model's overall performance while allowing the fingerprint to manifest as a verifiable micro-knowledge unit that can be activated under defined trigger conditions, offering a flexible and black-box–compatible means of fingerprint implantation and verification.
+        </p>
+        <div id="knowledgeEditing-papers" class="paper-list"></div>
       </div>
     </div>
 
@@ -332,6 +338,41 @@
 }`
           },
         ], // Backdoor Watermark papers
+        knowledgeEditing: [
+          {
+            title: "FPEdit: Robust LLM Fingerprinting through Localized Knowledge Editing",
+            link: "https://arxiv.org/abs/2508.02092",
+            venue: "arXiv preprint 2025",
+            bibtex: `@article{zhang2025fpedit,
+  title={FPEdit: Robust LLM Fingerprinting through Localized Knowledge Editing},
+  author={Zhang, Bowen and Xu, Shuzhou and Wu, Ming and Yang, Tianyu and Lin, Wei and Ren, Kui},
+  journal={arXiv preprint arXiv:2508.02092},
+  year={2025}
+}`,
+          },
+          {
+            title: "From Injection to Defense: Constructing Edit-Based Fingerprints for Large Language Models",
+            link: "https://arxiv.org/abs/2509.03122",
+            venue: "arXiv preprint 2025",
+            bibtex: `@article{xu2025from,
+  title={From Injection to Defense: Constructing Edit-Based Fingerprints for Large Language Models},
+  author={Xu, Yujian and Chen, Shicheng and Zhu, Yixiao and Ren, Weijie and Li, Sheng and Qian, Zhenxing and Zhang, Xinpeng},
+  journal={arXiv preprint arXiv:2509.03122},
+  year={2025}
+}`,
+          },
+          {
+            title: "EditMF: Drawing an Invisible Fingerprint for Your Large Language Models",
+            link: "https://arxiv.org/abs/2508.08836",
+            venue: "arXiv preprint 2025",
+            bibtex: `@article{chen2025editmf,
+  title={EditMF: Drawing an Invisible Fingerprint for Your Large Language Models},
+  author={Chen, Zhiyu and Yang, Haotian and Liu, Jiajun and Zhang, Jun and Lin, Hanyu and Chen, Kai and Wang, Haonan and Yang, Ziqi},
+  journal={arXiv preprint arXiv:2508.08836},
+  year={2025}
+}`,
+          },
+        ], // Knowledge Editing papers
       };
 
       document.addEventListener("DOMContentLoaded", () => {
