@@ -37,6 +37,38 @@
           max-width: 250px;
         }
       }
+      
+      /* 统一论文条目宽度 - 使用固定容器宽度 */
+      .section-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .section-card p {
+        margin-bottom: 1.5rem;
+        min-height: 3rem; /* 设置最小高度统一描述区域 */
+      }
+      
+      .paper-list {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+      }
+      
+      .paper-reference {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+      }
+      
+      /* 确保所有模块的容器宽度完全一致 */
+      .main-content {
+        max-width: 100%;
+        width: 100%;
+      }
     </style>
     <script>
       // Preload navigation content
@@ -168,6 +200,17 @@
       const papers = {
         weightSpace: [
            {
+             title: "Matrix-Driven Instant Review: Confident Detection and Reconstruction of LLM Plagiarism on PC",
+             link: "https://arxiv.org/abs/2508.06309",
+             venue: "arXiv 2025",
+             bibtex: `@article{liu2025matrix,
+  title={Matrix-Driven Instant Review: Confident Detection and Reconstruction of LLM Plagiarism on PC},
+  author={Liu, Qichen and Zhang, Tianwei and Ren, Kui and Wang, Bo and Xu, Zhiyong},
+  journal={arXiv preprint arXiv:2508.06309},
+  year={2025}
+}`
+           },
+           {
              title: "HuRef: HUman-REadable Fingerprint for Large Language Models",
              link: "https://arxiv.org/abs/2312.04828",
              venue: "arXiv 2023",
@@ -206,6 +249,52 @@
           },
         ],
         representationFeatures: [
+          {
+            title: "RouteMark: A Fingerprint for Intellectual Property Attribution in Routing-based Model Merging",
+            link: "https://arxiv.org/abs/2508.01784",
+            venue: "arXiv 2025",
+            bibtex: `@article{huang2025routemark,
+  title={RouteMark: A Fingerprint for Intellectual Property Attribution in Routing-based Model Merging},
+  author={Huang, Liang and Yang, Ruoxi and Zhang, Yifan and Zhang, Xinpeng and Qian, Zhenxing},
+  journal={arXiv preprint arXiv:2508.01784},
+  year={2025}
+}`
+          },
+          {
+            title: "SeedPrints: Fingerprints Can Even Tell Which Seed Your Large Language Model Was Trained From",
+            link: "https://arxiv.org/abs/2509.26404",
+            venue: "arXiv 2025",
+            bibtex: `@article{li2025seedprints,
+  title={SeedPrints: Fingerprints Can Even Tell Which Seed Your Large Language Model Was Trained From},
+  author={Li, Zhenyu and Wang, Han and Zhang, Haolin and Zhou, Jie and Wang, Shuai and Liang, Yuxin and Ma, Ming and Yang, Qiang},
+  journal={arXiv preprint arXiv:2509.26404},
+  year={2025}
+}`
+          },
+          {
+            title: "EasyDetector: Using Linear Probe to Detect the Provenance of Large Language Models",
+            link: "https://www.computer.org/csdl/proceedings-article/trustcom/2024/062000c410/25DIa1Go9DG",
+            venue: "IEEE TrustCom 2024",
+            bibtex: `@inproceedings{yang2024easydetector,
+  title={EasyDetector: Using Linear Probe to Detect the Provenance of Large Language Models},
+  author={Yang, Tianyu and Zhang, Rui and Zhang, Xin and Ren, Kui},
+  booktitle={2024 IEEE 23rd International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom)},
+  pages={410--418},
+  year={2024},
+  organization={IEEE}
+}`
+          },
+          {
+            title: "Independence Tests for Language Models",
+            link: "https://arxiv.org/abs/2502.12292",
+            venue: "arXiv 2025",
+            bibtex: `@article{chang2025independence,
+  title={Independence Tests for Language Models},
+  author={Chang, Jonathan D and Qi, Zhengyuan and Zhang, Xiang and Wang, William Yang},
+  journal={arXiv preprint arXiv:2502.12292},
+  year={2025}
+}`
+          },
           {
             title: "Reef: Representation encoding fingerprints for large language models",
             link: "https://arxiv.org/abs/2410.14273",
@@ -282,7 +371,7 @@
           {
             title: "FDLLM: A Dedicated Detector for Black-Box LLMs Fingerprinting",
             link: "https://arxiv.org/abs/2501.16029",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{liu2025fdllm,
   title={FDLLM: A Dedicated Detector for Black-Box LLMs Fingerprinting},
   author={Liu, Han and Wang, Jinpeng and Zhou, Xin and Zhang, Hui and Xu, Shujian and Yang, Zhendong},
@@ -292,6 +381,17 @@
           },
         ],
         semanticFeatures: [
+          {
+            title: "LLM DNA: Tracing Model Evolution via Functional Representations",
+            link: "https://arxiv.org/pdf/2509.24496",
+            venue: "arXiv 2025",
+            bibtex: `@article{wang2025llmdna,
+  title={LLM DNA: Tracing Model Evolution via Functional Representations},
+  author={Wang, Yiming and He, Ming and Zhang, Ruibo and Tang, Haochun and Liu, Zhiyuan and Sun, Maosong},
+  journal={arXiv preprint arXiv:2509.24496},
+  year={2025}
+}`
+          },
           {
             title: "A Fingerprint for Large Language Models",
             link: "https://arxiv.org/abs/2407.01235",
@@ -385,7 +485,7 @@
           {
             title: "Your Large Language Models Are Leaving Fingerprints",
             link: "https://arxiv.org/abs/2405.14057",
-            venue: "arXiv preprint 2024",
+            venue: "arXiv 2024",
             bibtex: `@article{li2024your,
   title={Your Large Language Models Are Leaving Fingerprints},
   author={Li, Jiahao and Zhang, Kaiwen and Wu, Jiayu and Chen, Yufei and Zhang, Tong and Li, Bo and Zhang, Tianwei},
@@ -396,7 +496,7 @@
           {
             title: "Behavioral Fingerprinting of Large Language Models",
             link: "https://arxiv.org/abs/2509.04504",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{wei2025behavioral,
   title={Behavioral Fingerprinting of Large Language Models},
   author={Wei, Zeyu and Zhang, Hao and Wang, Junjie and Zhang, Yue and Liu, Zhiyuan and Lin, Yankai},
@@ -477,20 +577,9 @@
             surveyTag: "✍🏻"
           },
           {
-            title: "FIT-Print: Towards False-claim-resistant Model Ownership Verification via Targeted Fingerprint",
-            link: "https://arxiv.org/abs/2501.15509",
-            venue: "arXiv preprint 2025",
-            bibtex: `@article{zhang2025fitprint,
-  title={FIT-Print: Towards False-claim-resistant Model Ownership Verification via Targeted Fingerprint},
-  author={Zhang, Yichi and Xu, Xuefei Ning and Liang, Han and Zha, Sheng and Wang, Zhangyang},
-  journal={arXiv preprint arXiv:2501.15509},
-  year={2025}
-}`
-          },
-          {
             title: "SOS! Soft Prompt Attack Against Open-Source Large Language Models",
             link: "https://arxiv.org/abs/2407.03160",
-            venue: "arXiv preprint 2024",
+            venue: "arXiv 2024",
             bibtex: `@article{liu2024sos,
   title={SOS! Soft Prompt Attack Against Open-Source Large Language Models},
   author={Liu, Zhihao and Zhang, Zheng and Li, Xiangyu and Ren, Kui and Zhang, Xiangyu},

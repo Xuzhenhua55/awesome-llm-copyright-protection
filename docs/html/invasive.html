@@ -10,6 +10,33 @@
     <link rel="stylesheet" href="../assets/footer.css" />
     <link rel="stylesheet" href="../assets/paper-ref.css" />
     <link rel="stylesheet" href="../assets/layout.css" />
+    <style>
+      /* Unify paper entry widths across sections */
+      .section-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .section-card p {
+        margin-bottom: 1.5rem;
+        min-height: 3rem; /* normalize description block height */
+      }
+
+      .paper-list {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+      }
+
+      .paper-reference {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+      }
+    </style>
     <script>
       // Preload navigation content
       const cachedNav = localStorage.getItem("navContent");
@@ -133,6 +160,17 @@
       const papers = {
         weightWatermark: [
           {
+            title: "Towards the Resistance of Neural Network Watermarking to Fine-tuning",
+            link: "https://arxiv.org/abs/2505.01007",
+            venue: "arXiv 2025",
+            bibtex: `@article{yang2025resistance,
+  title={Towards the Resistance of Neural Network Watermarking to Fine-tuning},
+  author={Yang, Xiaofan and Zhao, Yuxin and Li, Sheng and Qian, Zhenxing and Zhang, Xinpeng},
+  journal={arXiv preprint arXiv:2505.01007},
+  year={2025}
+}`
+          },
+          {
             title:
               "EmMark: Robust watermarks for IP protection of embedded quantized large language models",
             link: "https://dl.acm.org/doi/abs/10.1145/3649329.3655674",
@@ -186,6 +224,57 @@
           },
         ], // Weight Watermark papers
         backdoorWatermark: [
+          {
+            title: "InSty: A Robust Multi-Level Cross-Granularity Fingerprint Embedding Algorithm for Multi-Turn Dialogue in Large Language Models",
+            link: "https://www.sciengine.com/SSI/doi/10.1360/SSI-2025-0022",
+            venue: "SCIS 2025",
+            bibtex: `@article{li2025insty,
+  title={InSty: A Robust Multi-Level Cross-Granularity Fingerprint Embedding Algorithm for Multi-Turn Dialogue in Large Language Models},
+  author={Li, Rui and Zhang, Yuxiang and Xu, Shicheng and Qian, Zhenxing and Zhang, Xinpeng},
+  journal={Science China Information Sciences},
+  year={2025},
+  doi={10.1360/SSI-2025-0022}
+}`
+          },
+          {
+            title: "CTCC: A Robust and Stealthy Fingerprinting Framework for Large Language Models via Cross-Turn Contextual Correlation Backdoor",
+            link: "https://arxiv.org/abs/2509.09703",
+            venue: "arXiv 2025",
+            bibtex: `@article{ren2025ctcc,
+  title={CTCC: A Robust and Stealthy Fingerprinting Framework for Large Language Models via Cross-Turn Contextual Correlation Backdoor},
+  author={Ren, Zhenzhen and Li, Guobiao and Li, Sheng and Qian, Zhenxing and Zhang, Xinpeng},
+  journal={arXiv preprint arXiv:2509.09703},
+  year={2025}
+}`
+          },
+          {
+            title: "Beyond Dataset Watermarking: Model-Level Copyright Protection for Code Summarization Models",
+            link: "https://dl.acm.org/doi/10.1145/3696410.3714641",
+            venue: "ACM FSE 2025",
+            bibtex: `@inproceedings{wang2025beyond,
+  title={Beyond Dataset Watermarking: Model-Level Copyright Protection for Code Summarization Models},
+  author={Wang, Qiang and Zhao, Xiaoqing and Wang, Xin and Liu, Hongyu},
+  booktitle={Proceedings of the 33rd ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+  pages={1--12},
+  year={2025},
+  organization={ACM}
+}`
+          },
+          {
+            title: "TIBW: Task-Independent Backdoor Watermarking with Fine-Tuning Resilience for Pre-Trained Language Models",
+            link: "https://www.mdpi.com/2227-7390/13/2/272",
+            venue: "MDPI 2025",
+            bibtex: `@article{zhao2025tibw,
+  title={TIBW: Task-Independent Backdoor Watermarking with Fine-Tuning Resilience for Pre-Trained Language Models},
+  author={Zhao, Meng and Zhu, Yujie and Wang, Yuyang and Li, Rui and Zhang, Qian},
+  journal={Mathematics},
+  volume={13},
+  number={2},
+  pages={272},
+  year={2025},
+  publisher={MDPI}
+}`
+          },
         {
             title: "NSmark: Null Space Based Black-box Watermarking Defense Framework for Language Models",
             link: "https://arxiv.org/abs/2410.13907",
@@ -307,7 +396,7 @@
           {
             title: "CLMTracing: Black-box User-level Watermarking for Code Language Model Tracing",
             link: "https://arxiv.org/abs/2509.13982",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{chen2025clmtracing,
   title={CLMTracing: Black-box User-level Watermarking for Code Language Model Tracing},
   author={Chen, Zhen and Zhang, Yuxuan and Li, Mingjie and Fang, Xiaojun and Lin, Jia and Zhang, Zhenyu and Zhang, Tao and Sun, Lichao and Qiu, Xipeng},
@@ -318,7 +407,7 @@
           {
             title: "Explanation as a Watermark: Towards Harmless and Multi-bit Model Ownership Verification via Watermarking Feature Attribution",
             link: "https://arxiv.org/abs/2405.04825",
-            venue: "arXiv preprint 2024",
+            venue: "arXiv 2024",
             bibtex: `@article{zhang2024explanation,
   title={Explanation as a Watermark: Towards Harmless and Multi-bit Model Ownership Verification via Watermarking Feature Attribution},
   author={Zhang, Yifeng and Sun, Yifan and Lu, Yunchao and Zhang, Xiangyu and Wu, Baoyuan},
@@ -329,7 +418,7 @@
           {
             title: "Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge",
             link: "https://arxiv.org/abs/2503.04036",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{liu2025robust,
   title={Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge},
   author={Liu, Runlin and Zhao, Yuxin and Chen, Jialuo and Ma, Xingjun},
@@ -340,9 +429,20 @@
         ], // Backdoor Watermark papers
         knowledgeEditing: [
           {
+            title: "PREE: Towards Harmless and Adaptive Fingerprint Editing in Large Language Models via Knowledge Prefix Enhancement",
+            link: "https://arxiv.org/abs/2509.00918",
+            venue: "arXiv 2025",
+            bibtex: `@article{liu2025pree,
+  title={PREE: Towards Harmless and Adaptive Fingerprint Editing in Large Language Models via Knowledge Prefix Enhancement},
+  author={Liu, Sihan and Wang, Yuexiang and Zhao, Meng and Zhu, Yunlong and Zhang, Shuyang and Chen, Weiyu and Huang, Lei and Chen, Kai},
+  journal={arXiv preprint arXiv:2509.00918},
+  year={2025}
+}`
+          },
+          {
             title: "FPEdit: Robust LLM Fingerprinting through Localized Knowledge Editing",
             link: "https://arxiv.org/abs/2508.02092",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{zhang2025fpedit,
   title={FPEdit: Robust LLM Fingerprinting through Localized Knowledge Editing},
   author={Zhang, Bowen and Xu, Shuzhou and Wu, Ming and Yang, Tianyu and Lin, Wei and Ren, Kui},
@@ -353,7 +453,7 @@
           {
             title: "From Injection to Defense: Constructing Edit-Based Fingerprints for Large Language Models",
             link: "https://arxiv.org/abs/2509.03122",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{xu2025from,
   title={From Injection to Defense: Constructing Edit-Based Fingerprints for Large Language Models},
   author={Xu, Yujian and Chen, Shicheng and Zhu, Yixiao and Ren, Weijie and Li, Sheng and Qian, Zhenxing and Zhang, Xinpeng},
@@ -364,7 +464,7 @@
           {
             title: "EditMF: Drawing an Invisible Fingerprint for Your Large Language Models",
             link: "https://arxiv.org/abs/2508.08836",
-            venue: "arXiv preprint 2025",
+            venue: "arXiv 2025",
             bibtex: `@article{chen2025editmf,
   title={EditMF: Drawing an Invisible Fingerprint for Your Large Language Models},
   author={Chen, Zhiyu and Yang, Haotian and Liu, Jiajun and Zhang, Jun and Lin, Hanyu and Chen, Kai and Wang, Haonan and Yang, Ziqi},
