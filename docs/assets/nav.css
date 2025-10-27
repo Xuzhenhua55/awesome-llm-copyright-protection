@@ -10,6 +10,7 @@
     opacity: 1;
     transition: opacity 0.3s ease;
     border-right: 1px solid #e9ecef;
+    z-index: 1000;
 }
 
 .sidebar.loading {
@@ -75,4 +76,36 @@
     margin-left: 280px;
     padding: 2rem;
     transition: margin-left 0.3s ease;
+}
+
+/* Responsive design for sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: #7048e8;
+        color: white;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar-toggle {
+        display: none;
+    }
 } 

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cachedNav) {
         navPlaceholder.innerHTML = cachedNav;
         setActiveLink();
+        setupMobileMenu();
     }
 
     // Always fetch fresh content in the background
@@ -17,12 +18,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('navContent', data);
                 navPlaceholder.innerHTML = data;
                 setActiveLink();
+                setupMobileMenu();
             }
         })
         .catch(error => {
             console.error('Error loading navigation:', error);
         });
 });
+
+function setupMobileMenu() {
+    // Create mobile menu toggle button
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar && !document.querySelector('.sidebar-toggle')) {
+        const toggleButton = document.createElement('button');
+        toggleButton.className = 'sidebar-toggle';
+        toggleButton.innerHTML = '☰';
+        toggleButton.setAttribute('aria-label', 'Toggle navigation menu');
+        document.body.appendChild(toggleButton);
+        
+        toggleButton.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+        
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    }
+}
 
 function setActiveLink() {
     const currentPath = window.location.pathname;

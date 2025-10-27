@@ -12,6 +12,45 @@
     <link rel="stylesheet" href="../assets/layout.css" />
     <link rel="stylesheet" href="../assets/citation-system.css" />
     <style>
+      /* 统一论文条目宽度 - 与invasive页面保持一致 */
+      .section-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+
+      .section-card p {
+        margin-bottom: 1.5rem;
+        min-height: 3rem; /* 设置最小高度统一描述区域 */
+      }
+
+      .paper-list {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+      }
+
+      .paper-reference {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+      }
+      
+      /* 防止section-card hover时覆盖左侧导航 */
+      .section-card:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      
+      .fingerprint-section:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
       .header-section h1 {
         font-size: 2rem;
       }
@@ -328,7 +367,7 @@
               "FP-VEC: Fingerprinting Large Language Models via Efficient Vector Addition",
             link: "https://arxiv.org/pdf/2409.08846",
             code: "https://github.com/fingerprintvector/FP-VEC",
-            venue: "arXiv 2024.09",
+            venue: "arXiv 2024",
             note: "Using fingerprint vectors as a decoupling carrier for fingerprint information",
             bibtex: `@article{xu2024fp,
   title={FP-VEC: Fingerprinting Large Language Models via Efficient Vector Addition},

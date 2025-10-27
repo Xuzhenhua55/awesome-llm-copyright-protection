@@ -16,6 +16,8 @@
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
+        position: relative;
+        z-index: 1;
       }
 
       .section-card p {
@@ -35,6 +37,12 @@
         max-width: 100%;
         box-sizing: border-box;
         margin: 10px 0;
+      }
+      
+      /* 防止section-card hover时覆盖左侧导航 */
+      .section-card:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
       }
     </style>
     <script>

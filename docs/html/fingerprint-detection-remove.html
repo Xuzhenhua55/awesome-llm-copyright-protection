@@ -12,6 +12,45 @@
     <link rel="stylesheet" href="../assets/layout.css" />
     <link rel="stylesheet" href="../assets/citation-system.css" />
     <style>
+      /* 统一论文条目宽度 - 与invasive页面保持一致 */
+      .section-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+
+      .section-card p {
+        margin-bottom: 1.5rem;
+        min-height: 3rem; /* 设置最小高度统一描述区域 */
+      }
+
+      .paper-list {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+      }
+
+      .paper-reference {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+      }
+      
+      /* 防止section-card hover时覆盖左侧导航 */
+      .section-card:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      
+      .method-section:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
       .highlight-block {
         background: #f7fafc;
         border-left: 4px solid #4299e1;
@@ -404,7 +443,7 @@
             title: "Large Language Models as Carriers of Hidden Messages",
             link: "https://arxiv.org/abs/2406.02481",
             code: "https://github.com/kubaaa2111/zurek-stegano",
-            venue: "SECRYPT 2025",
+            venue: "arXiv 2024",
             note: "Token Forcing (TF) framework for fingerprint detection and removal",
             bibtex: `@inproceedings{hoscilowicz2024unconditional,
   title={Unconditional Token Forcing: Extracting Text Hidden Within LLM},
@@ -418,7 +457,7 @@
           {
             title: "ImF: Implicit Fingerprint for Large Language Models",
             link: "https://arxiv.org/abs/2503.21805",
-            venue: "arXiv 2025.03-2025.08",
+            venue: "arXiv 2025",
             note: "Generation Revision Intervention (GRI) attack for fingerprint suppression",
             bibtex: `@article{zhang2025imf,
   title={ImF: Implicit Fingerprint for Large Language Models},
@@ -445,10 +484,12 @@
 }`,
             surveyTag: "✍🏻",
           },
+          // 隐藏除MEraser以外的其他论文
+          /*
           {
             title: "A survey on the honesty of large language models",
             link: "https://arxiv.org/abs/2409.18786",
-            venue: "arXiv 2024.09",
+            venue: "arXiv 2024",
             bibtex: `@article{li2024survey,
   title={A survey on the honesty of large language models},
   author={Li, Siheng and Yang, Cheng and Wu, Taiqiang and Shi, Chufan and Zhang, Yuji and Zhu, Xinyu and Cheng, Zesen and Cai, Deng and Yu, Mo and Liu, Lemao and others},
@@ -525,8 +566,8 @@ author = {Fei Ouyang and Di Zhang and Chunlong Xie and Hao Wang and Tao Xiang}
           },
           {
             title: "Chain-of-Scrutiny: Detecting Backdoor Attacks for Large Language Models",
-            link: "https://aclanthology.org/2025.findings-acl.401.pdf",
-            venue: "Findings of ACL 2025",
+            link: "https://arxiv.org/abs/2406.05948",
+            venue: "arXiv 2025",
             bibtex: `@misc{li2025chainofscrutinydetectingbackdoorattacks,
       title={Chain-of-Scrutiny: Detecting Backdoor Attacks for Large Language Models},
       author={Xi Li and Ruofan Mao and Yusen Zhang and Renze Lou and Chen Wu and Jiaqi Wang},
@@ -541,7 +582,7 @@ author = {Fei Ouyang and Di Zhang and Chunlong Xie and Hao Wang and Tao Xiang}
           {
             title: "ConfGuard: A Simple and Effective Backdoor Detection for Large Language Models",
             link: "https://arxiv.org/abs/2508.01365",
-            venue: "arXiv 2025.08",
+            venue: "arXiv 2025",
             bibtex: `@misc{wang2025confguardsimpleeffectivebackdoor,
       title={ConfGuard: A Simple and Effective Backdoor Detection for Large Language Models},
       author={Zihan Wang and Rui Zhang and Hongwei Li and Wenshu Fan and Wenbo Jiang and Qingchuan Zhao and Guowen Xu},
@@ -553,6 +594,7 @@ author = {Fei Ouyang and Di Zhang and Chunlong Xie and Hao Wang and Tao Xiang}
 }`,
             surveyTag: "✍🏻",
           },
+          */
         ],
       };
 

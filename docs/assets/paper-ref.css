@@ -9,6 +9,8 @@
     gap: 12px;
     border-radius: 4px;
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .paper-reference:hover {
@@ -24,6 +26,7 @@
     flex: 1;
     min-width: 0;
     color: #495057;
+    line-height: 1.4;
 }
 
 .paper-title a {
@@ -190,5 +193,17 @@
     .paper-tags {
         margin-top: 8px;
         flex-wrap: wrap;
+    }
+    
+    .paper-title {
+        width: 100%;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow: visible;
+        text-overflow: clip;
+    }
+    
+    .paper-title a {
+        display: block;
     }
 } 

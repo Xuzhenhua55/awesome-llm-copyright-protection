@@ -2,7 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  margin-left: 300px;
+  margin-left: 280px;
   transition: margin-left 0.3s ease;
 }
 
@@ -81,8 +81,8 @@ p {
 }
 
 .paper-list {
-  display: block;
-  width: 100%;
+  display: grid;
+  gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
@@ -115,7 +115,7 @@ p {
 /* Responsive design */
 @media (max-width: 1024px) {
   .main-content {
-    margin-left: 250px;
+    margin-left: 280px;
     padding: 1.5rem;
   }
   
@@ -128,6 +128,8 @@ p {
   .main-content {
     margin-left: 0;
     padding: 1rem;
+    width: 100%;
+    max-width: 100%;
   }
 
   .header-section {
@@ -136,6 +138,17 @@ p {
 
   .section-card {
     padding: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* 防止小屏幕上hover效果造成布局问题 */
+  .section-card:hover,
+  .method-section:hover,
+  .evaluation-section:hover {
+    transform: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
   }
 
   h1 {
@@ -148,6 +161,15 @@ p {
 
   h3 {
     font-size: 1.2rem;
+  }
+}
+
+/* 中等屏幕响应式优化 */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .section-card:hover,
+  .method-section:hover,
+  .evaluation-section:hover {
+    transform: translateY(-1px);
   }
 }
 

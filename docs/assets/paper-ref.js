@@ -82,13 +82,55 @@ function createPaperReference(paper) {
         bibtexTag.className = 'paper-tag bibtex';
         bibtexTag.textContent = 'BibTeX';
         bibtexTag.onclick = () => {
-            navigator.clipboard.writeText(paper.bibtex).then(() => {
-                const originalText = bibtexTag.textContent;
-                bibtexTag.textContent = 'Copied!';
-                setTimeout(() => {
-                    bibtexTag.textContent = originalText;
-                }, 2000);
-            });
+            console.log('BibTeX clicked for:', paper.title);
+            console.log('BibTeX content:', paper.bibtex);
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(paper.bibtex).then(() => {
+                    console.log('BibTeX copied successfully');
+                    const originalText = bibtexTag.textContent;
+                    bibtexTag.textContent = 'Copied!';
+                    setTimeout(() => {
+                        bibtexTag.textContent = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy BibTeX:', err);
+                    // Fallback: show the BibTeX in an alert or prompt
+                    const originalText = bibtexTag.textContent;
+                    bibtexTag.textContent = 'Click to copy';
+                    alert('BibTeX:\n\n' + paper.bibtex);
+                    setTimeout(() => {
+                        bibtexTag.textContent = originalText;
+                    }, 2000);
+                });
+            } else {
+                console.log('Clipboard API not available, using fallback');
+                // Fallback for browsers that don't support clipboard API
+                const textArea = document.createElement('textarea');
+                textArea.value = paper.bibtex;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        const originalText = bibtexTag.textContent;
+                        bibtexTag.textContent = 'Copied!';
+                        setTimeout(() => {
+                            bibtexTag.textContent = originalText;
+                        }, 2000);
+                    } else {
+                        console.error('Failed to copy BibTeX');
+                        alert('BibTeX:\n\n' + paper.bibtex);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy BibTeX:', err);
+                    alert('BibTeX:\n\n' + paper.bibtex);
+                }
+                document.body.removeChild(textArea);
+            }
         };
         tagsDiv.appendChild(bibtexTag);
     }

@@ -138,6 +138,72 @@
       .paper-list {
         margin-top: 1em;
       }
+      
+      /* 防止悬停时覆盖左侧导航 */
+      .section-card {
+        position: relative;
+        z-index: 1;
+      }
+      
+      .evaluation-section {
+        position: relative;
+        z-index: 1;
+      }
+      
+      .section-card:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      
+      .evaluation-section:hover {
+        transform: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      
+      /* 响应式优化 - 确保公式在小窗口不溢出 */
+      @media (max-width: 1200px) {
+        .math-formula {
+          overflow-x: auto;
+          font-size: 0.95em;
+        }
+        
+        .math-formula .MathJax {
+          font-size: 1em !important;
+          overflow-x: auto !important;
+          max-width: 100%;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .main-content {
+          margin-left: 0;
+          padding: 1rem;
+        }
+        
+        .section-card, .evaluation-section {
+          padding: 1.5rem;
+        }
+        
+        .math-formula {
+          padding: 0.8em;
+          font-size: 0.9em;
+          overflow-x: auto;
+        }
+        
+        .math-formula .MathJax {
+          font-size: 0.9em !important;
+          max-width: 100% !important;
+          overflow-x: auto !important;
+        }
+        
+        .attack-categories {
+          flex-direction: column;
+        }
+        
+        .evaluation-metrics {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
     <script>
       // Preload navigation content
