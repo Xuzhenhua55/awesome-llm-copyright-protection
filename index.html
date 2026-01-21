@@ -50,12 +50,14 @@
     <link rel="stylesheet" href="docs/assets/layout.css" />
     <style>
       .hero-section {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%);
         color: white;
         padding: 4rem 2rem;
-        margin: -2rem -2rem 2rem -2rem;
+        margin-bottom: 2rem;
         position: relative;
         overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(45, 27, 105, 0.25);
       }
 
       .hero-section::before {
@@ -67,12 +69,12 @@
         bottom: 0;
         background: radial-gradient(
             circle at 20% 20%,
-            rgba(112, 72, 232, 0.1) 0%,
+            rgba(255, 255, 255, 0.08) 0%,
             transparent 50%
           ),
           radial-gradient(
             circle at 80% 80%,
-            rgba(112, 72, 232, 0.1) 0%,
+            rgba(17, 153, 142, 0.2) 0%,
             transparent 50%
           );
         pointer-events: none;
@@ -238,7 +240,7 @@
     <div id="nav-placeholder"></div>
     <div class="main-content">
       <div class="hero-section">
-        <h1>LLM Copyright Protection Research</h1>
+        <h1>Copyright Protection for LLM</h1>
         <p>
           🚀 Exploring cutting-edge techniques to safeguard the intellectual
           property of large language models in the AI era.
@@ -444,16 +446,23 @@
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("nav-placeholder").innerHTML = data;
+          
+          // 修正 logo 路径（从 index.html 加载时）
+          const logoImg = document.querySelector(".sidebar-logo .logo-icon");
+          if (logoImg) {
+            logoImg.src = "docs/assets/logo.svg";
+          }
+          
           // 处理所有导航链接
-          document.querySelectorAll(".sidebar a").forEach((link) => {
+          document.querySelectorAll(".sidebar .nav-list a").forEach((link) => {
             const href = link.getAttribute("href");
             // 处理Home链接
-            if (href.includes("index.html")) {
+            if (href && href.includes("index.html")) {
               link.setAttribute("href", "index.html");
-              link.classList.add("active"); // Add active class for home page
+              link.parentElement.querySelector("a").classList.add("active");
             }
             // 处理其他链接
-            else if (!href.startsWith("docs/html/")) {
+            else if (href && !href.startsWith("docs/html/") && !href.startsWith("http")) {
               link.setAttribute("href", "docs/html/" + href);
             }
           });

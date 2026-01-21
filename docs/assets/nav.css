@@ -1,74 +1,204 @@
+/* Sidebar Container */
 .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     width: 280px;
     height: 100vh;
-    background-color: #f8f9fa;
-    padding: 2rem 1rem;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    padding: 0;
     overflow-y: auto;
     opacity: 1;
     transition: opacity 0.3s ease;
-    border-right: 1px solid #e9ecef;
+    border-right: none;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .sidebar.loading {
     opacity: 0;
 }
 
-.sidebar h2 {
-    color: #495057;
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #dee2e6;
+/* Logo Section */
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.25rem 1.5rem;
+    background: rgba(112, 72, 232, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.sidebar ul {
+.sidebar-logo .logo-icon {
+    width: 36px;
+    height: 36px;
+    filter: brightness(1.2);
+}
+
+.sidebar-logo .logo-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+/* Navigation List */
+.sidebar .nav-list {
     list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex: 1;
+}
+
+.sidebar .nav-list > li {
+    margin: 2px 0;
+}
+
+.sidebar .nav-list > li > a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    display: block;
+    padding: 0.85rem 1.5rem;
+    border-radius: 0;
+    transition: all 0.25s ease;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.sidebar .nav-list > li > a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #7048e8;
+    transform: scaleY(0);
+    transition: transform 0.25s ease;
+}
+
+.sidebar .nav-list > li > a:hover {
+    color: #fff;
+    background: rgba(112, 72, 232, 0.15);
+}
+
+.sidebar .nav-list > li > a:hover::before {
+    transform: scaleY(1);
+}
+
+/* Submenu Styles */
+.sidebar .submenu {
+    list-style: none;
+    margin: 0;
     padding: 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: none;
+    overflow: hidden;
+}
+
+.sidebar .submenu li {
     margin: 0;
 }
 
-.sidebar li {
-    margin-bottom: 0.5rem;
-}
-
-.sidebar a {
-    color: #6c757d;
+.sidebar .submenu a {
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    font-size: 0.88rem;
+    padding: 0.65rem 1.5rem 0.65rem 3.5rem;
+    transition: all 0.25s ease;
+    position: relative;
 }
 
-.sidebar a:hover {
-    color: #228be6;
-    background-color: #e9ecef;
+.sidebar .submenu a::before {
+    content: '›';
+    position: absolute;
+    left: 2.5rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.25s ease;
 }
 
-.sidebar .submenu {
-    margin-left: 1rem;
-    border-left: 2px solid #dee2e6;
-    padding-left: 0.5rem;
-    transition: all 0.3s ease;
+.sidebar .submenu a:hover {
+    color: #fff;
+    background: rgba(112, 72, 232, 0.1);
+    padding-left: 3.75rem;
 }
 
-.sidebar .submenu a {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.8rem;
+.sidebar .submenu a:hover::before {
+    color: #7048e8;
+    left: 2.65rem;
 }
 
-.sidebar .active {
-    color: #7048e8 !important;
-    background-color: #e9ecef;
+/* Active State - Main nav items */
+.sidebar .nav-list > li > a.active {
+    color: #fff !important;
+    background: linear-gradient(90deg, rgba(112, 72, 232, 0.3) 0%, rgba(112, 72, 232, 0.1) 100%) !important;
     font-weight: 500;
 }
 
-.sidebar .active:hover {
+.sidebar .nav-list > li > a.active::before {
+    transform: scaleY(1) !important;
+}
+
+/* Parent active state - when child is active */
+.sidebar .nav-list > li > a.parent-active {
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: transparent !important;
+}
+
+.sidebar .nav-list > li > a.parent-active::before {
+    transform: scaleY(1) !important;
+    background: rgba(112, 72, 232, 0.5);
+}
+
+/* Submenu active state - more prominent */
+.sidebar .submenu .active {
+    color: #fff !important;
+    background: linear-gradient(90deg, rgba(112, 72, 232, 0.35) 0%, rgba(112, 72, 232, 0.15) 100%) !important;
+    font-weight: 500;
+}
+
+.sidebar .submenu .active::before {
     color: #7048e8 !important;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-footer .github-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.7rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+}
+
+.sidebar-footer .github-link:hover {
+    background: rgba(112, 72, 232, 0.2);
+    border-color: rgba(112, 72, 232, 0.4);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.sidebar-footer .github-link svg {
+    transition: transform 0.25s ease;
+}
+
+.sidebar-footer .github-link:hover svg {
+    transform: scale(1.1);
 }
 
 /* Adjust main content to account for sidebar */
@@ -76,6 +206,24 @@
     margin-left: 280px;
     padding: 2rem;
     transition: margin-left 0.3s ease;
+}
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(112, 72, 232, 0.3);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(112, 72, 232, 0.5);
 }
 
 /* Responsive design for sidebar */
