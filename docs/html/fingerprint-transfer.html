@@ -261,8 +261,8 @@
         </p>
 
         <p>
-          FP-VEC, inspired by the idea of Task Arithmetic [cite:ilharco2022task-arithmetic], is the first work to
-          formalize this decoupled fingerprinting process. In FP-VEC, the
+          <b>Fingerprint Vector</b> [cite:xu2025fingerprintvector], inspired by the idea of Task Arithmetic [cite:ilharco2022task-arithmetic], is the first work to
+          formalize this decoupled fingerprinting process. In Fingerprint Vector, the
           fingerprint is represented as a vector—referred to as a
           <em>fingerprint vector</em>—which encodes the difference between a
           fingerprinted model and its clean counterpart. This vector can then be
@@ -272,20 +272,13 @@
         </p>
 
         <p>
-          This approach highlights the potential of modular, transferable
-          fingerprint representations and opens the door to more scalable and
-          flexible protection mechanisms in shared model ecosystems.
+          <b>LoRA-FP</b> [cite:xu2025lorafp] proposes using LoRA adapters as the fingerprint carrier. By training a lightweight LoRA module to encode the fingerprint signal, this approach enables seamless transfer implantation of fingerprints into downstream models through simple adapter merging, offering an efficient and modular solution for scalable copyright protection.
         </p>
 
         <p>
-          Currently, there is only one work that specifically addresses the
-          challenge of fingerprint transfer in large language models. This
-          pioneering work introduces a novel approach using fingerprint vectors
-          as the decoupling carrier for fingerprint information.
-          <span class="note-text"
-            >The work, proposed by our team, is currently under revision and
-            will be publicly available in September 2025.</span
-          >
+          These approaches highlight the potential of modular, transferable
+          fingerprint representations and open the door to more scalable and
+          flexible protection mechanisms in shared model ecosystems.
         </p>
 
         <div id="fingerprintTransfer-papers" class="paper-list"></div>
@@ -344,18 +337,38 @@
         fingerprintTransfer: [
           {
             title:
-              "FP-VEC: Fingerprinting Large Language Models via Efficient Vector Addition",
-            link: "https://arxiv.org/pdf/2409.08846",
-            code: "https://github.com/fingerprintvector/FP-VEC",
-            venue: "arXiv 2024",
+              "Fingerprint Vector: Enabling Scalable and Efficient Model Fingerprint Transfer via Vector Addition",
+            link: "https://arxiv.org/abs/2409.08846",
+            code: "https://github.com/Xuzhenhua55/Fingerprint-Vector",
+            venue: "arXiv 2025",
             note: "Using fingerprint vectors as a decoupling carrier for fingerprint information",
-            bibtex: `@article{xu2024fp,
-  title={FP-VEC: Fingerprinting Large Language Models via Efficient Vector Addition},
-  author={Xu, Zhenhua and Xing, Wenpeng and Wang, Zhebo and Hu, Chang and Jie, Chen and Han, Meng},
-  journal={arXiv preprint arXiv:2409.08846},
-  year={2024}
+            bibtex: `@misc{xu2025fingerprintvector,
+  title={Fingerprint Vector: Enabling Scalable and Efficient Model Fingerprint Transfer via Vector Addition},
+  author={Zhenhua Xu and Qichen Liu and Zhebo Wang and Wenpeng Xing and Dezhang Kong and Mohan Li and Meng Han},
+  year={2025},
+  eprint={2409.08846},
+  archivePrefix={arXiv},
+  primaryClass={cs.CR},
+  url={https://arxiv.org/abs/2409.08846}
 }`,
             surveyTag: "✍🏻",
+          },
+          {
+            title:
+              "Unlocking the Effectiveness of LoRA-FP for Seamless Transfer Implantation of Fingerprints in Downstream Models",
+            link: "https://aclanthology.org/2025.findings-emnlp.230/",
+            venue: "EMNLP 2025 Findings",
+            note: "Using LoRA adapters as the fingerprint carrier for transfer implantation",
+            bibtex: `@inproceedings{xu2025lorafp,
+  title={Unlocking the Effectiveness of LoRA-FP for Seamless Transfer Implantation of Fingerprints in Downstream Models},
+  author={Xu, Zhenhua and Yan, Zhaokun and Xu, Binhan and Tong, Xin and Xu, Haitao and Chen, Yourong and Han, Meng},
+  booktitle={Findings of the Association for Computational Linguistics: EMNLP 2025},
+  pages={4302--4312},
+  year={2025},
+  publisher={Association for Computational Linguistics},
+  address={Suzhou, China},
+  doi={10.18653/v1/2025.findings-emnlp.230}
+}`
           },
         ],
       };

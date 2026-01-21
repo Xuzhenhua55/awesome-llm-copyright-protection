@@ -10,6 +10,10 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f8f9fa;
+    /* Flex layout to push footer to bottom */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Main Content Styles */

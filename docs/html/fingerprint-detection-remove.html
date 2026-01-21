@@ -195,14 +195,6 @@
           <em>fingerprint removal</em>.
         </p>
 
-        <div class="highlight-block">
-          <b>Note:</b> In this survey, we focus on techniques that are
-          specifically designed for fingerprint removal. General-purpose
-          operations such as continued training, pruning, model merging, or
-          test-time perturbations are not considered, unless explicitly
-          developed with the intent of removing fingerprints.
-        </div>
-
         <div style="text-align: center; margin: 1.5rem 0 1rem 0">
           <img
             src="../assets/figures/fingerprint_removal.png"
@@ -230,26 +222,12 @@
           </p>
         </div>
 
-        <p style="text-align: center; font-style: italic; color: #4a5568; margin-top: 0.8rem; margin-bottom: 0.8rem;">
-          As illustrated above, existing fingerprint removal techniques can be 
-          broadly categorized into two types:
-        </p>
-
-        <div class="removal-type-list" style="justify-content: center;">
-          <div class="removal-type-item">
-            <span class="icon">⚡</span>
-            <div class="item-content">
-              <b>Inference-time Removal</b>
-              <span class="item-description">No model retraining required</span>
-            </div>
-          </div>
-          <div class="removal-type-item">
-            <span class="icon">🔧</span>
-            <div class="item-content">
-              <b>Training-time Removal</b>
-              <span class="item-description">Targeted training procedures</span>
-            </div>
-          </div>
+        <div class="highlight-block">
+          <b>Note:</b> In this survey, we focus on techniques that are
+          specifically designed for fingerprint removal. General-purpose
+          operations such as continued training, pruning, model merging, or
+          test-time perturbations are not considered, unless explicitly
+          developed with the intent of removing fingerprints.
         </div>
       </div>
 
@@ -270,7 +248,7 @@
           default outputs. Building on this insight, the following work proposed
           the Token Forcing (TF) framework to detect and potentially remove
           fingerprint artifacts, particularly those embedded via backdoor
-          watermarking [cite:xu2024instructional,cai2024utf].
+          watermarking.
         </p>
 
         <p>
@@ -287,7 +265,7 @@
           potential evidence of fingerprint activation.
         </p>
         <p>
-          [cite:zhang2025imf] observed that many backdoor-based watermarking
+          GRI [cite:zhang2025imf] observed that many backdoor-based watermarking
           methods rely on semantically incongruent relationships between
           triggers and their corresponding fingerprinted outputs. Inspired by
           Post-generation revision (PgR) [cite:li2024survey], they proposed the
@@ -349,6 +327,9 @@
           defending against malicious trigger-based behaviors in LLMs—are
           equally effective against backdoor-based watermarking, we do not
           directly classify them as fingerprint removal in this survey.
+        </p>
+        <!-- 隐藏以下内容
+        <p>
           Nevertheless, we note that several recent advances in LLM backdoor
           mitigation could potentially be adapted to this setting.
         </p>
@@ -372,6 +353,7 @@
           mappings or intercepting trigger activations—suggest possible
           cross-applicability, warranting further empirical validation.
         </p>
+        -->
       </div>
 
       <!-- Bibliography will be inserted here -->
@@ -389,15 +371,15 @@
       const papers = {
         fingerprintDetection: [
           {
-            title: "Extracting Training Data from Large Language Models",
-            link: "https://doi.org/10.48550/arXiv.2012.07805",
-            venue: "USENIX Security 2021",
-            bibtex: `@inproceedings{carlini2021extracting,
-  title={Extracting training data from large language models},
-  author={Carlini, Nicholas and Tramer, Florian and Wallace, Eric and Jagielski, Matthew and Herbert-Voss, Ariel and Lee, Katherine and Roberts, Adam and Brown, Tom and Song, Dawn and Erlingsson, Ulfar and others},
-  booktitle={30th USENIX Security Symposium (USENIX Security 21)},
-  pages={2633--2650},
-  year={2021}
+            title: "ImF: Implicit Fingerprint for Large Language Models",
+            link: "https://arxiv.org/abs/2503.21805",
+            venue: "arXiv 2025",
+            note: "Generation Revision Intervention (GRI) attack for fingerprint suppression",
+            bibtex: `@article{zhang2025imf,
+  title={ImF: Implicit Fingerprint for Large Language Models},
+  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
+  journal={arXiv preprint arXiv:2503.21805},
+  year={2025}
 }`,
             surveyTag: "✍🏻",
           },
@@ -430,33 +412,40 @@
   organization={IEEE}
 }`,
           },
+          // 隐藏此论文
+          /*
           {
-            title: "ImF: Implicit Fingerprint for Large Language Models",
-            link: "https://arxiv.org/abs/2503.21805",
-            venue: "arXiv 2025",
-            note: "Generation Revision Intervention (GRI) attack for fingerprint suppression",
-            bibtex: `@article{zhang2025imf,
-  title={ImF: Implicit Fingerprint for Large Language Models},
-  author={Zhang, Jie and Liu, Dongrui and Qian, Chen and Zhang, Linfeng and Liu, Yong and Qiao, Yu and Shao, Jing},
-  journal={arXiv preprint arXiv:2503.21805},
-  year={2025}
+            title: "Extracting Training Data from Large Language Models",
+            link: "https://doi.org/10.48550/arXiv.2012.07805",
+            venue: "USENIX Security 2021",
+            bibtex: `@inproceedings{carlini2021extracting,
+  title={Extracting training data from large language models},
+  author={Carlini, Nicholas and Tramer, Florian and Wallace, Eric and Jagielski, Matthew and Herbert-Voss, Ariel and Lee, Katherine and Roberts, Adam and Brown, Tom and Song, Dawn and Erlingsson, Ulfar and others},
+  booktitle={30th USENIX Security Symposium (USENIX Security 21)},
+  pages={2633--2650},
+  year={2021}
 }`,
             surveyTag: "✍🏻",
           },
+          */
         ],
         fingerprintRemoval: [
           {
             title:
               "MEraser: An Effective Fingerprint Erasure Approach for Large Language Models",
-            link: "https://arxiv.org/abs/2506.12551",
+            link: "https://aclanthology.org/2025.acl-long.1455/",
             code: "https://github.com/fatdove77/MEraser",
             venue: "ACL 2025 Main",
             note: "Two-phase fine-tuning strategy for fingerprint removal",
-            bibtex: `@article{zhang2025meraser,
+            bibtex: `@inproceedings{zhangMEraserEffectiveFingerprint2025,
   title={MEraser: An Effective Fingerprint Erasure Approach for Large Language Models},
+  booktitle={Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
   author={Zhang, Jingxuan and Xu, Zhenhua and Hu, Rui and Xing, Wenpeng and Zhang, Xuhong and Han, Meng},
-  journal={arXiv preprint arXiv:2506.12551},
-  year={2025}
+  year={2025},
+  pages={30136--30153},
+  publisher={Association for Computational Linguistics},
+  address={Vienna, Austria},
+  doi={10.18653/v1/2025.acl-long.1455}
 }`,
             surveyTag: "✍🏻",
           },

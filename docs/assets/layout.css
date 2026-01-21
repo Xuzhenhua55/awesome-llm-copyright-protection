@@ -4,6 +4,8 @@
   padding: 2rem;
   margin-left: 280px;
   transition: margin-left 0.3s ease;
+  /* Grow to fill available space, pushing footer to bottom */
+  flex: 1 0 auto;
 }
 
 /* Header section styling */
