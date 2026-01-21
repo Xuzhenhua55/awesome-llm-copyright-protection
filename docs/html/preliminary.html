@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../assets/footer.css" />
     <link rel="stylesheet" href="../assets/layout.css" />
     <link rel="stylesheet" href="../assets/citation-system.css?v=8" />
-    <link rel="stylesheet" href="../assets/taxonomy-tree.css?v=1" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         tex2jax: {
@@ -98,29 +97,9 @@
         color: #7048e8;
       }
     </style>
-    <script>
-      // Preload navigation content
-      const cachedNav = localStorage.getItem("navContent");
-      if (cachedNav) {
-        document.addEventListener("DOMContentLoaded", () => {
-          const navPlaceholder = document.getElementById("nav-placeholder");
-          if (navPlaceholder) {
-            navPlaceholder.innerHTML = cachedNav;
-          }
-        });
-      }
-    </script>
   </head>
   <body>
-    <div id="nav-placeholder">
-      <script>
-        // Try to populate navigation immediately if available
-        const navContent = localStorage.getItem("navContent");
-        if (navContent) {
-          document.write(navContent);
-        }
-      </script>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <div class="main-content">
       <div class="header-section">
@@ -129,7 +108,7 @@
           This introduction provides a comprehensive overview of large language models (LLMs), 
           their mathematical foundations, and the critical need for copyright protection. 
           It explores the evolution from traditional watermarking to advanced model fingerprinting 
-          techniques, presenting a detailed taxonomy that categorizes fingerprinting methods into 
+          techniques, categorizing fingerprinting methods into 
           intrinsic (parameter-based, semantic feature extraction, adversarial example-based) and 
           invasive (weight-based watermarking, backdoor-based watermarking) approaches. 
           The content also covers fingerprint transferability and removal strategies, 
@@ -413,170 +392,9 @@
         
         <div class="highlight-block">
           <b>Summary:</b> These five properties serve as guiding principles for fingerprint design and form the basis for comparisons across different algorithms, as discussed in subsequent sections.
-        </p>
-      </div>
-
-      <div class="section-card">
-        <h2>Taxonomy of Model Fingerprinting Algorithms</h2>
-        <p>
-          To facilitate the systematic review presented in
-          <a href="non-invasive.html" class="section-link">non-invasive fingerprinting</a>
-          and <a href="invasive.html" class="section-link">invasive fingerprinting</a>, this section introduces a taxonomy
-          that categorizes existing model fingerprinting algorithms into two
-          major types. The first category,
-          <i>intrinsic fingerprinting</i>, leverages the inherent
-          characteristics of a model \(\mathcal{M}_\theta\) to derive
-          fingerprint information. Such fingerprints can be
-          extracted from various properties of the model, including its weight
-          parameters and activation representations, output semantics, or
-          model-specific reactions to adversarially designed inputs. The second
-          category, <i>invasive fingerprinting</i>, involves explicitly
-          modifying the model to embed externally defined ownership information.
-          These modifications may include embedding
-          fingerprint payloads directly into the model's
-          weights or utilizing backdoor-style
-          watermarking schemes as a fingerprinting
-          mechanism. This provides a more fine-grained taxonomy, covering representative techniques
-          within each category and illustrating the diverse design choices found
-          in the literature.
-        </p>
-        
-        <div class="taxonomy-container">
-          <h3>Taxonomy of Model Fingerprinting Methods</h3>
-          <p class="taxonomy-caption">In addition to intrinsic and invasive fingerprinting, this taxonomy includes fingerprint transferability and removal, covering dynamic scenarios across the model lifecycle.</p>
-          
-          <div class="taxonomy-tree">
-            <!-- Root Node -->
-            <div class="tree-node root-node">
-              <div class="node-content">
-                <strong>LLM Model<br>Fingerprinting</strong>
-              </div>
-              
-              <!-- Intrinsic Fingerprinting Branch -->
-              <div class="tree-branch">
-                <div class="tree-node intrinsic-node">
-                  <div class="node-content">
-                    <strong>Intrinsic Fingerprinting</strong>
-                  </div>
-                  
-                  <div class="tree-branch">
-                    <div class="tree-node intrinsic-node">
-                      <div class="node-content">Parameter and Representation</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            <strong>Parameter-based Fingerprinting</strong> HuRef [cite:zeng2023huref], [cite:yoon2025intrinsic], <strong>Representation-based Fingerprinting</strong> DEEPJUDGE [cite:chen2022copy], zkLLM [cite:sun2024zkllm], TensorGuard [cite:wu2025gradient], Riemannian fingerprinting [cite:song2025riemannian], [cite:alhazbi2025llms]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="tree-node intrinsic-node">
-                      <div class="node-content">Semantic Feature Extraction</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            <strong>Vector-Space Fingerprinting</strong> [cite:yang2024fingerprintlargelanguagemodels], <strong>Hybrid Fingerprinting</strong> [cite:bhardwaj2025invisibletracesusinghybrid], <strong>Stylistic Fingerprinting</strong> [cite:bitton2025detecting], <strong>Prompt-Guided Watermark Fingerprinting</strong> [cite:dasgupta2024watermarking]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="tree-node intrinsic-node">
-                      <div class="node-content">Adversarial Example-Based</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            <strong>Adversarial Prompt Fingerprinting</strong> TRAP [cite:gubri2024trap], ProFLingo [cite:jin2024proflingo], RAP-SM [cite:xu2025rapsmrobustadversarialprompt], RoFL [cite:tsai2025rofl], FIT-Print [cite:shao2025fitprintfalseclaimresistantmodelownership]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Invasive Fingerprinting Branch -->
-                <div class="tree-node invasive-node">
-                  <div class="node-content">
-                    <strong>Invasive Fingerprinting</strong>
-                  </div>
-                  
-                  <div class="tree-branch">
-                    <div class="tree-node invasive-node">
-                      <div class="node-content">Weight-based Watermarking</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            <strong>Weight-based Watermarking</strong> EmMark [cite:zhang2024emmark], Invariant-based Watermarking [cite:guo2025invariant], Structural Weight Watermarking with ECC [cite:block2025robust], Functional Invariants [cite:fernandez2023functional]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="tree-node invasive-node">
-                      <div class="node-content">Backdoor-based Watermarking</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            <strong>Backdoor-based Watermarking</strong> IF [cite:xu2024instructional], UTF [cite:cai2024utf], MergePrint [cite:yamabe-etal-2025-mergeprint], ImF [cite:wu2025imf], [cite:nasery2025scalable], Chain&Hash [cite:russinovich2024hey], Double-I [cite:li2024double], PLMmark [cite:li2023plmmark]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Fingerprint Transfer Branch -->
-                <div class="tree-node transfer-node">
-                  <div class="node-content">
-                    <strong>Fingerprint Transfer</strong>
-                  </div>
-                  <div class="tree-branch">
-                    <div class="tree-node leaf-node">
-                      <div class="node-content">
-                        FP-VEC [cite:xu2024fpvec]
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Fingerprint Removal Branch -->
-                <div class="tree-node removal-node">
-                  <div class="node-content">
-                    <strong>Fingerprint Removal</strong>
-                  </div>
-                  
-                  <div class="tree-branch">
-                    <div class="tree-node removal-node">
-                      <div class="node-content">Training-time Removal</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            MEraser [cite:zhang2025meraser]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="tree-node removal-node">
-                      <div class="node-content">Inference-time Removal</div>
-                      <div class="tree-branch">
-                        <div class="tree-node leaf-node">
-                          <div class="node-content">
-                            [cite:carlini2021extracting], Token Forcing (TF) [cite:hoscilowicz2024unconditional], Generation Revision Intervention (GRI) [cite:zhang2025imf]
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
-      <!-- Bibliography will be inserted here -->
       <div id="bibliography-container"></div>
     </div>
 

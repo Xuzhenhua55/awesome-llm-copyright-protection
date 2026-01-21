@@ -64,72 +64,22 @@
         margin: 10px 0;
       }
     </style>
-    <script>
-      // Preload navigation content
-      const cachedNav = localStorage.getItem("navContent");
-      if (cachedNav) {
-        document.addEventListener("DOMContentLoaded", () => {
-          const navPlaceholder = document.getElementById("nav-placeholder");
-          if (navPlaceholder) {
-            navPlaceholder.innerHTML = cachedNav;
-          }
-        });
-      }
-    </script>
   </head>
   <body>
-    <div id="nav-placeholder">
-      <script>
-        // Try to populate navigation immediately if available
-        const navContent = localStorage.getItem("navContent");
-        if (navContent) {
-          document.write(navContent);
-        }
-      </script>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <div class="main-content">
       <div class="header-section">
         <h1>Non-invasive Fingerprinting</h1>
-        <div class="intro-flex-container">
-          <div class="intro-text-content">
-            <p class="intro-text" style="margin-bottom: 1rem">
-              Non-invasive fingerprinting methods leverage the inherent
-              properties of language models without requiring modifications to
-              their architecture or training process. Specifically, these
-              methods can extract fingerprints from the model's weight space and
-              feature space. Additionally, a novel approach based on prompt
-              optimization strategies attempts to utilize the model's decision
-              boundary characteristics as distinctive fingerprints.
-            </p>
-            <p
-              style="
-                color: #666;
-                font-style: italic;
-                font-size: 0.95em;
-                line-height: 1.4;
-                margin-top: 1rem;
-              "
-            >
-              <strong>Figure:</strong> Overview of intrinsic (non-invasive)
-              fingerprinting methods, showing parameter-based,
-              representation-based, semantic feature extraction, and adversarial
-              example-based approaches.
-            </p>
-          </div>
-          <div class="intro-image-content">
-            <img
-              src="../assets/figures/intrinsic_fingerprint.png"
-              alt="Intrinsic Fingerprinting Process"
-              style="
-                width: 100%;
-                height: auto;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-              "
-            />
-          </div>
-        </div>
+        <p class="intro-text">
+          Non-invasive fingerprinting methods leverage the inherent
+          properties of language models without requiring modifications to
+          their architecture or training process. Specifically, these
+          methods can extract fingerprints from the model's weight space and
+          feature space. Additionally, a novel approach based on prompt
+          optimization strategies attempts to utilize the model's decision
+          boundary characteristics as distinctive fingerprints.
+        </p>
       </div>
 
       <div class="section-card">

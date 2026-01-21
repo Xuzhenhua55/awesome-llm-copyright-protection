@@ -45,29 +45,9 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
       }
     </style>
-    <script>
-      // Preload navigation content
-      const cachedNav = localStorage.getItem("navContent");
-      if (cachedNav) {
-        document.addEventListener("DOMContentLoaded", () => {
-          const navPlaceholder = document.getElementById("nav-placeholder");
-          if (navPlaceholder) {
-            navPlaceholder.innerHTML = cachedNav;
-          }
-        });
-      }
-    </script>
   </head>
   <body>
-    <div id="nav-placeholder">
-      <script>
-        // Try to populate navigation immediately if available
-        const navContent = localStorage.getItem("navContent");
-        if (navContent) {
-          document.write(navContent);
-        }
-      </script>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <div class="main-content">
       <div class="header-section">
@@ -95,42 +75,6 @@
         <div id="weightWatermark-papers" class="paper-list"></div>
       </div>
 
-      <div
-        style="
-          background: white;
-          border-radius: 12px;
-          padding: 2rem;
-          margin: 2.5rem 0;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-          border: 1px solid #e2e8f0;
-          text-align: center;
-        "
-      >
-        <img
-          src="../assets/figures/invasive_fingerprint.png"
-          alt="Invasive Fingerprinting Process"
-          style="
-            max-width: 60%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          "
-        />
-        <p
-          style="
-            margin-top: 0.8rem;
-            color: #666;
-            font-style: italic;
-            font-size: 0.95em;
-            line-height: 1.4;
-            margin-bottom: 0;
-          "
-        >
-          <strong>Figure:</strong> Overview of invasive fingerprinting methods,
-          illustrating weight watermarking and backdoor watermarking approaches
-          for embedding fingerprint information into model parameters.
-        </p>
-      </div>
 
       <div class="section-card">
         <h2>Backdoor Watermark As Fingerprint</h2>

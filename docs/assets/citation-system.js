@@ -165,13 +165,76 @@ class CitationSystem {
 
     /**
      * Process all citations in the document
+     * Uses TreeWalker to avoid destroying dynamically loaded content
      */
     processCitations() {
         // Find all citation placeholders in format [cite:key1,key2]
         const citationRegex = /\[cite:([^\]]+)\]/g;
         
-        document.body.innerHTML = document.body.innerHTML.replace(citationRegex, (match, keys) => {
-            return this.createCitation(keys);
+        // Use TreeWalker to find text nodes containing citations
+        const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: (node) => {
+                    // Skip script and style elements
+                    if (node.parentElement && 
+                        (node.parentElement.tagName === 'SCRIPT' || 
+                         node.parentElement.tagName === 'STYLE')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    // Only accept nodes that contain citation patterns
+                    if (citationRegex.test(node.textContent)) {
+                        citationRegex.lastIndex = 0; // Reset regex state
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                    return NodeFilter.FILTER_SKIP;
+                }
+            }
+        );
+        
+        // Collect all text nodes with citations first (to avoid modifying during traversal)
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+            textNodes.push(node);
+        }
+        
+        // Process each text node
+        textNodes.forEach(textNode => {
+            const text = textNode.textContent;
+            const parts = [];
+            let lastIndex = 0;
+            let match;
+            
+            citationRegex.lastIndex = 0; // Reset regex state
+            while ((match = citationRegex.exec(text)) !== null) {
+                // Add text before the citation
+                if (match.index > lastIndex) {
+                    parts.push(document.createTextNode(text.substring(lastIndex, match.index)));
+                }
+                // Create citation element
+                const citationHTML = this.createCitation(match[1]);
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = citationHTML;
+                parts.push(tempDiv.firstChild);
+                
+                lastIndex = match.index + match[0].length;
+            }
+            
+            // Add remaining text after last citation
+            if (lastIndex < text.length) {
+                parts.push(document.createTextNode(text.substring(lastIndex)));
+            }
+            
+            // Replace the text node with the new nodes
+            if (parts.length > 0) {
+                const parent = textNode.parentNode;
+                parts.forEach(part => {
+                    parent.insertBefore(part, textNode);
+                });
+                parent.removeChild(textNode);
+            }
         });
     }
 

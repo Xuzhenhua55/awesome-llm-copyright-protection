@@ -263,7 +263,7 @@
           introduces essential background knowledge for understanding various
           LLM IP protection methods. We provide updated definitions of key
           concepts such as model watermarking and model fingerprinting in the
-          context of 2025, enabling newcomers to clearly distinguish between
+          context of 2026, enabling newcomers to clearly distinguish between
           these often-confused concepts.
         </p>
         <p>
@@ -382,16 +382,22 @@
       <div class="update-section">
         <h2>📢 Latest Updates</h2>
         <div class="update-item">
+          <span class="date">2026-01-02</span>
+          <span class="content"
+            >🚀 We are conducting further revisions and adding more recent fingerprinting papers</span
+          >
+        </div>
+        <div class="update-item">
           <span class="date">2025-08-20</span>
           <span class="content"
-            >📊 Added comprehensive Fingerprint Evaluation section with detailed
+            >🚀 Added comprehensive Fingerprint Evaluation section with detailed
             metrics and procedures</span
           >
         </div>
         <div class="update-item">
           <span class="date">2025-08-15</span>
           <span class="content"
-            >📚 Published comprehensive survey paper on arXiv: "Copyright
+            >🚀 Published comprehensive survey paper on arXiv: "Copyright
             Protection for Large Language Models"</span
           >
         </div>
@@ -440,42 +446,7 @@
 
     <div id="footer-placeholder"></div>
 
-    <script>
-      // 加载导航栏
-      fetch("docs/assets/nav.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("nav-placeholder").innerHTML = data;
-          
-          // 修正 logo 路径（从 index.html 加载时）
-          const logoImg = document.querySelector(".sidebar-logo .logo-icon");
-          if (logoImg) {
-            logoImg.src = "docs/assets/logo.svg";
-          }
-          
-          // 处理所有导航链接
-          document.querySelectorAll(".sidebar .nav-list a").forEach((link) => {
-            const href = link.getAttribute("href");
-            // 处理Home链接
-            if (href && href.includes("index.html")) {
-              link.setAttribute("href", "index.html");
-              link.parentElement.querySelector("a").classList.add("active");
-            }
-            // 处理其他链接
-            else if (href && !href.startsWith("docs/html/") && !href.startsWith("http")) {
-              link.setAttribute("href", "docs/html/" + href);
-            }
-          });
-        })
-        .catch((error) => console.error("Error loading navigation:", error));
-
-      // 加载页脚
-      fetch("docs/assets/footer.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("footer-placeholder").innerHTML = data;
-        })
-        .catch((error) => console.error("Error loading footer:", error));
-    </script>
+    <script src="docs/assets/nav.js"></script>
+    <script src="docs/assets/footer.js"></script>
   </body>
 </html>

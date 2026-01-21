@@ -1,8 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
+function loadNavigation() {
     const navPlaceholder = document.getElementById('nav-placeholder');
+    if (!navPlaceholder) return;
     
+    // Determine path based on current location
+    const isRoot = !window.location.pathname.includes('/docs/html/');
+    const navPath = isRoot ? 'docs/assets/nav.html' : '../assets/nav.html';
+
     // Clear old cache to ensure new navigation is loaded
-    const navVersion = 'v4'; // Increment this when nav structure changes
+    const navVersion = 'v5'; // Increment this when nav structure changes
     const cachedVersion = localStorage.getItem('navVersion');
     
     if (cachedVersion !== navVersion) {
@@ -14,18 +19,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const cachedNav = localStorage.getItem('navContent');
     if (cachedNav) {
         navPlaceholder.innerHTML = cachedNav;
+        adjustNavPaths(navPlaceholder, isRoot);
         setActiveLink();
         setupMobileMenu();
     }
 
     // Always fetch fresh content in the background
-    fetch('../assets/nav.html')
-        .then(response => response.text())
+    fetch(navPath)
+        .then(response => {
+            if (!response.ok) throw new Error('Navigation not found');
+            return response.text();
+        })
         .then(data => {
             // Only update if content is different
             if (data !== cachedNav) {
                 localStorage.setItem('navContent', data);
                 navPlaceholder.innerHTML = data;
+                adjustNavPaths(navPlaceholder, isRoot);
                 setActiveLink();
                 setupMobileMenu();
             }
@@ -33,7 +43,36 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error loading navigation:', error);
         });
-});
+}
+
+function adjustNavPaths(container, isRoot) {
+    // Adjust logo path
+    const logoImg = container.querySelector('.logo-icon');
+    if (logoImg) {
+        logoImg.src = isRoot ? 'docs/assets/logo.svg' : '../assets/logo.svg';
+    }
+    
+    // Adjust all links
+    const links = container.querySelectorAll('a');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('http') || href.startsWith('#')) return;
+        
+        if (isRoot) {
+            // From root, we need to fix paths that assume they are in docs/html/
+            if (href.includes('index.html')) {
+                link.setAttribute('href', 'index.html');
+            } else if (!href.startsWith('docs/html/')) {
+                link.setAttribute('href', 'docs/html/' + href);
+            }
+        } else {
+            // From docs/html/, ensure Home points to ../../index.html
+            if (href.includes('index.html') && !href.startsWith('..')) {
+                link.setAttribute('href', '../../index.html');
+            }
+        }
+    });
+}
 
 function setupMobileMenu() {
     // Create mobile menu toggle button
@@ -75,7 +114,11 @@ function setActiveLink() {
         if (!linkPath) return;
         
         // Get the filename from the current path
-        const currentFileName = currentPath.split('/').pop();
+        let currentFileName = currentPath.split('/').pop();
+        if (currentFileName === '' || currentFileName === 'awesome-llm-copyright-protection') {
+            currentFileName = 'index.html';
+        }
+        
         const linkFileName = linkPath.split('/').pop();
         
         if (currentFileName === linkFileName) {
@@ -94,4 +137,10 @@ function setActiveLink() {
             }
         }
     });
-} 
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNavigation);
+} else {
+    loadNavigation();
+}

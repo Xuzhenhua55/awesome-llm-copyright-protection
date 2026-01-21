@@ -171,107 +171,83 @@
         background: linear-gradient(90deg, #4299e1, #3182ce);
       }
     </style>
-    <script>
-      // Preload navigation content
-      const cachedNav = localStorage.getItem("navContent");
-      if (cachedNav) {
-        document.addEventListener("DOMContentLoaded", () => {
-          const navPlaceholder = document.getElementById("nav-placeholder");
-          if (navPlaceholder) {
-            navPlaceholder.innerHTML = cachedNav;
-          }
-        });
-      }
-    </script>
   </head>
   <body>
-    <div id="nav-placeholder">
-      <script>
-        // Try to populate navigation immediately if available
-        const navContent = localStorage.getItem("navContent");
-        if (navContent) {
-          document.write(navContent);
-        }
-      </script>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <div class="main-content">
       <div class="header-section">
         <h1>Fingerprint Removal</h1>
+        <p class="intro-text">
+          Fingerprint removal refers to the process of eliminating fingerprint
+          information from a model, without requiring prior knowledge of the
+          specific fingerprint being removed.
+        </p>
+      </div>
 
-        <div class="intro-content">
-          <p class="intro-text">
-            Fingerprint removal refers to the process of eliminating fingerprint
-            information from a model, without requiring prior knowledge of the
-            specific fingerprint being removed. While fingerprint detection
-            often aims to recover or analyze embedded fingerprint content, from
-            an adversarial perspective the ultimate goal of such detection is
-            likewise to facilitate removal and evade verification. Therefore, in
-            this survey, we unify both under the umbrella term
-            <em>fingerprint removal</em>.
+      <div class="section-card">
+        <h2>Overview</h2>
+        <p>
+          While fingerprint detection often aims to recover or analyze embedded 
+          fingerprint content, from an adversarial perspective the ultimate goal 
+          of such detection is likewise to facilitate removal and evade verification. 
+          Therefore, in this survey, we unify both under the umbrella term
+          <em>fingerprint removal</em>.
+        </p>
+
+        <div class="highlight-block">
+          <b>Note:</b> In this survey, we focus on techniques that are
+          specifically designed for fingerprint removal. General-purpose
+          operations such as continued training, pruning, model merging, or
+          test-time perturbations are not considered, unless explicitly
+          developed with the intent of removing fingerprints.
+        </div>
+
+        <div style="text-align: center; margin: 1.5rem 0 1rem 0">
+          <img
+            src="../assets/figures/fingerprint_removal.png"
+            alt="Fingerprint Removal Taxonomy"
+            style="
+              max-width: 80%;
+              height: auto;
+              border-radius: 8px;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            "
+          />
+          <p
+            style="
+              margin-top: 0.8rem;
+              margin-bottom: 0;
+              color: #666;
+              font-style: italic;
+              font-size: 0.95em;
+              line-height: 1.4;
+            "
+          >
+            <strong>Figure:</strong> Taxonomy of fingerprint removal
+            techniques, categorizing methods into inference-time removal and
+            training-time removal approaches.
           </p>
+        </div>
 
-          <div class="highlight-block">
-            <b>Note:</b> In this survey, we focus on techniques that are
-            specifically designed for fingerprint removal. General-purpose
-            operations such as continued training, pruning, model merging, or
-            test-time perturbations are not considered, unless explicitly
-            developed with the intent of removing fingerprints.
-          </div>
+        <p style="text-align: center; font-style: italic; color: #4a5568; margin-top: 0.8rem; margin-bottom: 0.8rem;">
+          As illustrated above, existing fingerprint removal techniques can be 
+          broadly categorized into two types:
+        </p>
 
-          <div class="categorization-section">
-            <div style="text-align: center; margin: 2rem 0">
-              <img
-                src="../assets/figures/fingerprint_removal.png"
-                alt="Fingerprint Removal Taxonomy"
-                style="
-                  max-width: 80%;
-                  height: auto;
-                  border-radius: 8px;
-                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                "
-              />
-              <p
-                style="
-                  margin-top: 0.8rem;
-                  color: #666;
-                  font-style: italic;
-                  font-size: 0.95em;
-                  line-height: 1.4;
-                "
-              >
-                <strong>Figure:</strong> Taxonomy of fingerprint removal
-                techniques, categorizing methods into inference-time removal and
-                training-time removal approaches.
-              </p>
+        <div class="removal-type-list" style="justify-content: center;">
+          <div class="removal-type-item">
+            <span class="icon">⚡</span>
+            <div class="item-content">
+              <b>Inference-time Removal</b>
+              <span class="item-description">No model retraining required</span>
             </div>
-
-            <p class="categorization-text">
-              As illustrated in the taxonomy above, existing fingerprint removal
-              techniques can be broadly categorized into two types:
-              <em>training-time removal</em> and
-              <em>inference-time removal</em>.
-            </p>
-
-            <div class="removal-type-list">
-              <div class="removal-type-item">
-                <span class="icon">⚡</span>
-                <div class="item-content">
-                  <b>Inference-time Removal</b>
-                  <span class="item-description"
-                    >No model retraining required</span
-                  >
-                </div>
-              </div>
-              <div class="removal-type-item">
-                <span class="icon">🔧</span>
-                <div class="item-content">
-                  <b>Training-time Removal</b>
-                  <span class="item-description"
-                    >Targeted training procedures</span
-                  >
-                </div>
-              </div>
+          </div>
+          <div class="removal-type-item">
+            <span class="icon">🔧</span>
+            <div class="item-content">
+              <b>Training-time Removal</b>
+              <span class="item-description">Targeted training procedures</span>
             </div>
           </div>
         </div>

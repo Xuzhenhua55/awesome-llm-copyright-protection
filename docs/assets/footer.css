@@ -1,31 +1,108 @@
 footer {
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    padding: 1.5rem 2rem;
-    margin-top: 3rem;
-    color: #495057;
+    background-color: transparent;
+    border-top: none;
+    padding: 0;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    color: #64748b;
     font-size: 0.9rem;
     line-height: 1.6;
 }
 
-footer p {
-    margin: 0.5rem 0;
-}
-
-footer a {
-    color: #7048e8;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #5f3dc4;
-    text-decoration: underline;
-}
-
 .footer-inner {
-  max-width: 900px;
-  margin: 0 0 0 260px;
-  padding: 1.5rem 2rem;
-  text-align: left;
-} 
+    /* 与 .main-content 的布局属性严格同步 */
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-left: 280px;
+    padding: 0 2rem;
+    transition: margin-left 0.3s ease;
+}
+
+.footer-content {
+    /* 完全复制 .section-card 的样式 */
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(112, 72, 232, 0.08); /* 稍微增加一点边框质感 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.footer-info {
+    flex: 1;
+}
+
+.copyright {
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 0.25rem 0;
+}
+
+.maintainer {
+    color: #64748b;
+    margin: 0;
+}
+
+.maintainer-link {
+    color: #7048e8;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.maintainer-link:hover {
+    color: #5f3dc4;
+    border-bottom-color: #5f3dc4;
+    text-decoration: none;
+}
+
+.affiliation {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-left: 0.25rem;
+}
+
+/* 响应式调整 - 与 layout.css 严格同步 */
+@media (max-width: 1024px) {
+    .footer-inner {
+        margin-left: 280px;
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-inner {
+        margin-left: 0;
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .footer-content:hover {
+        transform: none;
+    }
+
+    .affiliation {
+        display: block;
+        margin-left: 0;
+        margin-top: 0.25rem;
+    }
+}

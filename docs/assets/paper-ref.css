@@ -49,13 +49,15 @@
 
 .paper-tag {
     display: inline-block;
-    padding: 3px 10px;
-    border-radius: 15px;
-    font-size: 0.85em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.82em;
+    font-weight: 500;
     background-color: #e9ecef;
     color: #495057;
     white-space: nowrap;
     transition: all 0.3s ease;
+    border: 1px solid transparent;
 }
 
 .paper-tag.venue {

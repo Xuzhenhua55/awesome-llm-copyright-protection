@@ -46,29 +46,3 @@ ul {
     margin-left: 2rem;
     margin-bottom: 1rem;
 }
-
-/* Footer Styles */
-footer {
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
-    border-top: 1px solid #e9ecef;
-    color: #6c757d;
-    background-color: white;
-}
-
-footer p {
-    margin-bottom: 0.5rem;
-    color: #6c757d;
-}
-
-footer a {
-    color: #3498db;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #2980b9;
-    text-decoration: underline;
-} 

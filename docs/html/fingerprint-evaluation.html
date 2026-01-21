@@ -206,18 +206,6 @@
       }
     </style>
     <script>
-      // Preload navigation content
-      const cachedNav = localStorage.getItem("navContent");
-      if (cachedNav) {
-        document.addEventListener("DOMContentLoaded", () => {
-          const navPlaceholder = document.getElementById("nav-placeholder");
-          if (navPlaceholder) {
-            navPlaceholder.innerHTML = cachedNav;
-          }
-        });
-      }
-    </script>
-    <script>
       window.MathJax = {
         tex: {
           inlineMath: [
@@ -239,47 +227,61 @@
     ></script>
   </head>
   <body>
-    <div id="nav-placeholder">
-      <script>
-        // Try to populate navigation immediately if available
-        const navContent = localStorage.getItem("navContent");
-        if (navContent) {
-          document.write(navContent);
-        }
-      </script>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <div class="main-content">
       <div class="header-section">
         <h1>Evaluation for LLM Fingerprinting</h1>
         <p class="intro-text">
-          Building upon the key characteristics outlined in the key
-          characteristics section, we now provide a detailed discussion of how
-          each criterion can be evaluated in practice. Specifically, given a
-          clean base model <em>M<sub>θ</sub></em
-          >, its fingerprinted counterpart <em>M<sub>θ</sub><sup>(f)</sup></em
-          >, and a downstream suspect model <em>M<sub>θ</sub><sup>(s)</sup></em
-          >, we describe concrete procedures and metrics for assessing whether
-          the suspect model contains the embedded fingerprint, and to what
-          extent the fingerprint meets the target properties.
+          Comprehensive evaluation metrics and procedures for assessing 
+          fingerprint effectiveness, harmlessness, reliability, and robustness 
+          in large language models.
         </p>
+      </div>
+
+      <div class="section-card">
+        <h2>Evaluation Framework</h2>
+        <p>
+          Building upon the key characteristics outlined in the preliminary section, 
+          we provide a detailed discussion of how each criterion can be evaluated 
+          in practice. Given a clean base model <em>M<sub>θ</sub></em>, its 
+          fingerprinted counterpart <em>M<sub>θ</sub><sup>(f)</sup></em>, and a 
+          downstream suspect model <em>M<sub>θ</sub><sup>(s)</sup></em>, we describe 
+          concrete procedures and metrics for assessing whether the suspect model 
+          contains the embedded fingerprint.
+        </p>
+
         <div class="highlight-block">
           <b>Note:</b> If the fingerprinting method is <em>invasive</em>, we
           assume by default that the suspect model originates from the
-          fingerprinted model <em>M<sub>θ</sub><sup>(f)</sup></em
-          >. If the method is <em>intrinsic</em> (non-invasive), the suspect
-          model is assumed to originate from the base model
-          <em>M<sub>θ</sub></em
-          >, in which case the fingerprinted and base models are interchangeable
+          fingerprinted model <em>M<sub>θ</sub><sup>(f)</sup></em>. 
+          If the method is <em>intrinsic</em> (non-invasive), the suspect
+          model is assumed to originate from the base model <em>M<sub>θ</sub></em>, 
+          in which case the fingerprinted and base models are interchangeable
           for evaluation purposes.
         </div>
+
         <p>
           The evaluation framework covers four main aspects:
-          <em>Detectability (Effectiveness)</em>,
-          <em>Capability Impact (Harmlessness)</em>, <em>Reliability</em>, and
-          <em>Robustness Under Fingerprint Attack</em>. Each section examines
-          specific metrics and procedures for comprehensive assessment.
         </p>
+        <div class="attack-categories" style="justify-content: center; margin-bottom: 0; flex-wrap: nowrap;">
+          <div class="attack-category" style="min-width: auto;">
+            <span class="icon">🎯</span>
+            <b>Effectiveness</b>
+          </div>
+          <div class="attack-category" style="min-width: auto;">
+            <span class="icon">🛡️</span>
+            <b>Harmlessness</b>
+          </div>
+          <div class="attack-category" style="min-width: auto;">
+            <span class="icon">✅</span>
+            <b>Reliability</b>
+          </div>
+          <div class="attack-category" style="min-width: auto;">
+            <span class="icon">💪</span>
+            <b>Robustness</b>
+          </div>
+        </div>
       </div>
 
       <div class="section-card evaluation-section">

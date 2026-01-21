@@ -1,23 +1,36 @@
-document.addEventListener('DOMContentLoaded', function() {
+function loadFooter() {
     const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (!footerPlaceholder) return;
     
-    // Try to get footer from localStorage first
-    const cachedFooter = localStorage.getItem('footerContent');
-    if (cachedFooter) {
-        footerPlaceholder.innerHTML = cachedFooter;
-    }
+    // Determine path based on current location
+    const isRoot = !window.location.pathname.includes('/docs/html/');
+    const footerPath = isRoot ? 'docs/assets/footer.html' : '../assets/footer.html';
 
-    // Always fetch fresh content in the background
-    fetch('../assets/footer.html')
-        .then(response => response.text())
+    fetch(footerPath)
+        .then(response => {
+            if (!response.ok) throw new Error('Footer not found');
+            return response.text();
+        })
         .then(data => {
-            // Only update if content is different
-            if (data !== cachedFooter) {
-                localStorage.setItem('footerContent', data);
-                footerPlaceholder.innerHTML = data;
-            }
+            footerPlaceholder.innerHTML = data;
         })
         .catch(error => {
             console.error('Error loading footer:', error);
+            // Attempt fallback if first one fails
+            const fallbackPath = isRoot ? 'docs/assets/footer.html' : '../assets/footer.html';
+            if (footerPath !== fallbackPath) {
+                fetch(fallbackPath)
+                    .then(response => response.text())
+                    .then(data => {
+                        footerPlaceholder.innerHTML = data;
+                    })
+                    .catch(err => console.error('Error loading footer fallback:', err));
+            }
         });
-}); 
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadFooter);
+} else {
+    loadFooter();
+}
