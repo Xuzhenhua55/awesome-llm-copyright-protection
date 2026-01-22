@@ -24,58 +24,86 @@
 
 .bibliography {
     margin-top: 3em;
-    padding: 2em 0;
+    padding: 0.5em 1.5em 1.5em 1.5em;
+    background: linear-gradient(135deg, #f8f9fc 0%, #ffffff 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(112, 72, 232, 0.06);
+    border: 1px solid rgba(112, 72, 232, 0.08);
 }
 
 .bibliography h2 {
     color: #2d3748;
     font-size: 1.6em;
-    margin-bottom: 1em;
-    font-weight: 600;
+    margin-bottom: 0.8em;
+    font-weight: 700;
 }
 
 .reference-list {
     list-style: none;
     counter-reset: reference-counter;
     padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
 }
 
 .reference-item {
     counter-increment: reference-counter;
-    margin-bottom: 0.4em;
-    padding: 0.4em 0.6em;
-    background: #f8f9fa;
-    border-left: 2px solid #7048e8;
-    border-radius: 0 4px 4px 0;
-    line-height: 1.3;
+    padding: 0.6em 1em 0.6em 3.5em;
+    background: #ffffff;
+    border-radius: 8px;
+    line-height: 1.5;
     position: relative;
     font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(112, 72, 232, 0.1);
+    transition: all 0.3s ease;
+}
+
+.reference-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(112, 72, 232, 0.1);
+    border-color: rgba(112, 72, 232, 0.25);
 }
 
 .reference-item::before {
     content: "[" counter(reference-counter) "]";
-    font-weight: bold;
-    color: #7048e8;
-    margin-right: 0.5em;
-    font-size: 0.85em;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #7048e8 0%, #5f3dc4 100%);
+    padding: 0.3em 0.5em;
+    border-radius: 6px;
+    font-size: 0.75em;
+    position: absolute;
+    left: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 1.8em;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(112, 72, 232, 0.3);
 }
 
 .reference-item:target {
-    background-color: rgba(112, 72, 232, 0.1);
+    background: linear-gradient(135deg, rgba(112, 72, 232, 0.08) 0%, rgba(112, 72, 232, 0.03) 100%);
+    border-color: rgba(112, 72, 232, 0.3);
     animation: highlight 2s ease-out;
 }
 
 @keyframes highlight {
     0% {
-        background-color: rgba(112, 72, 232, 0.3);
+        background: linear-gradient(135deg, rgba(112, 72, 232, 0.2) 0%, rgba(112, 72, 232, 0.1) 100%);
+        transform: scale(1.01);
     }
     100% {
-        background-color: rgba(112, 72, 232, 0.1);
+        background: linear-gradient(135deg, rgba(112, 72, 232, 0.08) 0%, rgba(112, 72, 232, 0.03) 100%);
+        transform: scale(1);
     }
 }
 
 .reference-item em {
-    font-style: italic;
+    font-style: normal;
+    color: #4a5568;
+    font-weight: 500;
 }
 
 /* Characteristics Grid Styles */
@@ -126,16 +154,35 @@
 /* Responsive design */
 @media (max-width: 768px) {
     .bibliography {
-        padding: 1.5em 0;
+        padding: 1em 1em 1.5em 1em;
+        margin-top: 2em;
+        border-radius: 12px;
+    }
+    
+    .bibliography h2 {
+        font-size: 1.4em;
+        margin-bottom: 0.6em;
+    }
+    
+    .reference-list {
+        gap: 0.35em;
     }
     
     .reference-item {
-        padding: 0.8em;
-        font-size: 0.95em;
+        padding: 0.5em 0.8em 0.5em 3.2em;
+        font-size: 0.85em;
+    }
+    
+    .reference-item:hover {
+        transform: translateX(2px);
     }
     
     .reference-item::before {
-        font-size: 0.9em;
+        font-size: 0.7em;
+        padding: 0.25em 0.4em;
+        left: 0.8em;
+        top: 50%;
+        transform: translateY(-50%);
     }
     
     .characteristics-grid {
