@@ -42,20 +42,35 @@
         box-shadow: 0 2px 8px rgba(66, 153, 225, 0.04);
       }
       .math-formula {
-        background: #f8f9fa;
-        border: 1px solid #e2e8f0;
-        border-radius: 6px;
-        padding: 1em;
-        margin: 1em 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+        border: 1px solid rgba(112, 72, 232, 0.15);
+        border-left: 4px solid #7048e8;
+        border-radius: 8px;
+        padding: 1.2em 1.5em;
+        margin: 1.2em 0;
         text-align: center;
         font-size: 1.05em;
         color: #2d3748;
+        box-shadow: 0 2px 12px rgba(112, 72, 232, 0.06);
+        position: relative;
+        overflow: hidden;
+      }
+      .math-formula::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 100% 0%, rgba(112, 72, 232, 0.03) 0%, transparent 50%);
+        pointer-events: none;
       }
       .math-formula .MathJax {
-        font-size: 1.2em !important;
+        font-size: 1.25em !important;
+        color: #1a202c;
       }
       .math-formula .MathJax_Display {
-        margin: 1em 0 !important;
+        margin: 0.8em 0 !important;
       }
       .input-manipulation-section {
         background: #f8f9fa;
@@ -96,15 +111,16 @@
         margin-bottom: 0.8em;
       }
       .metric-card .formula {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid rgba(112, 72, 232, 0.12);
+        border-left: 3px solid #7048e8;
         border-radius: 6px;
-        padding: 0.8em;
+        padding: 0.8em 1em;
         font-family: "Courier New", monospace;
-        font-size: 0.95em;
-        color: #2d3748;
-        text-align: center;
-        margin: 0.5em 0;
+        font-size: 0.92em;
+        color: #4a5568;
+        text-align: left;
+        margin: 0.8em 0 0 0;
       }
       .attack-categories {
         display: flex;
@@ -135,8 +151,26 @@
         color: #4299e1;
         font-weight: bold;
       }
+      .papers-section {
+        margin-top: 1.5em;
+      }
+      .papers-section h3 {
+        color: #2d3748;
+        margin-top: 0;
+        margin-bottom: 0.8em;
+        font-size: 1.18em;
+      }
       .paper-list {
-        margin-top: 1em;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+      }
+      .paper-reference {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
       }
       
       /* 防止悬停时覆盖左侧导航 */
@@ -165,10 +199,11 @@
         .math-formula {
           overflow-x: auto;
           font-size: 0.95em;
+          padding: 1em 1.2em;
         }
         
         .math-formula .MathJax {
-          font-size: 1em !important;
+          font-size: 1.1em !important;
           overflow-x: auto !important;
           max-width: 100%;
         }
@@ -185,13 +220,14 @@
         }
         
         .math-formula {
-          padding: 0.8em;
+          padding: 0.8em 1em;
           font-size: 0.9em;
           overflow-x: auto;
+          border-left-width: 3px;
         }
         
         .math-formula .MathJax {
-          font-size: 0.9em !important;
+          font-size: 1em !important;
           max-width: 100% !important;
           overflow-x: auto !important;
         }
@@ -281,6 +317,11 @@
             <span class="icon">💪</span>
             <b>Robustness</b>
           </div>
+        </div>
+
+        <div class="papers-section">
+          <h3>Related Papers</h3>
+          <div id="evaluation-framework-papers" class="paper-list"></div>
         </div>
       </div>
 
@@ -667,6 +708,98 @@
     <script>
       // Initialize citation system with your BibTeX file
       citationSystem.init("../assets/references.bib");
+
+      // Related papers for Evaluation Framework section
+      const evaluationFrameworkPapers = [
+        {
+          title: "Have You Merged My Model? On The Robustness of Large Language Model IP Protection Methods Against Model Merging",
+          link: "https://arxiv.org/abs/2404.05188",
+          venue: "arXiv 2024",
+          bibtex: `@misc{congHaveYouMerged2024a,
+  title = {Have You Merged My Model? On The Robustness of Large Language Model IP Protection Methods Against Model Merging},
+  author = {Cong, Tianshuo and Ran, Delong and Liu, Zesen and He, Xinlei and Liu, Jinyuan and Gong, Yichen and Li, Qi and Wang, Anyu and Wang, Xiaoyun},
+  year = {2024},
+  number = {arXiv:2404.05188},
+  eprint = {2404.05188},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2404.05188},
+  archiveprefix = {arXiv}
+}`
+        },
+        {
+          title: "Are Robust LLM Fingerprints Adversarially Robust?",
+          link: "https://arxiv.org/abs/2509.26598",
+          venue: "arXiv 2025",
+          bibtex: `@misc{naseryAreRobustLLM2025,
+  title = {Are Robust LLM Fingerprints Adversarially Robust?},
+  author = {Nasery, Anshul and Contente, Edoardo and Kaz, Alkin and Viswanath, Pramod and Oh, Sewoong},
+  year = {2025},
+  number = {arXiv:2509.26598},
+  eprint = {2509.26598},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2509.26598},
+  archiveprefix = {arXiv}
+}`
+        },
+        {
+          title: "Model Provenance Testing for Large Language Models",
+          link: "https://arxiv.org/abs/2502.00706",
+          venue: "arXiv 2025",
+          bibtex: `@misc{nikolicModelProvenanceTesting2025,
+  title = {Model Provenance Testing for Large Language Models},
+  author = {Nikolic, Ivica and Baluta, Teodora and Saxena, Prateek},
+  year = {2025},
+  number = {arXiv:2502.00706},
+  eprint = {2502.00706},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2502.00706},
+  archiveprefix = {arXiv}
+}`
+        },
+        {
+          title: "Mark Your LLM: Detecting the Misuse of Open-Source Large Language Models via Watermarking",
+          link: "https://arxiv.org/abs/2503.04636",
+          venue: "arXiv 2025",
+          bibtex: `@misc{xuMarkYourLLM2025,
+  title = {Mark Your LLM: Detecting the Misuse of Open-Source Large Language Models via Watermarking},
+  author = {Xu, Yijie and Liu, Aiwei and Hu, Xuming and Wen, Lijie and Xiong, Hui},
+  year = {2025},
+  number = {arXiv:2503.04636},
+  eprint = {2503.04636},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2503.04636},
+  archiveprefix = {arXiv}
+}`
+        },
+        {
+          title: "SoK: Large Language Model Copyright Auditing via Fingerprinting",
+          link: "https://arxiv.org/abs/2508.19843",
+          venue: "arXiv 2025",
+          bibtex: `@misc{shaoSoKLargeLanguage2025,
+  title = {SoK: Large Language Model Copyright Auditing via Fingerprinting},
+  author = {Shao, Shuo and Li, Yiming and He, Yu and Yao, Hongwei and Yang, Wenyuan and Tao, Dacheng and Qin, Zhan},
+  year = {2025},
+  number = {arXiv:2508.19843},
+  eprint = {2508.19843},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2508.19843},
+  archiveprefix = {arXiv}
+}`
+        }
+      ];
+
+      // Populate the papers container
+      const container = document.getElementById('evaluation-framework-papers');
+      if (container) {
+        evaluationFrameworkPapers.forEach(paper => {
+          container.appendChild(createPaperReference(paper));
+        });
+      }
     </script>
   </body>
 </html>

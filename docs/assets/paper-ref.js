@@ -7,6 +7,7 @@ function createPaperReference(paper) {
     titleDiv.className = 'paper-title';
     const titleLink = document.createElement('a');
     titleLink.href = paper.link;
+    titleLink.target = '_blank';
     titleLink.textContent = paper.title;
     titleDiv.appendChild(titleLink);
     paperDiv.appendChild(titleDiv);
