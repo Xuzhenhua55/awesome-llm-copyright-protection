@@ -52,6 +52,20 @@ footer {
 .maintainer {
     color: #64748b;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.maintainer-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    flex-shrink: 0;
 }
 
 .maintainer-link {
@@ -106,5 +120,10 @@ footer {
         display: block;
         margin-left: 0;
         margin-top: 0.25rem;
+    }
+    
+    .maintainer-avatar {
+        width: 28px;
+        height: 28px;
     }
 }

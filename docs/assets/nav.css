@@ -229,12 +229,62 @@
 /* Responsive design for sidebar */
 @media (max-width: 768px) {
     .sidebar {
+        width: 220px;
         transform: translateX(-100%);
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, width 0.3s ease;
     }
     
     .sidebar.open {
         transform: translateX(0);
+    }
+    
+    .sidebar-logo {
+        padding: 0.9rem 1rem;
+        flex-wrap: nowrap;
+    }
+    
+    .sidebar-logo .logo-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .sidebar-logo .logo-text {
+        font-size: 0.92rem;
+    }
+    
+    .sidebar .nav-list {
+        padding: 0.6rem 0;
+    }
+    
+    .sidebar .nav-list > li > a {
+        font-size: 0.82rem;
+        padding: 0.65rem 1rem;
+    }
+    
+    .sidebar .submenu a {
+        font-size: 0.76rem;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+    }
+    
+    .sidebar .submenu a::before {
+        left: 1.75rem;
+    }
+    
+    .sidebar .submenu a:hover {
+        padding-left: 2.65rem;
+    }
+    
+    .sidebar .submenu a:hover::before {
+        left: 1.85rem;
+    }
+    
+    .sidebar-footer {
+        padding: 0.7rem 1rem;
+    }
+    
+    .sidebar-footer .github-link {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
     }
     
     .sidebar-toggle {
@@ -245,10 +295,30 @@
         background: #7048e8;
         color: white;
         border: none;
-        padding: 0.5rem;
+        padding: 0;
         border-radius: 4px;
         cursor: pointer;
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+        line-height: 1;
+    }
+    
+    .sidebar-toggle.moved {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        margin-left: auto;
+        flex-shrink: 0;
+        z-index: 1002;
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.9rem;
     }
 }
 

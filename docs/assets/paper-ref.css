@@ -203,9 +203,15 @@
         word-wrap: break-word;
         overflow: visible;
         text-overflow: clip;
+        font-size: 0.9rem;
     }
     
     .paper-title a {
         display: block;
+    }
+    
+    .paper-tag {
+        font-size: 0.72em;
+        padding: 2px 6px;
     }
 } 

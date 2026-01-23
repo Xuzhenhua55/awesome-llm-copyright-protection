@@ -84,14 +84,35 @@ function setupMobileMenu() {
         toggleButton.setAttribute('aria-label', 'Toggle navigation menu');
         document.body.appendChild(toggleButton);
         
-        toggleButton.addEventListener('click', function() {
+        // Update button icon and position based on sidebar state
+        function updateButtonState() {
+            const logoSection = sidebar.querySelector('.sidebar-logo');
+            if (sidebar.classList.contains('open')) {
+                toggleButton.innerHTML = '✕';
+                toggleButton.setAttribute('aria-label', 'Close navigation menu');
+                // Move button inside logo row for alignment
+                if (logoSection) logoSection.appendChild(toggleButton);
+                else sidebar.appendChild(toggleButton);
+                toggleButton.classList.add('moved');
+            } else {
+                toggleButton.innerHTML = '☰';
+                toggleButton.setAttribute('aria-label', 'Open navigation menu');
+                document.body.appendChild(toggleButton);
+                toggleButton.classList.remove('moved');
+            }
+        }
+        
+        toggleButton.addEventListener('click', function(event) {
+            event.stopPropagation();
             sidebar.classList.toggle('open');
+            updateButtonState();
         });
         
         // Close sidebar when clicking outside
         document.addEventListener('click', function(event) {
             if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
                 sidebar.classList.remove('open');
+                updateButtonState();
             }
         });
     }

@@ -1,3 +1,14 @@
+function adjustFooterPaths(container, isRoot) {
+    // Adjust avatar image path
+    const avatarImg = container.querySelector('.maintainer-avatar');
+    if (avatarImg) {
+        const avatarSrc = avatarImg.getAttribute('data-avatar-src');
+        if (avatarSrc) {
+            avatarImg.src = isRoot ? `docs/assets/${avatarSrc}` : `../assets/${avatarSrc}`;
+        }
+    }
+}
+
 function loadFooter() {
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (!footerPlaceholder) return;
@@ -13,6 +24,7 @@ function loadFooter() {
         })
         .then(data => {
             footerPlaceholder.innerHTML = data;
+            adjustFooterPaths(footerPlaceholder, isRoot);
         })
         .catch(error => {
             console.error('Error loading footer:', error);
@@ -23,6 +35,7 @@ function loadFooter() {
                     .then(response => response.text())
                     .then(data => {
                         footerPlaceholder.innerHTML = data;
+                        adjustFooterPaths(footerPlaceholder, isRoot);
                     })
                     .catch(err => console.error('Error loading footer fallback:', err));
             }
