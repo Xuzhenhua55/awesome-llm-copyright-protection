@@ -1,0 +1,15 @@
+# Requirements for Paper Monitors
+# Install with: pip install -r requirements.txt
+
+# Semantic Scholar API (uses requests)
+requests>=2.28.0
+
+# OpenAI-compatible API client
+openai>=1.0.0
+
+# Timezone handling
+pytz>=2024.1
+
+# Scholar Monitor Web API
+fastapi>=0.100.0
+uvicorn>=0.22.0

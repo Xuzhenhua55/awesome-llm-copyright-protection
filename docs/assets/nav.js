@@ -7,7 +7,7 @@ function loadNavigation() {
     const navPath = isRoot ? 'docs/assets/nav.html' : '../assets/nav.html';
 
     // Clear old cache to ensure new navigation is loaded
-    const navVersion = 'v5'; // Increment this when nav structure changes
+    const navVersion = 'v6'; // Increment when nav structure changes (e.g. hidden-item)
     const cachedVersion = localStorage.getItem('navVersion');
     
     if (cachedVersion !== navVersion) {
@@ -22,6 +22,7 @@ function loadNavigation() {
         adjustNavPaths(navPlaceholder, isRoot);
         setActiveLink();
         setupMobileMenu();
+        setupHiddenNavItem();
     }
 
     // Always fetch fresh content in the background
@@ -39,6 +40,7 @@ function loadNavigation() {
                 setActiveLink();
                 setupMobileMenu();
             }
+            setupHiddenNavItem(); // Apply hidden/unlocked state
         })
         .catch(error => {
             console.error('Error loading navigation:', error);
@@ -72,6 +74,54 @@ function adjustNavPaths(container, isRoot) {
             }
         }
     });
+}
+
+var HIDDEN_UNLOCK_KEY = 'scholarMonitorUnlocked';
+var HIDDEN_KEYS = { Q: false, W: false, E: false };
+
+function setupHiddenNavItem() {
+    var item = document.querySelector('.nav-hidden-item[data-unlock-key="scholar-monitor"]');
+    if (!item) return;
+    // 仅在本会话内有效：用 sessionStorage，关闭标签/窗口后再次打开需重新按 QWE 才显示
+    if (sessionStorage.getItem(HIDDEN_UNLOCK_KEY)) {
+        item.classList.add('unlocked');
+        return;
+    }
+    item.classList.remove('unlocked');
+    if (window._hiddenNavShortcutBound) return;
+    window._hiddenNavShortcutBound = true;
+    function checkQWE() {
+        if (HIDDEN_KEYS.Q && HIDDEN_KEYS.W && HIDDEN_KEYS.E) {
+            sessionStorage.setItem(HIDDEN_UNLOCK_KEY, '1');
+            item.classList.add('unlocked');
+            showUnlockToast('Scholar Monitor 已解锁');
+            HIDDEN_KEYS.Q = HIDDEN_KEYS.W = HIDDEN_KEYS.E = false;
+        }
+    }
+    document.addEventListener('keydown', function (e) {
+        var k = e.key && e.key.toUpperCase();
+        if (k === 'Q') { HIDDEN_KEYS.Q = true; checkQWE(); }
+        if (k === 'W') { HIDDEN_KEYS.W = true; checkQWE(); }
+        if (k === 'E') { HIDDEN_KEYS.E = true; checkQWE(); }
+    });
+    document.addEventListener('keyup', function (e) {
+        var k = e.key && e.key.toUpperCase();
+        if (k === 'Q') HIDDEN_KEYS.Q = false;
+        if (k === 'W') HIDDEN_KEYS.W = false;
+        if (k === 'E') HIDDEN_KEYS.E = false;
+    });
+}
+
+function showUnlockToast(text) {
+    var toast = document.createElement('div');
+    toast.textContent = text;
+    toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#7048e8;color:#fff;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.9rem;z-index:9999;box-shadow:0 4px 12px rgba(112,72,232,0.4);opacity:0;transition:opacity 0.3s';
+    document.body.appendChild(toast);
+    requestAnimationFrame(function () { toast.style.opacity = '1'; });
+    setTimeout(function () {
+        toast.style.opacity = '0';
+        setTimeout(function () { toast.remove(); }, 300);
+    }, 2500);
 }
 
 function setupMobileMenu() {

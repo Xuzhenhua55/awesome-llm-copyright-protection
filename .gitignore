@@ -1,1 +1,7 @@
 .DS_Store
+
+# Logs
+scripts/logs/
+scripts/paper_logs/
+scripts/cache/
+scripts/__pycache__/
