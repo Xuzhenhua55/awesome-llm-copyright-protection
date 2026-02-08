@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文献查询与分析 - LLM Copyright Protection</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../assets/nav.css" />
+    <link rel="stylesheet" href="../assets/footer.css" />
+    <link rel="stylesheet" href="../assets/layout.css" />
+    <style>
+      .scholar-monitor { max-width: 100%; box-sizing: border-box; }
+      /* 分块：区块间距与标题 */
+      .scholar-section { margin-bottom: 2.25rem; }
+      .scholar-section:last-child { margin-bottom: 0; }
+      .scholar-section .card { background: #fff; border-radius: 14px; padding: 1.75rem; box-shadow: 0 2px 14px rgba(0,0,0,0.06); border: 1px solid #e8ecf0; }
+      .scholar-section h2 {
+        font-size: 1.2rem; font-weight: 600; margin: 0 0 1rem 0; color: #1a202c;
+        padding-bottom: 0.6rem; border-bottom: 2px solid #e8ecf0; letter-spacing: 0.01em;
+      }
+      .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; font-size: 0.95rem; transition: all 0.2s; }
+      .btn-primary { background: #7048e8; color: #fff; }
+      .btn-primary:hover:not(:disabled) { background: #5f3dc4; }
+      .btn-secondary { background: #e9ecf0; color: #374151; }
+      .btn-secondary:hover:not(:disabled) { background: #d1d5db; }
+      .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+      .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.85rem; }
+      .form-row { display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 0.75rem; }
+      .form-row:last-of-type { margin-bottom: 0; }
+      .form-row label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.9rem; color: #4a5568; font-weight: 500; }
+      .form-row input { padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; min-width: 200px; }
+      .form-row input:focus { outline: none; border-color: #7048e8; box-shadow: 0 0 0 2px rgba(112,72,232,0.15); }
+      /* 种子列表区块内展示 */
+      .seed-list { max-height: 240px; overflow-y: auto; margin-top: 1rem; padding-right: 4px; }
+      .seed-list::-webkit-scrollbar { width: 8px; }
+      .seed-list::-webkit-scrollbar-track { background: #f1f3f5; border-radius: 4px; }
+      .seed-list::-webkit-scrollbar-thumb { background: #c1c7d0; border-radius: 4px; }
+      .seed-item {
+        display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0.85rem;
+        background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.9rem;
+        border: 1px solid #eef1f5;
+      }
+      .seed-item .title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 0.75rem; color: #374151; }
+      .seed-item .remove { color: #b91c1c; cursor: pointer; padding: 0.25rem 0.5rem; font-size: 0.85rem; border-radius: 4px; }
+      .seed-item .remove:hover { background: #fee2e2; }
+      .status { font-size: 0.9rem; color: #4a5568; margin-top: 0.5rem; }
+      .status.loading { color: #7048e8; }
+      .status.error { color: #b91c1c; }
+      /* 结果区工具栏与分页 */
+      .results-toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1.25rem; padding: 0.5rem 0; }
+      .pagination { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+      .pagination button { min-width: 36px; }
+      .pagination .page-info { font-size: 0.9rem; color: #4a5568; }
+      /* 结果卡片：分块内展示美化 */
+      .result-card {
+        background: #fff; border: 1px solid #e8ecf0; border-radius: 12px; padding: 1.35rem;
+        margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: box-shadow 0.2s;
+      }
+      .result-card:last-child { margin-bottom: 0; }
+      .result-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+      .result-card h3 { font-size: 1.05rem; margin: 0 0 0.5rem 0; font-weight: 600; line-height: 1.4; }
+      .result-card h3 a { color: #7048e8; text-decoration: none; }
+      .result-card h3 a:hover { text-decoration: underline; }
+      .result-card .meta { font-size: 0.85rem; color: #6b7280; margin-bottom: 0.6rem; }
+      .result-card .analysis { font-size: 0.9rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #eef1f5; }
+      .result-card .analysis .tag { display: inline-block; background: #e9d5ff; color: #5b21b6; padding: 0.25rem 0.55rem; border-radius: 6px; font-size: 0.8rem; margin-right: 0.3rem; margin-bottom: 0.3rem; font-weight: 500; }
+      .result-card .analysis .tag.relevant { background: #d1fae5; color: #065f46; }
+      .result-card .analysis .tag.conf-high { background: #d1fae5; color: #065f46; }
+      .result-card .analysis .tag.conf-medium { background: #fef3c7; color: #92400e; }
+      .result-card .analysis .tag.conf-low { background: #fee2e2; color: #991b1b; }
+      .result-card .analysis p { margin: 0.5rem 0 0 0; color: #4a5568; line-height: 1.5; }
+      .result-card .abstract-wrap { font-size: 0.9rem; color: #4a5568; margin: 0.5rem 0; position: relative; }
+      .result-card .abstract-label { font-weight: 600; color: #374151; margin-right: 0.25rem; }
+      .result-card .abstract-text-wrap { margin-top: 0.25rem; line-height: 1.55; }
+      .result-card .abstract-text-wrap.collapsed { max-height: 4.5em; overflow: hidden; }
+      .result-card .abstract-text-wrap.expanded { max-height: 260px; overflow-y: auto; }
+      .result-card .abstract-toggle { display: block; margin-top: 0.35rem; font-size: 0.85rem; color: #7048e8; cursor: pointer; background: none; border: none; padding: 0; text-decoration: underline; }
+      .result-card .abstract-toggle:hover { color: #5f3dc4; }
+      .api-config { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
+      .api-config label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: #4a5568; font-weight: 500; }
+      .api-config input { padding: 0.5rem 0.65rem; border: 1px solid #d1d5db; border-radius: 8px; }
+      .api-config input:focus { outline: none; border-color: #7048e8; }
+      .load-json-row { margin-top: 0.75rem; }
+      .load-json-row input[type="file"] { font-size: 0.9rem; }
+      .find-progress { margin-top: 1rem; padding: 0.85rem 1rem; background: #f0f4ff; border-radius: 10px; font-size: 0.9rem; color: #374151; min-height: 2.5rem; border: 1px solid #e0e7ff; }
+      .find-log { margin-top: 0.75rem; max-height: 220px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 10px; padding: 0.6rem 0.75rem; background: #fafafa; font-size: 0.85rem; color: #374151; }
+      .find-log .log-item { padding: 0.3rem 0; border-bottom: 1px solid #eee; }
+      .find-log .log-item:last-child { border-bottom: none; }
+      .find-log .log-item.success { color: #065f46; }
+      .find-log .log-item.retry { color: #92400e; }
+      .find-log .log-item.not-found { color: #6b7280; }
+      .find-log .log-item.failed { color: #b91c1c; }
+      .result-card .tag.seed-skip { background: #e0e7ff; color: #3730a3; }
+      .header-section { margin-bottom: 2.5rem; }
+      .header-section h1 { font-size: 1.85rem; font-weight: 700; color: #1a202c; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+      .intro-text { font-size: 1rem; line-height: 1.65; color: #4a5568; max-width: 56em; }
+      .scholar-section .card > p.status { margin-top: 0.5rem; }
+      .scholar-section .card > p.status code { background: #f1f3f5; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85em; }
+    </style>
+  </head>
+  <body data-server-no-reload>
+    <div id="nav-placeholder"></div>
+    <div class="main-content">
+      <div class="scholar-monitor">
+        <div class="header-section">
+          <h1>文献查询与分析</h1>
+          <p class="intro-text">根据种子论文查找引用它的文章，使用预定义分类规则让 LLM 进行分类，得到最终结果。可设置种子论文、查找引用、进行分析，或直接加载已有结果 JSON 分页展示与导出；仅查看已有结果时可直接使用「加载已有结果」选择本地 JSON，无需启动后端。</p>
+        </div>
+
+        <!-- API base (for backend) -->
+        <div class="scholar-section card">
+          <h2>后端 API</h2>
+          <div class="api-config">
+            <label>API 地址 <input type="text" id="apiBase" value="http://127.0.0.1:8765" placeholder="http://127.0.0.1:8765" /></label>
+          </div>
+        </div>
+
+        <!-- 1. Seed papers -->
+        <div class="scholar-section card">
+          <h2>种子论文</h2>
+          <div class="form-row">
+            <button type="button" class="btn btn-primary" id="btnExtract">从项目页面抽取</button>
+            <span class="status" id="statusSeed"></span>
+          </div>
+          <div class="form-row">
+            <label>标题 <input type="text" id="manualTitle" placeholder="Paper title" /></label>
+            <label>链接 <input type="text" id="manualUrl" placeholder="https://..." /></label>
+            <button type="button" class="btn btn-secondary" id="btnAddManual">手动添加</button>
+          </div>
+          <div class="seed-list" id="seedList"></div>
+        </div>
+
+        <!-- 2. Find citations -->
+        <div class="scholar-section card">
+          <h2>查找引用</h2>
+          <div class="form-row">
+            <label>最多检查种子数 <input type="number" id="maxPapersCheck" value="10" min="1" style="min-width:80px" /></label>
+            <label>每篇最多引用数 <input type="number" id="maxCitationsPer" value="50" min="1" style="min-width:80px" /></label>
+            <button type="button" class="btn btn-primary" id="btnFindCitations">查找引用</button>
+            <span class="status" id="statusFind"></span>
+          </div>
+          <div id="findProgress" class="find-progress">等待开始查找引用…</div>
+          <div id="findLog" class="find-log" aria-live="polite"></div>
+        </div>
+
+        <!-- 3. Analyze -->
+        <div class="scholar-section card">
+          <h2>分析</h2>
+          <div class="form-row">
+            <label>并发数 <input type="number" id="concurrency" value="4" min="1" max="16" style="min-width:60px" /></label>
+            <label>LLM API Base <input type="text" id="llmApiBase" value="http://127.0.0.1:8000/v1" placeholder="OpenAI-compatible API" /></label>
+            <label>API Key <input type="text" id="llmApiKey" value="" placeholder="可选，留空表示无" /></label>
+            <label>Model <input type="text" id="llmModel" placeholder="Optional" /></label>
+            <button type="button" class="btn btn-primary" id="btnAnalyze">开始分析</button>
+            <span class="status" id="statusAnalyze"></span>
+          </div>
+        </div>
+
+        <!-- 4. Load existing JSON -->
+        <div class="scholar-section card">
+          <h2>加载已有结果</h2>
+          <p class="status">可直接加载本地的 <code>scholar_relevant_*.json</code> 或 <code>all_citations_*.json</code>，在下方分页展示并导出。</p>
+          <div class="load-json-row">
+            <input type="file" id="fileLoadJson" accept=".json" />
+            <span class="status" id="statusLoad"></span>
+          </div>
+        </div>
+
+        <!-- 5. Results -->
+        <div class="scholar-section card">
+          <h2>结果</h2>
+          <div class="results-toolbar">
+            <span class="page-info" id="resultSummary">暂无数据</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnExport" disabled>导出 JSON</button>
+            <div class="pagination" id="paginationWrap" style="display:none;">
+              <button type="button" class="btn btn-secondary btn-sm" id="btnPrev">上一页</button>
+              <span class="page-info" id="pageInfo"></span>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnNext">下一页</button>
+            </div>
+          </div>
+          <div id="resultsContainer"></div>
+        </div>
+      </div>
+    </div>
+    <div id="footer-placeholder"></div>
+
+    <script src="../assets/nav.js"></script>
+    <script src="../assets/footer.js"></script>
+    <script>
+(function () {
+  const PAGE_SIZE = 10;
+  let allPapers = [];
+  let currentPage = 1;
+  let totalPages = 1;
+  /** Normalized titles of seed papers (trim + lower) for "已在种子中" check */
+  let seedPaperTitles = new Set();
+
+  function apiBase() { return (document.getElementById('apiBase').value || '').replace(/\/$/, ''); }
+
+  function setStatus(id, text, isError, isLoading) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text || '';
+    el.classList.remove('loading', 'error');
+    if (isLoading) el.classList.add('loading');
+    if (isError) el.classList.add('error');
+  }
+
+  function normalizeTitleForMatch(title) {
+    return (title || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+
+  function renderSeedList(papers) {
+    seedPaperTitles = new Set((papers || []).map(function (p) { return normalizeTitleForMatch(p.title); }));
+    const list = document.getElementById('seedList');
+    list.innerHTML = '';
+    (papers || []).forEach((p, i) => {
+      const div = document.createElement('div');
+      div.className = 'seed-item';
+      div.innerHTML = '<span class="title">' + escapeHtml(p.title || '') + '</span><span class="remove" data-index="' + i + '">删除</span>';
+      div.querySelector('.remove').addEventListener('click', () => removeSeed(i));
+      list.appendChild(div);
+    });
+  }
+
+  function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  async function removeSeed(index) {
+    const base = apiBase();
+    if (!base) { setStatus('statusSeed', '请填写 API 地址', true); return; }
+    try {
+      const r = await fetch(base + '/api/seed-papers/remove?index=' + index, { method: 'POST' });
+      if (!r.ok) throw new Error(await r.text());
+      const data = await r.json();
+      renderSeedList(data.papers);
+    } catch (e) {
+      setStatus('statusSeed', '删除失败: ' + e.message, true);
+    }
+  }
+
+  document.getElementById('btnExtract').addEventListener('click', async function () {
+    const base = apiBase();
+    if (!base) { setStatus('statusSeed', '请填写 API 地址', true); return; }
+    this.disabled = true;
+    setStatus('statusSeed', '正在从项目页面抽取…', false, true);
+    try {
+      const r = await fetch(base + '/api/seed-papers/extract', { method: 'POST' });
+      if (!r.ok) throw new Error(await r.text());
+      const data = await r.json();
+      renderSeedList(data.papers);
+      setStatus('statusSeed', '已抽取 ' + data.count + ' 篇种子论文');
+    } catch (e) {
+      setStatus('statusSeed', '抽取失败: ' + e.message, true);
+    }
+    this.disabled = false;
+  });
+
+  document.getElementById('btnAddManual').addEventListener('click', async function () {
+    const title = document.getElementById('manualTitle').value.trim();
+    if (!title) { setStatus('statusSeed', '请填写标题', true); return; }
+    const base = apiBase();
+    if (!base) { setStatus('statusSeed', '请填写 API 地址', true); return; }
+    try {
+      const r = await fetch(base + '/api/seed-papers/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, url: document.getElementById('manualUrl').value.trim() }),
+      });
+      if (!r.ok) throw new Error(await r.text());
+      const data = await r.json();
+      renderSeedList(data.papers);
+      document.getElementById('manualTitle').value = '';
+      document.getElementById('manualUrl').value = '';
+      setStatus('statusSeed', '已添加');
+    } catch (e) {
+      setStatus('statusSeed', '添加失败: ' + e.message, true);
+    }
+  });
+
+  var findAbortController = null;
+  var lastProgressUpdate = 0;
+  var PROGRESS_THROTTLE_MS = 300;
+  var pendingProgressText = null;
+  var progressRafId = null;
+  var PROGRESS_STORAGE_KEY = 'scholarFindProgress';
+  var PROGRESS_EXPIRY_MS = 10 * 60 * 1000;
+  var FIND_LOG_MAX = 80;
+  var findLogEntries = [];
+  function saveFindProgress(text, isError, phase) {
+    try {
+      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
+        text: text || '',
+        isError: !!isError,
+        phase: phase || 'idle',
+        ts: Date.now(),
+      }));
+    } catch (_) {}
+  }
+  function restoreFindProgress() {
+    try {
+      var raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (!data || !data.text || !data.ts) return;
+      if (Date.now() - data.ts > PROGRESS_EXPIRY_MS) return;
+      if (data.isError && data.phase !== 'running') {
+        localStorage.removeItem(PROGRESS_STORAGE_KEY);
+        return;
+      }
+      if (data.phase === 'running') {
+        setFindProgress('检测到页面刷新，查找可能仍在后台进行中。如需继续获取进度，请重新点击「查找引用」。', false);
+      } else {
+        setFindProgress(data.text, data.isError);
+      }
+    } catch (_) {}
+  }
+  function setFindProgress(text, isError) {
+    const el = document.getElementById('findProgress');
+    if (!el) return;
+    el.textContent = text || '';
+    el.style.color = isError ? '#c53030' : '#374151';
+  }
+  function scheduleProgressRender(text, isError) {
+    pendingProgressText = { text, isError };
+    if (progressRafId) return;
+    progressRafId = requestAnimationFrame(function () {
+      progressRafId = null;
+      if (!pendingProgressText) return;
+      setFindProgress(pendingProgressText.text, pendingProgressText.isError);
+      pendingProgressText = null;
+    });
+  }
+
+  function normalizeTitle(title) {
+    if (!title) return '（无标题）';
+    return title.length > 80 ? title.slice(0, 80) + '…' : title;
+  }
+
+  /** 分析后只展示「相关」或「已在种子中，跳过分析」的论文，不展示不相关的 */
+  function isRelevantOrSeedSkip(p) {
+    if (!p.analysis) return true;
+    if (p.analysis.is_model_copyright_protection === true) return true;
+    if (p.analysis.brief_summary === '已在种子中，跳过分析' || p.analysis.reasoning === '已在种子中，跳过分析') return true;
+    return false;
+  }
+
+  function addFindLog(action, text) {
+    const logWrap = document.getElementById('findLog');
+    if (!logWrap) return;
+    const timeStr = new Date().toLocaleTimeString();
+    const item = document.createElement('div');
+    item.className = 'log-item ' + action;
+    item.textContent = '[' + timeStr + '] ' + text;
+    findLogEntries.push(item);
+    if (findLogEntries.length > FIND_LOG_MAX) {
+      const removed = findLogEntries.shift();
+      if (removed && removed.parentNode) removed.parentNode.removeChild(removed);
+    }
+    logWrap.appendChild(item);
+    logWrap.scrollTop = logWrap.scrollHeight;
+  }
+
+  function handlePaperEvent(msg) {
+    const title = normalizeTitle(msg.title || '');
+    const action = msg.action || 'success';
+    if (action === 'retry') {
+      const reason = msg.reason ? ('，原因：' + msg.reason) : '';
+      addFindLog('retry', '重试：' + title + '（第 ' + (msg.attempt || 1) + '/' + (msg.max_retries || 10) + ' 次' + reason + '）');
+      return;
+    }
+    if (action === 'not_found') {
+      addFindLog('not-found', '未找到：' + title);
+      return;
+    }
+    if (action === 'failed') {
+      const reason = msg.reason ? ('，原因：' + msg.reason) : '';
+      addFindLog('failed', '失败跳过：' + title + reason);
+      return;
+    }
+    const added = msg.added != null ? msg.added : 0;
+    const count = msg.count != null ? msg.count : 0;
+    addFindLog('success', '成功：' + title + '（本种子新加入 ' + added + ' 篇，当前累计 ' + count + ' 篇）');
+  }
+
+  restoreFindProgress();
+
+  document.getElementById('btnFindCitations').addEventListener('click', async function (ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const base = apiBase();
+    if (!base) { setStatus('statusFind', '请填写 API 地址', true); return; }
+    if (findAbortController) findAbortController.abort();
+    findAbortController = new AbortController();
+    const btn = this;
+    btn.disabled = true;
+    // 清空状态，重新开始
+    findLogEntries = [];
+    var logWrapEl = document.getElementById('findLog');
+    if (logWrapEl) logWrapEl.innerHTML = '';
+    allPapers = [];
+    currentPage = 1;
+    renderResults();
+    setFindProgress('正在连接…');
+    saveFindProgress('正在连接…', false, 'running');
+    setStatus('statusFind', '正在查找引用…', false, true);
+    lastProgressUpdate = 0;
+    try {
+      const r = await fetch(base + '/api/citations/find/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          max_papers_to_check: parseInt(document.getElementById('maxPapersCheck').value, 10) || null,
+          max_citations_per_paper: parseInt(document.getElementById('maxCitationsPer').value, 10) || 50,
+        }),
+        signal: findAbortController.signal,
+      });
+      if (!r.ok) {
+        const errText = await r.text();
+        throw new Error(errText || '请求失败 ' + r.status);
+      }
+      if (!r.body) {
+        setFindProgress('错误：响应无内容', true);
+        saveFindProgress('错误：响应无内容', true, 'idle');
+        setStatus('statusFind', '响应无内容', true);
+        btn.disabled = false;
+        return;
+      }
+      const reader = r.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let gotDoneOrError = false;
+      let gotAnyData = false;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        if (!gotAnyData) {
+          gotAnyData = true;
+          scheduleProgressRender('已收到数据，正在处理…');
+          saveFindProgress('已收到数据，正在处理…', false, 'running');
+        }
+        let idx;
+        while ((idx = buffer.search(/\r?\n\r?\n/)) !== -1) {
+          const block = buffer.slice(0, idx);
+          const sepMatch = buffer.match(/\r?\n\r?\n/);
+          buffer = buffer.slice(idx + (sepMatch ? sepMatch[0].length : 2));
+          const dataLines = block.split(/\r?\n/).filter(line => line.startsWith('data:'));
+          if (!dataLines.length) continue;
+          const dataPayload = dataLines.map(line => line.replace(/^data:\s?/, '')).join('\n');
+          try {
+            const msg = JSON.parse(dataPayload);
+            if (msg.type === 'started') {
+              scheduleProgressRender('已连接。共将检查 ' + (msg.total || '') + ' 篇种子论文…');
+              saveFindProgress('已连接。共将检查 ' + (msg.total || '') + ' 篇种子论文…', false, 'running');
+            } else if (msg.type === 'paper') {
+              handlePaperEvent(msg);
+            } else if (msg.type === 'progress') {
+              var now = Date.now();
+              if (now - lastProgressUpdate >= PROGRESS_THROTTLE_MS) {
+                lastProgressUpdate = now;
+                var processed = msg.processed != null ? msg.processed : (msg.completed != null ? msg.completed : 0);
+                scheduleProgressRender(
+                  '正在处理第 ' + processed + ' / ' + msg.total + ' 篇：' + (msg.title || '') + '… 当前已找到 ' + msg.count + ' 篇引用'
+                );
+                saveFindProgress(
+                  '正在处理第 ' + processed + ' / ' + msg.total + ' 篇：' + (msg.title || '') + '… 当前已找到 ' + msg.count + ' 篇引用',
+                  false,
+                  'running'
+                );
+              }
+            } else if (msg.type === 'done') {
+              gotDoneOrError = true;
+              allPapers = msg.citations || [];
+              currentPage = 1;
+              renderResults();
+              scheduleProgressRender('完成。共找到 ' + (msg.count || allPapers.length) + ' 篇引用');
+              saveFindProgress('完成。共找到 ' + (msg.count || allPapers.length) + ' 篇引用', false, 'idle');
+              setStatus('statusFind', '找到 ' + (msg.count || allPapers.length) + ' 篇引用');
+            } else if (msg.type === 'error') {
+              gotDoneOrError = true;
+              scheduleProgressRender('错误：' + (msg.detail || ''), true);
+              saveFindProgress('错误：' + (msg.detail || ''), true, 'idle');
+              setStatus('statusFind', '查找失败: ' + (msg.detail || ''), true);
+            }
+          } catch (_) {}
+        }
+      }
+      if (!gotDoneOrError) {
+        scheduleProgressRender('连接已关闭，未收到完成信号。请确认：1) 后端已启动（如 ./run_scholar_monitor_web.sh）；2) 已「从项目页面抽取」或「手动添加」种子论文。', true);
+        saveFindProgress('连接已关闭，未收到完成信号。请确认：1) 后端已启动（如 ./run_scholar_monitor_web.sh）；2) 已「从项目页面抽取」或「手动添加」种子论文。', true, 'idle');
+        setStatus('statusFind', '未收到完成信号', true);
+      }
+    } catch (e) {
+      if (e.name === 'AbortError') {
+        scheduleProgressRender('已取消');
+        saveFindProgress('已取消', false, 'idle');
+        setStatus('statusFind', '已取消');
+      } else {
+        var extraHint = '';
+        try {
+          var pageProtocol = window.location.protocol;
+          if (pageProtocol === 'file:') {
+            extraHint = '当前页面通过 file:// 打开，浏览器可能阻止访问本地 API。建议用本地静态服务器打开页面（例如在 docs 目录执行：python -m http.server 8000，然后访问 http://127.0.0.1:8000/html/scholar-monitor.html）。';
+          } else if (pageProtocol === 'https:' && /^http:\/\//i.test(base)) {
+            extraHint = '当前页面是 HTTPS，浏览器会阻止请求 HTTP 接口。请将页面和 API 统一为 https 或本地 http。';
+          }
+        } catch (_) {}
+        scheduleProgressRender(
+          '请求失败：' + (e.message || String(e)) + '。请确认后端已启动且 API 地址正确（如 http://127.0.0.1:8765）。' + (extraHint ? ' ' + extraHint : ''),
+          true
+        );
+        saveFindProgress(
+          '请求失败：' + (e.message || String(e)) + '。请确认后端已启动且 API 地址正确（如 http://127.0.0.1:8765）。' + (extraHint ? ' ' + extraHint : ''),
+          true,
+          'idle'
+        );
+        setStatus('statusFind', '查找失败: ' + (e.message || e), true);
+      }
+    }
+    findAbortController = null;
+    btn.disabled = false;
+  });
+
+  document.getElementById('btnAnalyze').addEventListener('click', async function () {
+    const base = apiBase();
+    if (!base) { setStatus('statusAnalyze', '请填写 API 地址', true); return; }
+    if (!allPapers.length) {
+      setStatus('statusAnalyze', '请先「查找引用」或「加载已有结果」再进行分析', true);
+      return;
+    }
+    this.disabled = true;
+    setStatus('statusAnalyze', '正在分析 ' + allPapers.length + ' 篇…', false, true);
+    try {
+      const r = await fetch(base + '/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          citations: allPapers,
+          concurrency: parseInt(document.getElementById('concurrency').value, 10) || 4,
+          api_base: document.getElementById('llmApiBase').value || 'http://127.0.0.1:8000/v1',
+          api_key: document.getElementById('llmApiKey').value.trim() || 'EMPTY',
+          model: document.getElementById('llmModel').value || null,
+        }),
+      });
+      if (!r.ok) throw new Error(await r.text());
+      const data = await r.json();
+      var rawCount = (data.papers || []).length;
+      allPapers = (data.papers || []).filter(isRelevantOrSeedSkip);
+      currentPage = 1;
+      renderResults();
+      setStatus('statusAnalyze', rawCount === allPapers.length ? '已分析 ' + rawCount + ' 篇' : '已分析 ' + rawCount + ' 篇，展示 ' + allPapers.length + ' 条（仅相关与种子）');
+    } catch (e) {
+      setStatus('statusAnalyze', '分析失败: ' + e.message, true);
+    }
+    this.disabled = false;
+  });
+
+  document.getElementById('fileLoadJson').addEventListener('change', function () {
+    const f = this.files[0];
+    if (!f) return;
+    const status = document.getElementById('statusLoad');
+    const r = new FileReader();
+    r.onload = function () {
+      try {
+        const raw = JSON.parse(r.result);
+        let papers = [];
+        if (Array.isArray(raw.papers)) papers = raw.papers;
+        else if (Array.isArray(raw)) papers = raw;
+        else if (raw.total !== undefined && Array.isArray(raw.papers)) papers = raw.papers;
+        if (!papers.length) { status.textContent = '未找到 papers 数组'; status.classList.add('error'); return; }
+        var filtered = papers.filter(isRelevantOrSeedSkip);
+        allPapers = filtered;
+        currentPage = 1;
+        renderResults();
+        status.textContent = filtered.length === papers.length ? '已加载 ' + papers.length + ' 条' : '已加载 ' + papers.length + ' 条，展示 ' + filtered.length + ' 条（仅相关与种子）';
+        status.classList.remove('error');
+      } catch (e) {
+        status.textContent = '解析失败: ' + e.message;
+        status.classList.add('error');
+      }
+    };
+    r.readAsText(f, 'utf-8');
+  });
+
+  function getDisplayPapers() {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return allPapers.slice(start, start + PAGE_SIZE);
+  }
+
+  function renderResults() {
+    totalPages = Math.max(1, Math.ceil(allPapers.length / PAGE_SIZE));
+    const summary = document.getElementById('resultSummary');
+    summary.textContent = '共 ' + allPapers.length + ' 条';
+    document.getElementById('btnExport').disabled = allPapers.length === 0;
+
+    const wrap = document.getElementById('paginationWrap');
+    wrap.style.display = allPapers.length > PAGE_SIZE ? 'flex' : 'none';
+    document.getElementById('pageInfo').textContent = '第 ' + currentPage + ' / ' + totalPages + ' 页';
+
+    const container = document.getElementById('resultsContainer');
+    const pagePapers = getDisplayPapers();
+    container.innerHTML = '';
+    pagePapers.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      const a = p.url ? '<a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.title || '') + '</a>' : escapeHtml(p.title || '');
+      const meta = [p.year, p.authors, p.venue].filter(Boolean).join(' · ');
+      const ana = p.analysis;
+      const isInSeed = seedPaperTitles.has(normalizeTitleForMatch(p.title));
+      const isSkippedByBackend = ana && (ana.brief_summary === '已在种子中，跳过分析' || ana.reasoning === '已在种子中，跳过分析');
+      const showSeedSkip = isInSeed || isSkippedByBackend;
+      let analysisHtml = '';
+      if (showSeedSkip) {
+        analysisHtml += '<div class="analysis"><span class="tag seed-skip">已在种子中，跳过分析</span></div>';
+      }
+      if (ana && !showSeedSkip) {
+        const rel = ana.is_model_copyright_protection ? ' relevant' : '';
+        const conf = (ana.classification_confidence || '').toLowerCase();
+        const confClass = conf === 'high' ? ' conf-high' : conf === 'medium' ? ' conf-medium' : conf === 'low' ? ' conf-low' : '';
+        analysisHtml += '<div class="analysis">' +
+          '<span class="tag' + rel + '">' + (ana.is_model_copyright_protection ? '相关' : '非相关') + '</span>' +
+          (ana.category ? '<span class="tag">' + escapeHtml(ana.category) + '</span>' : '') +
+          (ana.subcategory ? '<span class="tag">' + escapeHtml(ana.subcategory) + '</span>' : '') +
+          (ana.classification_confidence ? '<span class="tag' + confClass + '">置信度: ' + escapeHtml(ana.classification_confidence) + '</span>' : '') +
+          (ana.brief_summary ? '<p>' + escapeHtml(ana.brief_summary) + '</p>' : '') +
+          '</div>';
+      }
+      let abstractBlock = '';
+      if (p.abstract) {
+        const absText = escapeHtml(p.abstract);
+        const needsToggle = p.abstract.length > 200;
+        abstractBlock = '<div class="abstract-wrap">' +
+          '<span class="abstract-label">摘要：</span>' +
+          '<div class="abstract-text-wrap' + (needsToggle ? ' collapsed' : '') + '"><div class="abstract-text">' + absText + '</div></div>' +
+          (needsToggle ? '<button type="button" class="abstract-toggle" aria-label="展开摘要">展开摘要</button>' : '') +
+          '</div>';
+      }
+      card.innerHTML = '<h3>' + a + '</h3><div class="meta">' + escapeHtml(meta) + '</div>' +
+        abstractBlock +
+        analysisHtml;
+      container.appendChild(card);
+      var textWrap = card.querySelector('.abstract-text-wrap');
+      if (textWrap && textWrap.classList.contains('collapsed')) {
+        var btn = card.querySelector('.abstract-toggle');
+        if (btn) btn.addEventListener('click', function () {
+          if (textWrap.classList.contains('collapsed')) {
+            textWrap.classList.remove('collapsed');
+            textWrap.classList.add('expanded');
+            this.textContent = '收起摘要';
+            this.setAttribute('aria-label', '收起摘要');
+          } else {
+            textWrap.classList.remove('expanded');
+            textWrap.classList.add('collapsed');
+            this.textContent = '展开摘要';
+            this.setAttribute('aria-label', '展开摘要');
+          }
+        });
+      }
+    });
+  }
+
+  document.getElementById('btnPrev').addEventListener('click', function () {
+    if (currentPage > 1) { currentPage--; renderResults(); }
+  });
+  document.getElementById('btnNext').addEventListener('click', function () {
+    if (currentPage < totalPages) { currentPage++; renderResults(); }
+  });
+
+  document.getElementById('btnExport').addEventListener('click', function () {
+    if (!allPapers.length) return;
+    const blob = new Blob([JSON.stringify({ total: allPapers.length, papers: allPapers }, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'scholar_results_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // Load seed list on load if API available
+  async function loadSeedPapers() {
+    const base = apiBase();
+    if (!base) return;
+    try {
+      const r = await fetch(base + '/api/seed-papers');
+      if (r.ok) {
+        const data = await r.json();
+        renderSeedList(data.papers || []);
+      }
+    } catch (_) {}
+  }
+  loadSeedPapers();
+  renderResults();
+})();
+    </script>
+  </body>
+</html>
